@@ -61,6 +61,7 @@
 #include "vtr_util.h"
 #include "vtr_path.h"
 #include "vtr_memory.h"
+#include "Hard_Soft_Logic_Mixer.hpp"
 
 #define DEFAULT_OUTPUT "."
 
@@ -84,116 +85,118 @@ enum ODIN_ERROR_CODE {
 
 };
 
-static void get_physical_luts(std::vector<t_pb_type*>& pb_lut_list, t_mode* mode);
-static void get_physical_luts(std::vector<t_pb_type*>& pb_lut_list, t_pb_type* pb_type);
-static void set_physical_lut_size();
+static ODIN_ERROR_CODE synthesize_verilog()
+{
+	double elaboration_time = wall_time();
 
-static ODIN_ERROR_CODE synthesize_verilog() {
-    double elaboration_time = wall_time();
+	printf("--------------------------------------------------------------------\n");
+	printf("High-level synthesis Begin\n");
+	HardSoftLogicMixer mixer=HardSoftLogicMixer(Arch,configuration.mix_soft_and_hard_logic);
+	mixer.estimate_possible_device_size();
+	/* Perform any initialization routines here */
+	find_hard_multipliers();
+	find_hard_adders();
+	//find_hard_adders_for_sub();
+	register_hard_blocks();
 
-    printf("--------------------------------------------------------------------\n");
-    printf("High-level synthesis Begin\n");
+	module_names_to_idx = sc_new_string_cache();
 
-    FILE* output_blif_file = create_blif(global_args.output_file.value().c_str());
+	/* parse to abstract syntax tree */
+	printf("Parser starting - we'll create an abstract syntax tree. Note this tree can be viewed using Grap Viz (see documentation)\n");
+	init_parser();
+	parse_to_ast();
+	/**
+	 *  Note that the entry point for ast optimzations is done per module with the
+	 * function void next_parsed_verilog_file(ast_node_t *file_items_list) 
+	 */
 
-    /* Perform any initialization routines here */
-    find_hard_multipliers();
-    find_hard_adders();
-    //find_hard_adders_for_sub();
-    register_hard_blocks();
+	/* after the ast is made potentially do tagging for downstream links to verilog */
+	if (global_args.high_level_block.provenance() == argparse::Provenance::SPECIFIED)
+		add_tag_data();
 
-    module_names_to_idx = sc_new_string_cache();
+	/**
+	 *  Now that we have a parse tree (abstract syntax tree [ast]) of
+	 *	the Verilog we want to make into a netlist. 
+		*/
+	printf("Converting AST into a Netlist. Note this netlist can be viewed using GraphViz (see documentation)\n");
+	create_netlist();
 
-    /* parse to abstract syntax tree */
-    printf("Parser starting - we'll create an abstract syntax tree. Note this tree can be viewed using Grap Viz (see documentation)\n");
-    verilog_ast = init_parser();
-    parse_to_ast();
-    /**
-     *  Note that the entry point for ast optimzations is done per module with the
-     * function void next_parsed_verilog_file(ast_node_t *file_items_list) 
-     */
+	// Can't levelize yet since the large muxes can look like combinational loops when they're not
+	check_netlist(verilog_netlist);
 
-    /* after the ast is made potentially do tagging for downstream links to verilog */
-    if (global_args.high_level_block.provenance() == argparse::Provenance::SPECIFIED)
-        add_tag_data(verilog_ast);
+	//START ################# NETLIST OPTIMIZATION ############################
 
-    /**
-     *  Now that we have a parse tree (abstract syntax tree [ast]) of
-     *	the Verilog we want to make into a netlist. 
-     */
-    printf("Converting AST into a Netlist. Note this netlist can be viewed using GraphViz (see documentation)\n");
-    create_netlist(verilog_ast);
-    if (verilog_netlist) {
-        // Can't levelize yet since the large muxes can look like combinational loops when they're not
-        check_netlist(verilog_netlist);
+	/* point for all netlist optimizations. */
+	printf("Performing Optimizations of the Netlist\n");
+	if(hard_multipliers)
+	{
+		/* Perform a splitting of the multipliers for hard block mults */
+		reduce_operations(verilog_netlist, MULTIPLY);
+		iterate_multipliers(verilog_netlist);
+		clean_multipliers();
+	}
 
-        //START ################# NETLIST OPTIMIZATION ############################
+	if (sp_memory_list || dp_memory_list)
+	{
+		/* Perform a splitting of any hard block memories */
+		iterate_memories(verilog_netlist);
+		free_memory_lists();
+	}
 
-        /* point for all netlist optimizations. */
-        printf("Performing Optimizations of the Netlist\n");
-        if (hard_multipliers) {
-            /* Perform a splitting of the multipliers for hard block mults */
-            reduce_operations(verilog_netlist, MULTIPLY);
-            iterate_multipliers(verilog_netlist);
-            clean_multipliers();
-        }
+	if(hard_adders)
+	{
+		/* Perform a splitting of the adders for hard block add */
+		reduce_operations(verilog_netlist, ADD);
+		iterate_adders(verilog_netlist);
+		clean_adders();
 
-        if (single_port_rams || dual_port_rams) {
-            /* Perform a splitting of any hard block memories */
-            iterate_memories(verilog_netlist);
-            free_memory_lists();
-        }
+		/* Perform a splitting of the adders for hard block sub */
+		reduce_operations(verilog_netlist, MINUS);
+		iterate_adders_for_sub(verilog_netlist);
+		clean_adders_for_sub();
+	}
 
-        if (hard_adders) {
-            /* Perform a splitting of the adders for hard block add */
-            reduce_operations(verilog_netlist, ADD);
-            iterate_adders(verilog_netlist);
-            clean_adders();
+	//END ################# NETLIST OPTIMIZATION ############################
 
-            /* Perform a splitting of the adders for hard block sub */
-            reduce_operations(verilog_netlist, MINUS);
-            iterate_adders_for_sub(verilog_netlist);
-            clean_adders_for_sub();
-        }
+	if (configuration.output_netlist_graphs )
+		graphVizOutputNetlist(configuration.debug_output_path, "optimized", 1, verilog_netlist); /* Path is where we are */
 
-        //END ################# NETLIST OPTIMIZATION ############################
+	/* point where we convert netlist to FPGA or other hardware target compatible format */
+	printf("Performing Partial Map to target device\n");
+	partial_map_top(verilog_netlist);
 
-        if (configuration.output_netlist_graphs)
-            graphVizOutputNetlist(configuration.debug_output_path, "optimized", 1, verilog_netlist); /* Path is where we are */
+	/* Find any unused logic in the netlist and remove it */
+	remove_unused_logic(verilog_netlist);
 
-        /* point where we convert netlist to FPGA or other hardware target compatible format */
-        printf("Performing Partial Map to target device\n");
-        partial_map_top(verilog_netlist);
+	/**
+	 *	point for outputs.  This includes soft and hard mapping all structures to the
+		*	target format.  Some of these could be considred optimizations 
+		*/
+	printf("Outputting the netlist to the specified output format\n");
+	
+	output_blif(global_args.output_file.value().c_str(), verilog_netlist);
 
-        /* Find any unused logic in the netlist and remove it */
-        remove_unused_logic(verilog_netlist);
+	module_names_to_idx = sc_free_string_cache(module_names_to_idx);
+	
+	cleanup_parser();
 
-        /**
-         * point for outputs.  This includes soft and hard mapping all structures to the
-         * target format.  Some of these could be considred optimizations
-         */
-        printf("Outputting the netlist to the specified output format\n");
+	elaboration_time = wall_time() - elaboration_time;
 
-        output_blif(output_blif_file, verilog_netlist);
-        module_names_to_idx = sc_free_string_cache(module_names_to_idx);
+	printf("Successful High-level synthesis by Odin\n\tBlif file available at %s\n\tRan in ",global_args.output_file.value().c_str());
+	print_time(elaboration_time);
+	printf("\n");
+	printf("--------------------------------------------------------------------\n");
 
-        cleanup_parser();
+	report_mult_distribution();
+	report_add_distribution();
+	report_sub_distribution();
+	deregister_hard_blocks();
 
-        printf("Successful High-level synthesis by Odin\n\tBlif file available at %s\n", global_args.output_file.value().c_str());
-        report_mult_distribution();
-        report_add_distribution();
-        report_sub_distribution();
+	//cleanup netlist
+	free_netlist(verilog_netlist);
 
-        compute_statistics(verilog_netlist, true);
-
-        deregister_hard_blocks();
-
-        //cleanup netlist
-        free_netlist(verilog_netlist);
-    } else {
-        printf("Empty blif generated, Empty input or no module declared\n");
-    }
-    fclose(output_blif_file);
+	return SUCCESS;
+}
 
     elaboration_time = wall_time() - elaboration_time;
     printf("Elaboration Time: ");
