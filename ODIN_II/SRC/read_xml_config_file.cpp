@@ -169,106 +169,179 @@ void read_debug_switches(pugi::xml_node a_node, config_t* config, const pugiutil
 /*--------------------------------------------------------------------------
  * (function: set_default_optimization_settings)
  *------------------------------------------------------------------------*/
-void set_default_optimization_settings(config_t* config) {
-    config->min_hard_multiplier = 0;
-    config->fixed_hard_multiplier = 0;
-    config->mult_padding = -1; /* unconn */
-    config->split_hard_multiplier = 1;
-    config->split_memory_width = false;
-    config->split_memory_depth = false;
-    config->min_hard_adder = 0;
-    config->fixed_hard_adder = 0;
-    config->split_hard_adder = 1;
-    config->min_threshold_adder = 0;
-    return;
+void set_default_optimization_settings(config_t *config)
+{
+	config->min_hard_multiplier = 0;
+	config->fixed_hard_multiplier = 0;
+	config->mult_padding = -1; /* unconn */
+	config->split_hard_multiplier = 1;
+	config->split_memory_width = false;
+	config->split_memory_depth = false;
+	config->min_hard_adder = 0;
+	config->fixed_hard_adder = 0;
+	config->split_hard_adder = 1;
+	config->min_threshold_adder = 0;
+	config->mix_soft_and_hard_logic = 0;
+	return;
 }
 
 /*--------------------------------------------------------------------------
  * (function: read_optimizations)
  *------------------------------------------------------------------------*/
-void read_optimizations(pugi::xml_node a_node, config_t* config, const pugiutil::loc_data& loc_data) {
-    const char* prop;
-    pugi::xml_node child;
+void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil::loc_data& loc_data)
+{
+	const char *prop;
+	pugi::xml_node child;
 
-    child = get_single_child(a_node, "multiply", loc_data, OPTIONAL);
-    if (child != NULL) {
-        prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->min_hard_multiplier = atoi(prop);
-        } else /* Default: No minimum hard multiply size */
-            config->min_hard_multiplier = 0;
+	child = get_single_child(a_node, "multiply", loc_data, OPTIONAL);
+	if (child != NULL)
+	{
+		prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->min_hard_multiplier = atoi(prop);
+		}
+		else /* Default: No minimum hard multiply size */
+			config->min_hard_multiplier = 0;
 
-        prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->mult_padding = atoi(prop);
-        } else /* Default: Pad to hbpad pins */
-            config->mult_padding = -1;
+		prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->mult_padding = atoi(prop);
+		}
+		else /* Default: Pad to hbpad pins */
+			config->mult_padding = -1;
 
-        prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->fixed_hard_multiplier = atoi(prop);
-        } else /* Default: No fixed hard multiply size */
-            config->fixed_hard_multiplier = 0;
+		prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->fixed_hard_multiplier = atoi(prop);
+		}
+		else /* Default: No fixed hard multiply size */
+			config->fixed_hard_multiplier = 0;
 
-        prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->split_hard_multiplier = atoi(prop);
-        } else /* Default: use fractured hard multiply size */
-            config->split_hard_multiplier = 1;
+		prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->split_hard_multiplier = atoi(prop);
+		}
+		else /* Default: use fractured hard multiply size */
+			config->split_hard_multiplier = 1;
+	}
+
+	child = get_single_child(a_node, "memory", loc_data, OPTIONAL);
+	if (child != NULL)
+	{
+		prop = get_attribute(child, "split_memory_width", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->split_memory_width = atoi(prop);
+		}
+		else /* Default: Do not split memory width! */
+			config->split_memory_width = 0;
+
+		prop = get_attribute(child, "split_memory_depth", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			if (strcmp(prop, "min") == 0)
+				config->split_memory_depth = -1;
+			else if (strcmp(prop, "max") == 0)
+				config->split_memory_depth = -2;
+			else
+				config->split_memory_depth = atoi(prop);
+		}
+		else /* Default: Do not split memory depth! */
+			config->split_memory_depth = 0;
+
+	}
+
+	child = get_single_child(a_node, "adder", loc_data, OPTIONAL);
+	if (child != NULL)
+	{
+		prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->min_hard_adder = atoi(prop);
+		}
+		else /* Default: No minimum hard adder size */
+			config->min_hard_adder = 0;
+
+		prop = get_attribute(child, "threshold_size", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->min_threshold_adder = atoi(prop);
+		}
+		else /* Default: No minimum hard adder size */
+			config->min_threshold_adder = 0;
+
+		prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->add_padding = atoi(prop);
+		}
+		else /* Default: Pad to hbpad pins */
+			config->add_padding = -1;
+
+		prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->fixed_hard_adder = atoi(prop);
+		}
+		else /* Default: Fixed hard adder size */
+			config->fixed_hard_adder = 1;
+
+		prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL)
+		{
+			config->split_hard_adder = atoi(prop);
+		}
+		else /* Default: use fractured hard adder size */
+			config->split_hard_adder = 1;
     }
 
-    child = get_single_child(a_node, "memory", loc_data, OPTIONAL);
-    if (child != NULL) {
-        prop = get_attribute(child, "split_memory_width", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->split_memory_width = atoi(prop);
-        } else /* Default: Do not split memory width! */
-            config->split_memory_width = 0;
+	child = get_single_child(a_node, "mix_soft_hard_blocks", loc_data, OPTIONAL);
+	if (child != NULL)
+	{
+		// This is a temporary block that should be removed in future
+		// Mixing soft and hard blocks is likely to interfere with 
+		// other optimizations, so the can_try_to_optimize vent
+		// is introduced to avoid interactions that were not thought through
+		// or were not tested.
+		config->mix_soft_and_hard_logic = 0;
+		bool can_try_to_optimize = true;
+		if (config->min_hard_multiplier != 0)
+			can_try_to_optimize = false;
+		if (config->fixed_hard_multiplier != 0)
+			can_try_to_optimize = false;
+		if (config->mult_padding != -1) 
+			can_try_to_optimize = false;
+		if (config->split_hard_multiplier != 1)
+			can_try_to_optimize = false;
+		if (config->split_memory_width != false)
+			can_try_to_optimize = false;
+		if (config->split_memory_depth != false)
+			can_try_to_optimize = false;
+		if (config->min_hard_adder != 0)
+			can_try_to_optimize = false;
+		if (config->fixed_hard_adder != 0)
+			can_try_to_optimize = false;
+		if (config->split_hard_adder != 1)
+			can_try_to_optimize = false;
+		if (config->min_threshold_adder != 0)
+			can_try_to_optimize = false;
+		if (config->mix_soft_and_hard_logic != 0)
+			can_try_to_optimize = false;
 
-        prop = get_attribute(child, "split_memory_depth", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            if (strcmp(prop, "min") == 0)
-                config->split_memory_depth = -1;
-            else if (strcmp(prop, "max") == 0)
-                config->split_memory_depth = -2;
-            else
-                config->split_memory_depth = atoi(prop);
-        } else /* Default: Do not split memory depth! */
-            config->split_memory_depth = 0;
-    }
-
-    child = get_single_child(a_node, "adder", loc_data, OPTIONAL);
-    if (child != NULL) {
-        prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->min_hard_adder = atoi(prop);
-        } else /* Default: No minimum hard adder size */
-            config->min_hard_adder = 0;
-
-        prop = get_attribute(child, "threshold_size", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->min_threshold_adder = atoi(prop);
-        } else /* Default: No minimum hard adder size */
-            config->min_threshold_adder = 0;
-
-        prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->add_padding = atoi(prop);
-        } else /* Default: Pad to hbpad pins */
-            config->add_padding = -1;
-
-        prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->fixed_hard_adder = atoi(prop);
-        } else /* Default: Fixed hard adder size */
-            config->fixed_hard_adder = 1;
-
-        prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
-        if (prop != NULL) {
-            config->split_hard_adder = atoi(prop);
-        } else /* Default: use fractured hard adder size */
-            config->split_hard_adder = 1;
-    }
-
-    return;
+		// After we checked for unexpected interactions,
+		// it is time to populate the bitmask, as described in
+		// config_t.h file. When introducing new hard block type
+		// to perform mixed hard/soft logic design, please modify
+		// the description in config_t.h file.
+		prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL && true == can_try_to_optimize)
+		{
+			config->mix_soft_and_hard_logic += 1;
+		}
+	}
+	return;
 }

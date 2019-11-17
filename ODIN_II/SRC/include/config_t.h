@@ -41,10 +41,17 @@ struct config_t {
     // defines if the first cin of an adder/subtractor is connected to a global gnd/vdd
     // or generated using a dummy adder with both inputs set to gnd/vdd
     bool adder_cin_global;
-
-    // If the memory is smaller than both of these, it will be converted to soft logic.
-    int soft_logic_memory_depth_threshold;
-    int soft_logic_memory_width_threshold;
+	// Should be set to allow for mixing soft and hard logic, default is 0
+	// Solves problem described in Issue#
+	// The bits correspond to (right to left):
+	// 1 : multipliers
+	// 2 : adders 
+	// ...
+	// Added by gkr
+	int mix_soft_and_hard_logic;
+	// If the memory is smaller than both of these, it will be converted to soft logic.
+	int soft_logic_memory_depth_threshold;
+	int soft_logic_memory_width_threshold;
 
     std::string arch_file; // Name of the FPGA architecture file
 };
