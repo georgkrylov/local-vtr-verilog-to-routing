@@ -61,7 +61,7 @@
 #include "vtr_util.h"
 #include "vtr_path.h"
 #include "vtr_memory.h"
-#include "Hard_Soft_Logic_Mixer.hpp"
+#include "HardSoftLogicMixer.hpp"
 
 #define DEFAULT_OUTPUT "."
 
@@ -92,7 +92,7 @@ static ODIN_ERROR_CODE synthesize_verilog()
 	printf("--------------------------------------------------------------------\n");
 	printf("High-level synthesis Begin\n");
 	HardSoftLogicMixer mixer=HardSoftLogicMixer(Arch,configuration.mix_soft_and_hard_logic);
-	mixer.estimate_possible_device_size();
+	// mixer.estimate_possible_device_size();
 	/* Perform any initialization routines here */
 	find_hard_multipliers();
 	find_hard_adders();
