@@ -21,30 +21,14 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "Hard_Soft_Logic_Mixer.hpp"
+#include "OdinGridAnalyzer.hpp"
+#include <utility>      // std::pair, std::make_pair
+#include <vector>
 #include <iostream>
 
-HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& Arch,int config):_arch(Arch){
-	_mixMultipliers = false;
-	_mixAdders = false;
-	_shouldNotOptimizeAtAll = true;
-	parseAndSetOptimizationParameters(config);
-}
+OdinGridAnalyzer::OdinGridAnalyzer(const t_arch& Arch):_arch(Arch){}
 
-void HardSoftLogicMixer::parseAndSetOptimizationParameters(int config){
-	if (config != 0)
-		_shouldNotOptimizeAtAll = false;
-	if ((config & 1) == 1){
-		_mixMultipliers = true;
-	}
-	if (((config>> 1) & 1) == 1){
-		_mixAdders = true;
-	}
-}
-
-void HardSoftLogicMixer::estimate_possible_device_size(){
-	if (_shouldNotOptimizeAtAll)
-		return;
+void OdinGridAnalyzer::estimate_possible_device_size(std::map<std::string,std::pair<int,int>> gridLayoutSizes){
 	bool multipleArchitectureFiles = _arch.grid_layouts.size() > 1 ? true : false;
 	// At the development stage, the estimate works only for one device, otherwise it
 	// should not be turned on, because it was not tested thoroughly
@@ -60,13 +44,12 @@ void HardSoftLogicMixer::estimate_possible_device_size(){
 		int height;
 		width = _arch.grid_layouts[0].width;
 		height = _arch.grid_layouts[0].height;
-		_grid_layout_sizes.emplace_back(width,height);
+        std::string layout_name =_arch.grid_layouts[0].name;
+		gridLayoutSizes[layout_name]= std::make_pair(width,height);
 	}
-	
 	else
 	{
 		std::cerr<<"Odin won't continue execution since requested optimization parameters are not implemented: auto_layout and mixing soft and hard logic\n";
 		exit(6);
 	}		
 	
-}
