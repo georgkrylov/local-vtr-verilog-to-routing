@@ -26,30 +26,23 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <vector>
 #include <iostream>
 
-OdinGridAnalyzer::OdinGridAnalyzer(const t_arch& Arch):_arch(Arch){}
 
-void OdinGridAnalyzer::estimate_possible_device_size(std::map<std::string,std::pair<int,int>> gridLayoutSizes){
-	bool multipleArchitectureFiles = _arch.grid_layouts.size() > 1 ? true : false;
-	// At the development stage, the estimate works only for one device, otherwise it
-	// should not be turned on, because it was not tested thoroughly
-	if (multipleArchitectureFiles)
-		{
-		std::cerr<<"Odin won't continue execution since requested optimization parameters are not implemented: multiple architecture files and mixing soft and hard logic";
-		std::cerr<<_arch.grid_layouts.size();
-		exit(6);
-		}
-	if (_arch.grid_layouts[0].grid_type == FIXED)
+std::pair<int,int> 
+OdinGridAnalyzer::estimatePossibleDeviceSize(const t_grid_def& layout){
+	std::pair<int,int> result;
+	if (layout.grid_type == FIXED)
 	{	
 		int width;
 		int height;
-		width = _arch.grid_layouts[0].width;
-		height = _arch.grid_layouts[0].height;
-        std::string layout_name =_arch.grid_layouts[0].name;
-		gridLayoutSizes[layout_name]= std::make_pair(width,height);
+		width = layout.width;
+		height = layout.height;
+		result = std::make_pair(width,height);
 	}
 	else
 	{
 		std::cerr<<"Odin won't continue execution since requested optimization parameters are not implemented: auto_layout and mixing soft and hard logic\n";
 		exit(6);
-	}		
+	}	
+	return result;
+}	
 	

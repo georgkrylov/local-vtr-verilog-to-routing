@@ -27,21 +27,22 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "physical_types.h"
 #include <utility>      // std::pair, std::make_pair
 #include <map>
-
-class OdinGridAnalyzer;
+#include "OdinGridAnalyzer.hpp"
 
 class HardSoftLogicMixer{
 public:
     HardSoftLogicMixer(const t_arch& arch,int);
-    ~HardSoftLogicMixer();
-
-    void calculateGridSizes();
+    /*----------------------------------------------------------------------
+    * Function: calculateGridSizes 
+    *   For all the layouts represented in the architecture file, populates
+    *   the _grid_layout_sizes map with corresponding estimated sizes
+    *---------------------------------------------------------------------*/
+    void calculateAllGridSizes();
 
 
     /* Returns whether the hard blocks and soft logic implementation 
      * of adders should be mixed in the process of synthesis
      */
-
     bool mixAdders(){ return _mixAdders;}
 
     /* Returns whether the hard blocks and soft logic implementation 
@@ -56,9 +57,10 @@ private:
     void parseAndSetOptimizationParameters(int);
 
     /* This map holds estimated device sizes that would
-     * correspond to the architecture, keyed by layout name
+     * correspond to the architecture, keyed by the pointers to 
+     * layout  description
      */
-    std::map<std::string,std::pair<int,int>> _grid_layout_sizes; 
+    std::map<int,std::pair<int,int>> _grid_layout_sizes; 
 
     // These booleans store devices selected for optimization
     bool _mixMultipliers;
@@ -66,7 +68,8 @@ private:
   	/* If  mixing soft and hard_logic is set, the possible size of the device 
 	 * should be estimated 
 	 */  
-    OdinGridAnalyzer* _analyzer;
+    OdinGridAnalyzer _analyzer;
+    const t_arch& _arch;
     bool _shouldNotOptimizeAtAll;
 };
 
