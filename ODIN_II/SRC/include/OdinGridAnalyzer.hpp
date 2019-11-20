@@ -24,17 +24,21 @@ OTHER DEALINGS IN THE SOFTWARE.
 #define ODIN_GRID_ANALYZER_HPP
 
 #include "physical_types.h"
-#include <map>
+#include <utility>
 
 class OdinGridAnalyzer{
     public:
-        OdinGridAnalyzer(const t_arch& arch);
-        /*---------------------------------------------------------------------------------------------
-        * Estimate possible size of the device: for the fixed layout, it is known,
-        * for the dynamic layout, some assumptions are required 
-        *-------------------------------------------------------------------------*/
-        void estimate_possible_device_size(std::map<std::string,std::pair<int,int>> gridLayoutSizes);
+        /*----------------------------------------------------------------------
+        * Function: estimatePossibleDeviceSize 
+        *   Estimates possible size of the device: for a fixed layout, it is 
+        *   known, for a dynamic layout, some assumptions are required 
+        * Parameters: 
+        *   layout: t_grid_def : layout to explore
+        * returns:
+        *   Pair of integers, that correspond to estimated width and height of 
+        *   the device
+        *---------------------------------------------------------------------*/
+        std::pair<int,int> estimatePossibleDeviceSize(const t_grid_def&);
     private:
-        const t_arch& _arch;
 };
 #endif

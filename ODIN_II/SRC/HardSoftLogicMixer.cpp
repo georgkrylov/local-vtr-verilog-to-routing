@@ -22,13 +22,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 #include "HardSoftLogicMixer.hpp"
 #include <iostream>
+#include <vector>
 #include "OdinGridAnalyzer.hpp"
 
-HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,int config){
+HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,int config):_analyzer(),_arch(arch){
 	_mixMultipliers = false;
 	_mixAdders = false;
 	_shouldNotOptimizeAtAll = true;
-	_analyzer = new OdinGridAnalyzer(arch);
 	parseAndSetOptimizationParameters(config);
 }
 
@@ -42,6 +42,20 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(int config){
 		_mixAdders = true;
 	}
 }
-HardSoftLogicMixer::~HardSoftLogicMixer(){
-	delete _analyzer;
+
+void HardSoftLogicMixer::calculateAllGridSizes(){
+	if (_shouldNotOptimizeAtAll)
+	{
+		std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
+					"since it should not optimize at all";
+		exit(6);
+	}		
+	for (int i = 0 ; i < _arch.grid_layouts.size();i++)
+	{
+		const t_grid_def& ref =   _arch.grid_layouts[i];
+		std::pair<int,int> widthAndHeight = _analyzer.estimatePossibleDeviceSize(ref);
+		_grid_layout_sizes.emplace(i,widthAndHeight);
+		
+	}
+	
 }
