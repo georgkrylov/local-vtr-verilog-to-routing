@@ -72,6 +72,7 @@ std::vector<t_physical_tile_type> physical_tile_types;
 std::vector<t_logical_block_type> logical_block_types;
 int block_tag = -1;
 ids default_net_type = WIRE;
+HardSoftLogicMixer* mixer;
 
 enum ODIN_ERROR_CODE
 {
@@ -91,7 +92,7 @@ static ODIN_ERROR_CODE synthesize_verilog()
 
 	printf("--------------------------------------------------------------------\n");
 	printf("High-level synthesis Begin\n");
-	HardSoftLogicMixer mixer=HardSoftLogicMixer(Arch,configuration.mix_soft_and_hard_logic);
+	mixer= new HardSoftLogicMixer(Arch,configuration.mix_soft_and_hard_logic);
 	// mixer.estimate_possible_device_size();
 	/* Perform any initialization routines here */
 	find_hard_multipliers();
