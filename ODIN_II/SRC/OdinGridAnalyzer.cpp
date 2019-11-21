@@ -45,4 +45,11 @@ OdinGridAnalyzer::estimatePossibleDeviceSize(const t_grid_def& layout){
 	}	
 	return result;
 }	
+
+int 
+OdinGridAnalyzer::countHardBlocks(const t_grid_def&,int hardBlockType,std::pair<int,int>){
+	std::cout<< "Hard blocks counting is in development stage, using a hard-coded"
+			<<"value of 1" << std::endl;
+	return 1;
+}	
 	

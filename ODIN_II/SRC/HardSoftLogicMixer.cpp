@@ -44,7 +44,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(int config){
 }
 
 void HardSoftLogicMixer::calculateAllGridSizes(){
-	if (_shouldNotOptimizeAtAll)
+	if (true ==_shouldNotOptimizeAtAll)
 	{
 		std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
 					"since it should not optimize at all";
@@ -58,4 +58,10 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 		
 	}
 	
+}
+void HardSoftLogicMixer::takeNoteOfAMultiply(const nnode_t * multNode){
+	_multiplierNodes.emplace_back(multNode);
+}
+void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(){
+
 }
