@@ -25,8 +25,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 #define HARD_SOFT_LOGIC_MIXER_HPP
 
 #include "physical_types.h"
+#include "odin_types.h"
 #include <utility>      // std::pair, std::make_pair
 #include <map>
+#include <vector>
 #include "OdinGridAnalyzer.hpp"
 
 class HardSoftLogicMixer{
@@ -43,13 +45,31 @@ public:
     /* Returns whether the hard blocks and soft logic implementation 
      * of adders should be mixed in the process of synthesis
      */
-    bool mixAdders(){ return _mixAdders;}
+    bool mixAdders(){ return !_shouldNotOptimizeAtAll && _mixAdders;}
 
     /* Returns whether the hard blocks and soft logic implementation 
      * of multipliers should be mixed in the process of synthesis
      */
-    bool mixMultipliers(){ return _mixMultipliers;}
-    
+    bool mixMultipliers(){ return !_shouldNotOptimizeAtAll && _mixMultipliers;}
+    /*----------------------------------------------------------------------
+     * Function: selectLogicToImplementInHardBlocks 
+     * Calculates number of available hard blocks by issuing a call,
+     * traverses the netlist and statistics to figure out
+     * which operation should be implemented on the hard block
+     * Parameters: 
+     * returns:
+     *---------------------------------------------------------------------*/
+    void selectLogicToImplementInHardBlocks();
+
+    /*----------------------------------------------------------------------
+     * Function: selectLogicToImplementInHardBlocks 
+     * Calculates number of available hard blocks by issuing a call,
+     * traverses the netlist and statistics to figure out
+     * which operation should be implemented on the hard block
+     * Parameters: 
+     * returns:
+     *---------------------------------------------------------------------*/
+    void takeNoteOfAMultiply(const nnode_t * node);
 private:
     /* This function parses the configuration bitmask and sets
      * the corresponding variables.
@@ -62,6 +82,8 @@ private:
      */
     std::map<int,std::pair<int,int>> _grid_layout_sizes; 
 
+    std::vector<const nnode_t*> _multiplierNodes; 
+
     // These booleans store devices selected for optimization
     bool _mixMultipliers;
     bool _mixAdders;
@@ -72,7 +94,5 @@ private:
     const t_arch& _arch;
     bool _shouldNotOptimizeAtAll;
 };
-
-
 
 #endif

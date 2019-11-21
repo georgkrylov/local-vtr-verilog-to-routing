@@ -33,12 +33,27 @@ class OdinGridAnalyzer{
         *   Estimates possible size of the device: for a fixed layout, it is 
         *   known, for a dynamic layout, some assumptions are required 
         * Parameters: 
-        *   layout: t_grid_def : layout to explore
+        *   layout: const t_grid_def : layout to explore
         * returns:
         *   Pair of integers, that correspond to estimated width and height of 
         *   the device
         *---------------------------------------------------------------------*/
         std::pair<int,int> estimatePossibleDeviceSize(const t_grid_def&);
+
+        /*----------------------------------------------------------------------
+        * Function: countHardBlocks 
+        *   Estimates number of hard blocks of a certain type available on the 
+        * device, given the device architecture and size
+        * Parameters: 
+        *   layout       : const t_grid_def   : layout to explore
+        *   hardBlockType: int : type of the block. 1 corresponds to multiplier
+        *   deviceWidth  : std::pair<int,int> : estimated device size
+        * returns:
+        *   An integer, that will constrain the number of hard blocks of a
+        * specified type
+        *---------------------------------------------------------------------*/
+        int 
+        countHardBlocks(const t_grid_def&,int hardBlockType,std::pair<int,int>);
     private:
 };
 #endif
