@@ -59,9 +59,12 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 	}
 	
 }
-void HardSoftLogicMixer::takeNoteOfAMultiply(const nnode_t * multNode){
+void HardSoftLogicMixer::takeNoteOfAMultiply( nnode_t * multNode){
 	_multiplierNodes.emplace_back(multNode);
 }
-void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(){
-
+void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
+	if (mixMultipliers()){
+		instantiate_simple_soft_multiplier( _multiplierNodes[0], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+		instantiate_simple_soft_multiplier( _multiplierNodes[1], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+	}
 }
