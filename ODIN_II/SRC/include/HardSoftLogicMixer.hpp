@@ -30,6 +30,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <map>
 #include <vector>
 #include "OdinGridAnalyzer.hpp"
+#include "multipliers.h"
 
 class HardSoftLogicMixer{
 public:
@@ -59,7 +60,7 @@ public:
      * Parameters: 
      * returns:
      *---------------------------------------------------------------------*/
-    void selectLogicToImplementInHardBlocks();
+    void selectLogicToImplementInHardBlocks(netlist_t *netlist);
 
     /*----------------------------------------------------------------------
      * Function: selectLogicToImplementInHardBlocks 
@@ -69,7 +70,7 @@ public:
      * Parameters: 
      * returns:
      *---------------------------------------------------------------------*/
-    void takeNoteOfAMultiply(const nnode_t * node);
+    void takeNoteOfAMultiply( nnode_t * node);
 private:
     /* This function parses the configuration bitmask and sets
      * the corresponding variables.
@@ -82,7 +83,7 @@ private:
      */
     std::map<int,std::pair<int,int>> _grid_layout_sizes; 
 
-    std::vector<const nnode_t*> _multiplierNodes; 
+    std::vector<nnode_t*> _multiplierNodes; 
 
     // These booleans store devices selected for optimization
     bool _mixMultipliers;
