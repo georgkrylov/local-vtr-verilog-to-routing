@@ -165,7 +165,7 @@ static ODIN_ERROR_CODE synthesize_verilog()
 	/* point where we convert netlist to FPGA or other hardware target compatible format */
 	printf("Performing Partial Map to target device\n");
 	partial_map_top(verilog_netlist);
-
+	mixer->selectLogicToImplementInHardBlocks(verilog_netlist);
 	/* Find any unused logic in the netlist and remove it */
 	remove_unused_logic(verilog_netlist);
 
