@@ -222,7 +222,7 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
 		case MULTIPLY:
         {
 			if (true == mixer->mixMultipliers()){
-				mixer->takeNoteOfAMultiply(node);
+				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
 			} else
 			{
 				int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);

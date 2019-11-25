@@ -42,12 +42,10 @@ struct config_t {
     // or generated using a dummy adder with both inputs set to gnd/vdd
     bool adder_cin_global;
 	// Should be set to allow for mixing soft and hard logic, default integer value
-	// is 1 (NoOPT)
+	// is 0 (No optimization is required)
 	// Solves problem described in Issue#
 	// The bits correspond to (right to left):
-	// 0 : NO_OPT
 	// 1 : multipliers
-	// 2 : adders 
 	// ...
 	// Added by gkr
 	int mix_soft_and_hard_logic;
