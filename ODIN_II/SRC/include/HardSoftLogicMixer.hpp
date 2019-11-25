@@ -31,6 +31,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <vector>
 #include "OdinGridAnalyzer.hpp"
 #include "multipliers.h"
+#include "netlist_analyzer.h"
 
 class HardSoftLogicMixer{
 public:
@@ -82,7 +83,7 @@ private:
     // This array is composed of vectors, that store nodes that
     // are potential candidates for performing mixing optimization
     std::vector<nnode_t*>potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::Count];
-
+    int _hardBlocksCount [HardBlocksOptimizationTypesEnum::Count];
     // These booleans store devices selected for optimization
     bool _allOptsDisabled ;
     bool _enabledOptimizations[HardBlocksOptimizationTypesEnum::Count];

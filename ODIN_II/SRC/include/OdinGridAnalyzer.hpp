@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #define ODIN_GRID_ANALYZER_HPP
 
 #include "physical_types.h"
+#include "odin_types.h"
 #include <utility>
 
 class OdinGridAnalyzer{

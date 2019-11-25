@@ -64,9 +64,14 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 		const t_grid_def& ref =   _arch.grid_layouts[i];
 		std::pair<int,int> widthAndHeight = _analyzer.estimatePossibleDeviceSize(ref);
 		_grid_layout_sizes.emplace(i,widthAndHeight);
-		
+		for (int j = 0 ; j < HardBlocksOptimizationTypesEnum::Count; j++)
+		{
+			if (true == _enabledOptimizations[j])
+			{
+				_hardBlocksCount[j]=_analyzer.countHardBlocks(ref,j,widthAndHeight);
+			} 
+		}
 	}
-	
 }
 void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * multNode, HardBlocksOptimizationTypesEnum type){
 	potentialHardBlockNodes[type].emplace_back(multNode);
@@ -81,7 +86,7 @@ void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
 				}
 				break;
 			default:
-				std::cerr<<"Optimization with number:"<<i<<" does not have an"<<
+				std::cerr<<"Optimization with number: "<<i<<" does not have an "<<
 				"implementation inside of HardSoftLogicMixer::selectLogicToIm"<<
 				"plementInHardBlocks"<<std::endl;
 		}
@@ -90,11 +95,32 @@ void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
 
 void 
 HardSoftLogicMixer::selectMultipliersToImplementInHardBlocks(netlist_t* netlist){
+	calculateAllGridSizes();
 	std::vector<nnode_t*> nodesVector = potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
-	for (int i = 0 ; i<nodesVector.size();i++){
-		instantiate_hard_multiplier(nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
-		// instantiate_simple_soft_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
-		instantiate_hard_multiplier(nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
-
+	int nodesCount = nodesVector.size();
+	int* costs = new int[nodesCount];
+	for (int i = 0 ; i < nodesCount;i++){
+		costs[i] =calculate_multiplier_aware_critical_path(nodesVector[i],netlist);
 	}
+	int numberOfMultipliers = _hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
+	// std::cout<<"Number of multipliers is: "<<numberOfMultipliers<<std::endl;
+	for (int i = 0 ; i < numberOfMultipliers; i++){
+		int maximalCost = costs[0];
+		int indexOfMaximum = 0;
+		for (int j = 0 ; j < nodesCount; j++ ){
+			if (maximalCost<costs[j]){
+				maximalCost = costs[j];
+				indexOfMaximum = j;
+			}
+		}
+		costs[indexOfMaximum] = -1;
+		instantiate_hard_multiplier(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+	}
+
+	for (int i = 0 ; i < nodesCount; i++){
+		if (costs[i]!= -1){
+			instantiate_simple_soft_multiplier(nodesVector[i],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+		}
+	}
+	delete [] costs;
 }
