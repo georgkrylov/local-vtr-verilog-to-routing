@@ -532,6 +532,11 @@ struct nnet_t
 	signed char initial_value; // initial net value
 	//////////////////////
 };
+// Enumerator showing on which kinds of hard blocks
+// mixing of soft and hard logic implementation should
+// be performed. The NO_OPT and Count should be the
+// first and the last element
+enum HardBlocksOptimizationTypesEnum { NO_OPT, MULTIPLIERS, Count};
 
 struct signal_list_t
 {
