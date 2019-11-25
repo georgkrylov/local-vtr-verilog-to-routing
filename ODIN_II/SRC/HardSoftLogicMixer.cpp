@@ -26,25 +26,31 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "OdinGridAnalyzer.hpp"
 
 HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,int config):_analyzer(),_arch(arch){
-	_mixMultipliers = false;
-	_mixAdders = false;
-	_shouldNotOptimizeAtAll = true;
+	_allOptsDisabled = true;
+	// By default, disables all optimizations, starts from 1
+	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
+		_enabledOptimizations[i] = false;
+	}
+
 	parseAndSetOptimizationParameters(config);
 }
 
 void HardSoftLogicMixer::parseAndSetOptimizationParameters(int config){
-	if (config != 0)
-		_shouldNotOptimizeAtAll = false;
-	if ((config & 1) == 1){
-		_mixMultipliers = true;
-	}
-	if (((config>> 1) & 1) == 1){
-		_mixAdders = true;
+	if (config!=0){
+	int checkValue = -1;
+		for (int i = HardBlocksOptimizationTypesEnum::Count-1; i>0; i--){
+			checkValue = config - i;
+			if (checkValue >= 0){
+				_enabledOptimizations[i] = true;
+				config = config - i;
+			}
+		}
+		_allOptsDisabled = false;
 	}
 }
 
 void HardSoftLogicMixer::calculateAllGridSizes(){
-	if (true ==_shouldNotOptimizeAtAll)
+	if (true ==_allOptsDisabled)
 	{
 		std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
 					"since it should not optimize at all";
@@ -59,11 +65,13 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 	}
 	
 }
-void HardSoftLogicMixer::takeNoteOfAMultiply( nnode_t * multNode){
-	_multiplierNodes.emplace_back(multNode);
+void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * multNode, HardBlocksOptimizationTypesEnum type){
+	potentialHardBlockNodes[type].emplace_back(multNode);
 }
 void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
-	if (mixMultipliers()){
+	for (int i = 1; i < )
+	if (_enabledOptimizations[]){
+		std::vectorvectorOf
 		instantiate_simple_soft_multiplier( _multiplierNodes[0], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
 		instantiate_simple_soft_multiplier( _multiplierNodes[1], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
 	}
