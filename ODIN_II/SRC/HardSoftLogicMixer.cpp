@@ -23,11 +23,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "HardSoftLogicMixer.hpp"
 #include <iostream>
 #include <vector>
+#include <cstdint>
+#include <cstring>
 #include "OdinGridAnalyzer.hpp"
 
 HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,int config):_analyzer(),_arch(arch){
 	_allOptsDisabled = true;
-	// By default, disables all optimizations, starts from 1
+	// By default, disables all optimizations
 	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
 		_enabledOptimizations[i] = false;
 	}
@@ -37,12 +39,13 @@ HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,int config):_analyzer(
 
 void HardSoftLogicMixer::parseAndSetOptimizationParameters(int config){
 	if (config!=0){
-	int checkValue = -1;
-		for (int i = HardBlocksOptimizationTypesEnum::Count-1; i>0; i--){
-			checkValue = config - i;
-			if (checkValue >= 0){
+		int checkValue = -1;
+		int temp;
+		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
+			temp = 1 << (i);
+			checkValue = temp && config;
+			if (checkValue != 0){
 				_enabledOptimizations[i] = true;
-				config = config - i;
 			}
 		}
 		_allOptsDisabled = false;
@@ -69,10 +72,29 @@ void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * multNode, 
 	potentialHardBlockNodes[type].emplace_back(multNode);
 }
 void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
-	for (int i = 1; i < )
-	if (_enabledOptimizations[]){
-		std::vectorvectorOf
-		instantiate_simple_soft_multiplier( _multiplierNodes[0], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
-		instantiate_simple_soft_multiplier( _multiplierNodes[1], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count;i++ ){
+		switch (i){
+			case HardBlocksOptimizationTypesEnum::MULTIPLIERS: 
+				if (_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS])
+				{
+					selectMultipliersToImplementInHardBlocks(netlist);
+				}
+				break;
+			default:
+				std::cerr<<"Optimization with number:"<<i<<" does not have an"<<
+				"implementation inside of HardSoftLogicMixer::selectLogicToIm"<<
+				"plementInHardBlocks"<<std::endl;
+		}
+	}
+}
+
+void 
+HardSoftLogicMixer::selectMultipliersToImplementInHardBlocks(netlist_t* netlist){
+	std::vector<nnode_t*> nodesVector = potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
+	for (int i = 0 ; i<nodesVector.size();i++){
+		instantiate_hard_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+		// instantiate_simple_soft_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+		instantiate_hard_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+
 	}
 }

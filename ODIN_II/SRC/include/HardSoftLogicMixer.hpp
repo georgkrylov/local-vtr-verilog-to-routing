@@ -48,9 +48,8 @@ public:
     bool mixMultipliers(){ return _enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS] ;}
     /*----------------------------------------------------------------------
      * Function: selectLogicToImplementInHardBlocks 
-     * Calculates number of available hard blocks by issuing a call,
-     * traverses the netlist and statistics to figure out
-     * which operation should be implemented on the hard block
+     *  For all the notes, that noted to be candidates to be implemented in the 
+     * hard blocks, launches corresponding logic
      * Parameters: 
      * returns:
      *---------------------------------------------------------------------*/
@@ -73,6 +72,7 @@ private:
      */
     void parseAndSetOptimizationParameters(int);
 
+    void selectMultipliersToImplementInHardBlocks(netlist_t *netlist);
     /* This map holds estimated device sizes that would
      * correspond to the architecture, keyed by the pointers to 
      * layout  description

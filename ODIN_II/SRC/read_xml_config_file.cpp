@@ -322,7 +322,7 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		// other optimizations, so the can_try_to_optimize vent
 		// is introduced to avoid interactions that were not thought through
 		// or were not tested.
-		config->mix_soft_and_hard_logic = HardBlocksOptimizationTypesEnum::NO_OPT;
+		config->mix_soft_and_hard_logic = 0;
 		bool can_try_to_optimize = true;
 		if (config->min_hard_multiplier != 0)
 			can_try_to_optimize = false;
@@ -351,14 +351,16 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		// it is time to populate the bitmask, as described in
 		// config_t.h file. When introducing new hard block type
 		// to perform mixed hard/soft logic design, please modify
-		// the description in config_t.h file.
+		// the description in config_t.h file, as well as the enum
+		// in the odin_types.h
 		prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
 		if (prop != NULL && true == can_try_to_optimize)
 		{
-			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic || ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS);
+			int bitValue = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic | bitValue ;
 		}
 	} else {
-		config->mix_soft_and_hard_logic = HardBlocksOptimizationTypesEnum::NO_OPT;
+		config->mix_soft_and_hard_logic =0;
 	}
 	return;
 }
