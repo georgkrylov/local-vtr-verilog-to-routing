@@ -42,16 +42,10 @@ public:
     *---------------------------------------------------------------------*/
     void calculateAllGridSizes();
 
-
-    /* Returns whether the hard blocks and soft logic implementation 
-     * of adders should be mixed in the process of synthesis
-     */
-    bool mixAdders(){ return !_shouldNotOptimizeAtAll && _mixAdders;}
-
     /* Returns whether the hard blocks and soft logic implementation 
      * of multipliers should be mixed in the process of synthesis
      */
-    bool mixMultipliers(){ return !_shouldNotOptimizeAtAll && _mixMultipliers;}
+    bool mixMultipliers(){ return _enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS] ;}
     /*----------------------------------------------------------------------
      * Function: selectLogicToImplementInHardBlocks 
      * Calculates number of available hard blocks by issuing a call,
@@ -68,12 +62,14 @@ public:
      * traverses the netlist and statistics to figure out
      * which operation should be implemented on the hard block
      * Parameters: 
+     *      node_t * : pointer to candidate node
+     *      HardBlocksOptimizationTypesEnum : type of the hard block to optimize
      * returns:
      *---------------------------------------------------------------------*/
-    void takeNoteOfAMultiply( nnode_t * node);
+    void takeNoteOfAPotentialHardBlockNode( nnode_t * node, HardBlocksOptimizationTypesEnum type);
 private:
     /* This function parses the configuration bitmask and sets
-     * the corresponding variables.
+     * the corresponding boolean variables in the _enabledOptimizationsArray.
      */
     void parseAndSetOptimizationParameters(int);
 
@@ -83,17 +79,18 @@ private:
      */
     std::map<int,std::pair<int,int>> _grid_layout_sizes; 
 
-    std::vector<nnode_t*> _multiplierNodes; 
+    // This array is composed of vectors, that store nodes that
+    // are potential candidates for performing mixing optimization
+    std::vector<nnode_t*>potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::Count];
 
     // These booleans store devices selected for optimization
-    bool _mixMultipliers;
-    bool _mixAdders;
+    bool _allOptsDisabled ;
+    bool _enabledOptimizations[HardBlocksOptimizationTypesEnum::Count];
   	/* If  mixing soft and hard_logic is set, the possible size of the device 
 	 * should be estimated 
 	 */  
     OdinGridAnalyzer _analyzer;
     const t_arch& _arch;
-    bool _shouldNotOptimizeAtAll;
 };
 
 #endif

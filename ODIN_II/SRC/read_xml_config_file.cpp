@@ -322,7 +322,7 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		// other optimizations, so the can_try_to_optimize vent
 		// is introduced to avoid interactions that were not thought through
 		// or were not tested.
-		config->mix_soft_and_hard_logic = 0;
+		config->mix_soft_and_hard_logic = HardBlocksOptimizationTypesEnum::NO_OPT;
 		bool can_try_to_optimize = true;
 		if (config->min_hard_multiplier != 0)
 			can_try_to_optimize = false;
@@ -355,8 +355,10 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
 		if (prop != NULL && true == can_try_to_optimize)
 		{
-			config->mix_soft_and_hard_logic += 1;
+			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic || ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS);
 		}
+	} else {
+		config->mix_soft_and_hard_logic = HardBlocksOptimizationTypesEnum::NO_OPT;
 	}
 	return;
 }
