@@ -30,7 +30,7 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
 
 		/* mark that we have visitied this node now */
 		node->traverse_visited = MULT_OPTIMIZATION_TRAVERSE_VALUE;
-        int multiplyMultiplier = 5;
+        int result = 1;
 		for (i = 0; i < node->num_output_pins; i++)
 		{
 			if (node->output_pins[i]->net)
@@ -45,13 +45,20 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
 							if (next_net->fanout_pins[j]->node)
 							{
 							/* recursive call point */
-								calculate_multiplier_aware_critical_path(next_net->fanout_pins[j]->node, netlist);
+								int ans = calculate_multiplier_aware_critical_path(next_net->fanout_pins[j]->node, netlist);
+								if (result<ans)
+								{
+									result = ans;
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+		if (node->type==MULTIPLY)
+			result = result * 5;
         node->traverse_visited = PARTIAL_MAP_TRAVERSE_VALUE;
+		return result;
 	}
 }
