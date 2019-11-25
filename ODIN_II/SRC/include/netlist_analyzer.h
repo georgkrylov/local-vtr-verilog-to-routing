@@ -27,6 +27,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <time.h>       /* time */
 #include "odin_types.h"
 
+#define MULT_OPTIMIZATION_TRAVERSE_VALUE 1337
+#define MULT_OPTIMIZATION_WEIGHT_
 // Returns a random number
-int calculate_critical_path(netlist_t* netlist);
+int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist);
 #endif

@@ -23,7 +23,35 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include "netlist_analyzer.h"
 
-int calculate_critical_path(netlist_t* netlist){
-     srand (time(NULL));
-     int result = rand() % 1000 + 50;
+int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
+    int i,j;
+	if (node->traverse_visited != MULT_OPTIMIZATION_TRAVERSE_VALUE){
+		/*this is a new node so depth visit it */
+
+		/* mark that we have visitied this node now */
+		node->traverse_visited = MULT_OPTIMIZATION_TRAVERSE_VALUE;
+        int multiplyMultiplier = 5;
+		for (i = 0; i < node->num_output_pins; i++)
+		{
+			if (node->output_pins[i]->net)
+			{
+				nnet_t *next_net = node->output_pins[i]->net;
+				if(next_net->fanout_pins)
+				{
+					for (j = 0; j < next_net->num_fanout_pins; j++)
+					{
+						if (next_net->fanout_pins[j])
+						{
+							if (next_net->fanout_pins[j]->node)
+							{
+							/* recursive call point */
+								calculate_multiplier_aware_critical_path(next_net->fanout_pins[j]->node, netlist);
+							}
+						}
+					}
+				}
+			}
+		}
+        node->traverse_visited = PARTIAL_MAP_TRAVERSE_VALUE;
+	}
 }
