@@ -92,9 +92,9 @@ void
 HardSoftLogicMixer::selectMultipliersToImplementInHardBlocks(netlist_t* netlist){
 	std::vector<nnode_t*> nodesVector = potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
 	for (int i = 0 ; i<nodesVector.size();i++){
-		instantiate_hard_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+		instantiate_hard_multiplier(nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
 		// instantiate_simple_soft_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
-		instantiate_hard_multiplier( nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+		instantiate_hard_multiplier(nodesVector[i], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
 
 	}
 }
