@@ -4,6 +4,7 @@
 #ifndef CONFIG_T_H
 #define CONFIG_T_H
 
+
 /* This is the data structure that holds config file details */
 struct config_t
 {
@@ -27,7 +28,6 @@ struct config_t
 	char split_memory_width;
 	// Set to a positive integer to split memory depth to that address width. 0 to split to arch width.
 	int split_memory_depth;
-
 	//add by Sen
 	// Threshold from hard to soft logic(extra bits)
 	int min_hard_adder;
@@ -41,6 +41,13 @@ struct config_t
     // defines if the first cin of an adder/subtractor is connected to a global gnd/vdd
     // or generated using a dummy adder with both inputs set to gnd/vdd
     bool adder_cin_global;
+	// If the memory is smaller than both of these, it will be converted to soft logic.
+	int soft_logic_memory_depth_threshold;
+	int soft_logic_memory_width_threshold;
+
+	std::string arch_file; // Name of the FPGA architecture file
+
+	// Mixing soft and hard logic
 	// Should be set to allow for mixing soft and hard logic, default integer value
 	// is 0 (No optimization is required)
 	// Solves problem described in Issue#
@@ -49,11 +56,16 @@ struct config_t
 	// ...
 	// Added by gkr
 	int mix_soft_and_hard_logic;
-	// If the memory is smaller than both of these, it will be converted to soft logic.
-	int soft_logic_memory_depth_threshold;
-	int soft_logic_memory_width_threshold;
-
-	std::string arch_file; // Name of the FPGA architecture file
+	// This variable shows the percentage of multipliers that will be implemented 
+	// in hard logic. The default value of the variable is 1.0f. The variable can
+	// will automaticaly set the rightmost bit of mix_soft_and_hard_logic to 1
+	// mults_mixing_exact_number_of_multipliers takes precedence
+	float mults_mixing_ratio;
+	// This value is for the special cases when only X multipliers are desired
+	// Default value is -1. Setting this value will automatically set 
+	// mults mixing ratio to 1.0 as well as the rightmost bit of 
+	// mix_soft_and_hard_logic to 1
+	int mults_mixing_exact_number_of_multipliers;
 };
 
 extern config_t configuration;
