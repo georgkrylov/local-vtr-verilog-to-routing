@@ -197,6 +197,8 @@ void set_default_optimization_settings(config_t *config)
 	config->split_hard_adder = 1;
 	config->min_threshold_adder = 0;
 	config->mix_soft_and_hard_logic = 0;
+	config->mults_mixing_exact_number_of_multipliers = -1;
+	config->mults_mixing_ratio = -1.0f;
 	return;
 }
 
@@ -322,6 +324,8 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		// other optimizations, so the can_try_to_optimize vent
 		// is introduced to avoid interactions that were not thought through
 		// or were not tested.
+		config->mults_mixing_ratio = 1.0f;
+		config->mults_mixing_exact_number_of_multipliers = -1;
 		config->mix_soft_and_hard_logic = 0;
 		bool can_try_to_optimize = true;
 		if (config->min_hard_multiplier != 0)
@@ -356,12 +360,23 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
 		if (prop != NULL && true == can_try_to_optimize)
 		{
-			int bitValue = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
-			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic | bitValue ;
+			int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic | bit_value ;
 		}
-	} else {
-		config->mix_soft_and_hard_logic =0;
-	}
+
+		// These are additional command line parameter that configure that optimization
+		prop = get_attribute(child, "multipliers_mixing_ratio", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL && true == can_try_to_optimize)
+		{
+			float specified_ratio = std::stof (prop);
+			config->mults_mixing_ratio= specified_ratio;
+		}
+		prop = get_attribute(child, "mults_mixing_exact_number_of_multipliers", loc_data, OPTIONAL).as_string(NULL);
+		if (prop != NULL && true == can_try_to_optimize)
+		{
+			config->mults_mixing_exact_number_of_multipliers=std::stoi(prop);
+		}
+	} 
 	return;
 }
 
