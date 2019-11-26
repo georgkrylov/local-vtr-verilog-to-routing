@@ -536,7 +536,7 @@ struct nnet_t {
 // mixing of soft and hard logic implementation should
 // be performed. The Count should be the
 // the last element
-enum HardBlocksOptimizationTypesEnum { MULTIPLIERS, ADDERS, Count};
+enum HardBlocksOptimizationTypesEnum { MULTIPLIERS, Count};
 
 struct signal_list_t {
     npin_t** pins;
