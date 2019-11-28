@@ -41,7 +41,12 @@ class OdinGridAnalyzer{
         *---------------------------------------------------------------------*/
         std::pair<int,int> estimatePossibleDeviceSize(t_grid_def&);
 
-        int countHardBlocksInFixedLayout(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size);
+        int countHardBlocksInFixedLayout(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size,std::vector<t_physical_tile_type>tiletypes);
+        int findDesiredBlockPriority(t_grid_def& layout,std::string& typeTag);
+        t_physical_tile_type* findAssociatedTileType(std::vector<t_physical_tile_type> tileTypes,std::string& typeTag);
+        
     private:
+        std::string getArchDescriptionTag(int hardBlockType);
+        int parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h);
 };
 #endif
