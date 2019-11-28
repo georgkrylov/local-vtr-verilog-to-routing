@@ -35,7 +35,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 class HardSoftLogicMixer{
 public:
-    HardSoftLogicMixer(t_arch& arch,const config_t configuration);
+    HardSoftLogicMixer(t_arch& arch,const config_t configuration,std::vector<t_physical_tile_type> tileTypes);
     /*----------------------------------------------------------------------
     * Function: calculateGridSizes 
     *   For all the layouts represented in the architecture file, populates
@@ -97,6 +97,7 @@ private:
     OdinGridAnalyzer _analyzer;
     float _hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::Count];
     t_arch& _arch;
+    std::vector<t_physical_tile_type> _tileTypes;
 };
 
 #endif

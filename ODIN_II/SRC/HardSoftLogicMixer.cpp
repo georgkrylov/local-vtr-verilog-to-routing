@@ -28,8 +28,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "OdinGridAnalyzer.hpp"
 #include <bits/stdc++.h> 
 
-HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config):_analyzer(),_arch(arch){
+HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config,std::vector<t_physical_tile_type> tileTypes):_analyzer(),_arch(arch){
 	_allOptsDisabled = true;
+	_tileTypes = tileTypes;
 	// By default, disables all optimizations
 	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
 		_enabledOptimizations[i] = false;
@@ -116,8 +117,7 @@ int HardSoftLogicMixer::countHardBlocksInArch(t_grid_def& layout ,int hardBlockT
 	int result = INT_MAX;
 	if (layout.grid_type == FIXED)
 	{	
-		_analyzer.countHardBlocksInFixedLayout(layout,hardBlockType,size);
-		_arch.grid_logic_tile_area/
+		_analyzer.countHardBlocksInFixedLayout(layout,hardBlockType,size,_tileTypes);
 	}
 	return result;
 }	
