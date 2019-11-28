@@ -25,10 +25,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <utility>      // std::pair, std::make_pair
 #include <vector>
 #include <iostream>
-
+#include <bits/stdc++.h> 
 
 std::pair<int,int> 
-OdinGridAnalyzer::estimatePossibleDeviceSize(const t_grid_def& layout){
+OdinGridAnalyzer::estimatePossibleDeviceSize(t_grid_def& layout){
 	std::pair<int,int> result;
 	if (layout.grid_type == FIXED)
 	{	
@@ -40,10 +40,26 @@ OdinGridAnalyzer::estimatePossibleDeviceSize(const t_grid_def& layout){
 	}
 	else
 	{
-		std::cerr<<"Odin won't continue execution since requested optimization parameters are not implemented: auto_layout and mixing soft and hard logic\n";
-		exit(6);
+		result = std::make_pair(INT_MAX,INT_MAX);
 	}	
 	return result;
 }	
 
+int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size){
+	int width = size.first;
+	int height = size.second;
+	//TODO account with fill
+	std::vector<std::vector<std::pair<int,int>>> grid (height,std::vector<std::pair<int,int>>(width,std::make_pair(-1,-1)));
+	std::vector<t_grid_loc_def>::iterator pointer;
+	std::cout<<"BlockDefsAre:"<<std::endl;
+	for (pointer =  layout.loc_defs.begin();pointer<layout.loc_defs.end(); pointer++){
+		std::cout<<"\t"<<pointer->block_type<<"\tx\ty"<<std::endl;
+		std::cout<<"Start_expr\t" << pointer->x.start_expr<<"\t"<<pointer->y.start_expr<<std::endl;
+		std::cout<<"End_expr\t" << pointer->x.end_expr<<"\t"<<pointer->y.end_expr<<std::endl;
+		std::cout<<"Incr_expr\t" << pointer->x.incr_expr<<"\t"<<pointer->y.incr_expr<<std::endl;
+		std::cout<<"Repeat_expr:\t" << pointer->x.incr_expr<<"\t"<<pointer->y.incr_expr<<std::endl;
+		std::cout<<pointer->meta;
 	
+	}
+	
+}

@@ -26,8 +26,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <cstdint>
 #include <cstring>
 #include "OdinGridAnalyzer.hpp"
+#include <bits/stdc++.h> 
 
-HardSoftLogicMixer::HardSoftLogicMixer(const t_arch& arch,const config_t config):_analyzer(),_arch(arch){
+HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config):_analyzer(),_arch(arch){
 	_allOptsDisabled = true;
 	// By default, disables all optimizations
 	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
@@ -86,7 +87,7 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 		if (i == 1){
 			std::cerr<<"Optimization for multiple layouts was never tested, from now on you are on your own"<<std::endl;
 		}
-		const t_grid_def& ref = _arch.grid_layouts[i];
+		t_grid_def& ref = _arch.grid_layouts[i];
 		std::pair<int,int> widthAndHeight = _analyzer.estimatePossibleDeviceSize(ref);
 		_grid_layout_sizes.emplace(i,widthAndHeight);
 
@@ -111,11 +112,12 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 	scaleHardBlockCounts();
 }
 
-int HardSoftLogicMixer::countHardBlocksInArch(const t_grid_def& layout ,int hardBlockType,std::pair<int,int> size){
+int HardSoftLogicMixer::countHardBlocksInArch(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size){
 	int result = INT_MAX;
 	if (layout.grid_type == FIXED)
 	{	
-		// TODO
+		_analyzer.countHardBlocksInFixedLayout(layout,hardBlockType,size);
+		_arch.grid_logic_tile_area/
 	}
 	return result;
 }	

@@ -32,11 +32,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "OdinGridAnalyzer.hpp"
 #include "multipliers.h"
 #include "netlist_analyzer.h"
-#include<bits/stdc++.h> 
 
 class HardSoftLogicMixer{
 public:
-    HardSoftLogicMixer(const t_arch& arch,const config_t configuration);
+    HardSoftLogicMixer(t_arch& arch,const config_t configuration);
     /*----------------------------------------------------------------------
     * Function: calculateGridSizes 
     *   For all the layouts represented in the architecture file, populates
@@ -75,7 +74,7 @@ private:
      * the corresponding boolean variables in the _enabledOptimizationsArray.
      */
     void parseAndSetOptimizationParameters(const config_t);
-    int countHardBlocksInArch(const t_grid_def& layout ,int hardBlockType,std::pair<int,int> size);
+    int countHardBlocksInArch(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size);
     void scaleHardBlockCounts();
     int inferHardBlocksFromNetlist(int currentOptimizationKind);
     void selectMultipliersToImplementInHardBlocks(netlist_t *netlist);
@@ -97,7 +96,7 @@ private:
 	 */  
     OdinGridAnalyzer _analyzer;
     float _hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::Count];
-    const t_arch& _arch;
+    t_arch& _arch;
 };
 
 #endif
