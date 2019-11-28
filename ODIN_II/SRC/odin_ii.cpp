@@ -92,7 +92,7 @@ static ODIN_ERROR_CODE synthesize_verilog()
 
 	printf("--------------------------------------------------------------------\n");
 	printf("High-level synthesis Begin\n");
-	mixer= new HardSoftLogicMixer(Arch,configuration);
+	mixer= new HardSoftLogicMixer(Arch,configuration,physical_tile_types);
 	// mixer.estimate_possible_device_size();
 	/* Perform any initialization routines here */
 	find_hard_multipliers();
