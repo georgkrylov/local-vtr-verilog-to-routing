@@ -39,7 +39,9 @@ class OdinGridAnalyzer{
         *   Pair of integers, that correspond to estimated width and height of 
         *   the device
         *---------------------------------------------------------------------*/
-        std::pair<int,int> estimatePossibleDeviceSize(const t_grid_def&);
+        std::pair<int,int> estimatePossibleDeviceSize(t_grid_def&);
+
+        int countHardBlocksInFixedLayout(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size);
     private:
 };
 #endif
