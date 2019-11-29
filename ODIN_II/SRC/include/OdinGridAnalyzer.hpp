@@ -25,7 +25,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include "physical_types.h"
 #include "odin_types.h"
-#include <utility>
+#include <utility>      // std::pair, std::make_pair
+#include <tuple>
+#include <vector>       // std::vector
 
 class OdinGridAnalyzer{
     public:
@@ -47,6 +49,13 @@ class OdinGridAnalyzer{
         
     private:
         std::string getArchDescriptionTag(int hardBlockType);
-        int parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h);
+        // int parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h);
+
+        /**
+         * This function mimics the behaviour of the build_device_grid 
+         * It is segreged into a separate function, to improve maintainability 
+         */
+        void fillGridWithBlockType(std::vector<std::tuple<int,int,int>>grid, t_grid_loc_def* grid_def,
+                                    t_physical_tile_type* type,int grid_width,int grid_height);
 };
 #endif
