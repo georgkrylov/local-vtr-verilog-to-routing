@@ -45,7 +45,7 @@ class OdinGridAnalyzer{
 
         int countHardBlocksInFixedLayout(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size,std::vector<t_physical_tile_type>tiletypes);
         int findDesiredBlockPriority(t_grid_def& layout,std::string& typeTag);
-        t_physical_tile_type* findAssociatedTileType(std::vector<t_physical_tile_type> tileTypes,std::string& typeTag);
+        ssize_t findIndexOfAssociatedTileType(std::vector<t_physical_tile_type> tileTypes,std::string& typeTag);
         
     private:
         std::string getArchDescriptionTag(int hardBlockType);
@@ -55,9 +55,9 @@ class OdinGridAnalyzer{
          * This function mimics the behaviour of the build_device_grid 
          * It is segreged into a separate function, to improve maintainability 
          */
-        void fillGridWithBlockType(std::vector<std::vector<std::pair<char*,int>>>grid, t_grid_loc_def* grid_def,
-                                    t_physical_tile_type* type,int grid_width,int grid_height);
+        void fillGridWithBlockType(std::vector<std::vector<std::pair<char*,int>>>&grid, t_grid_loc_def* grid_def,
+                                     std::vector<t_physical_tile_type>tileTypes, ssize_t indexOfTile,int grid_width,int grid_height);
 
-        void set_grid_block_type(int priority,t_physical_tile_type* type, int x, int y,std::vector<std::vector<std::pair<char*,int>>>  grid);
+        void set_grid_block_type(int priority,t_physical_tile_type* type, int x, int y,std::vector<std::vector<std::pair<char*,int>>>&  grid);
 };
 #endif
