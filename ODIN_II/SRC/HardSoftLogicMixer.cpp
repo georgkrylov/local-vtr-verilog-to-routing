@@ -107,6 +107,7 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 				if (hardBlocksCount < _hardBlocksCount[currentOptimizationKind]){
 					_hardBlocksCount[currentOptimizationKind] = hardBlocksCount;
 				}
+				std::cout<<"The estimated hardBlocksCount"<<_hardBlocksCount[currentOptimizationKind] <<std::endl;
 			} 
 		}
 	}
@@ -117,7 +118,7 @@ int HardSoftLogicMixer::countHardBlocksInArch(t_grid_def& layout ,int hardBlockT
 	int result = INT_MAX;
 	if (layout.grid_type == FIXED)
 	{	
-		_analyzer.countHardBlocksInFixedLayout(layout,hardBlockType,size,_tileTypes);
+		result = _analyzer.countHardBlocksInFixedLayout(layout,hardBlockType,size,_tileTypes);
 	}
 	return result;
 }	
