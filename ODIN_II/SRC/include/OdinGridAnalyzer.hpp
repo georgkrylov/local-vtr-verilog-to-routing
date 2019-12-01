@@ -55,7 +55,9 @@ class OdinGridAnalyzer{
          * This function mimics the behaviour of the build_device_grid 
          * It is segreged into a separate function, to improve maintainability 
          */
-        void fillGridWithBlockType(std::vector<std::tuple<int,int,int>>grid, t_grid_loc_def* grid_def,
+        void fillGridWithBlockType(std::vector<std::vector<std::pair<char*,int>>>grid, t_grid_loc_def* grid_def,
                                     t_physical_tile_type* type,int grid_width,int grid_height);
+
+        void set_grid_block_type(int priority,t_physical_tile_type* type, int x, int y,std::vector<std::vector<std::pair<char*,int>>>  grid);
 };
 #endif
