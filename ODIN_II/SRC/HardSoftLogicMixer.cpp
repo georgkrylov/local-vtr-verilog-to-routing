@@ -53,7 +53,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		}
 		_allOptsDisabled = false;
 	}
-	//Explicitly set all hard block numbers to 0
+	//Explicitly set all hard block numbers to max
 	for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
 	{
 		_hardBlocksCount[i] = INT_MAX;
@@ -79,8 +79,8 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 void HardSoftLogicMixer::calculateAllGridSizes(){
 	if (true ==_allOptsDisabled)
 	{
-		std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
-					"since it should not optimize at all";
+		// std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
+		// 			"since it should not optimize at all";
 		return;
 	}		
 	for (int i = 0 ; i < _arch.grid_layouts.size();i++)
@@ -132,8 +132,8 @@ void HardSoftLogicMixer::scaleHardBlockCounts(){
 	}
 }
 
-void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * multNode, HardBlocksOptimizationTypesEnum type){
-	potentialHardBlockNodes[type].emplace_back(multNode);
+void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * opNode, HardBlocksOptimizationTypesEnum type){
+	potentialHardBlockNodes[type].emplace_back(opNode);
 }
 
 void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
