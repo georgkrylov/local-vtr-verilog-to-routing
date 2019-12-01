@@ -309,7 +309,7 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		// other optimizations, so the can_try_to_optimize vent
 		// is introduced to avoid interactions that were not thought through
 		// or were not tested.
-		config->mults_mixing_ratio = 1.0f;
+		config->mults_mixing_ratio = -1.0f;
 		config->mults_mixing_exact_number_of_multipliers = -1;
 		config->mix_soft_and_hard_logic = 0;
 		bool can_try_to_optimize = true;
