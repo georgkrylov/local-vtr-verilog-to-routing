@@ -49,7 +49,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 	int width = size.first;
 	int height = size.second;
 	//TODO account with fill,corners,perimeter
-	std::vector<std::tuple<int,int,int>> grid (height,std::vector<std::pair<int,int>>(width,std::make_pair(-1,-1)));
+	std::vector<std::vector<std::pair<char*,int>>> grid (height,std::vector<std::pair<char*,int>>(width,std::make_pair(nullptr,-1)));
 	std::vector<t_grid_loc_def>::iterator pointer;
 	std::string typeTag = getArchDescriptionTag(hardBlockType);
 	std::cout<<typeTag<<std::endl;
@@ -79,7 +79,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 	//TODO consider different mults
 }
 void
-OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<int,int>>>grid, 
+OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,int>>> grid, 
 										t_grid_loc_def* grid_loc_def, t_physical_tile_type* type,
 										int grid_width,int grid_height)
 	{
@@ -182,20 +182,20 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<int,in
                             yspec.end_expr.c_str(), endy, yspec.start_expr.c_str(), starty, type->name);
         }
 
-        //The minimum increment is the block dimension
-        // VTR_ASSERT(type->width > 0);
-        if (incrx < size_t(type->width)) {
-            printf("Grid location specification incrx for block type '%s' must be at least"
-                            " block width (%d) to avoid overlapping instances (was %s = %d)",
-                            type, type->width, xspec.incr_expr.c_str(), incrx);
-        }
+        // //The minimum increment is the block dimension
+        // // VTR_ASSERT(type->width > 0);
+        // if (incrx < size_t(type->width)) {
+        //     printf("Grid location specification incrx for block type '%s' must be at least"
+        //                     " block width (%d) to avoid overlapping instances (was %s = %d)",
+        //                     type, type->width, xspec.incr_expr.c_str(), incrx);
+        // }
 
-        VTR_ASSERT(type->height > 0);
-        if (incry < size_t(type->height)) {
-             printf("Grid location specification incry for block type '%s' must be at least"
-                    " block height (%d) to avoid overlapping instances (was %s = %d)",
-                    type->name, type->height, yspec.incr_expr.c_str(), incry);
-        }
+        // VTR_ASSERT(type->height > 0);
+        // if (incry < size_t(type->height)) {
+        //      printf("Grid location specification incry for block type '%s' must be at least"
+        //             " block height (%d) to avoid overlapping instances (was %s = %d)",
+        //             type->name, type->height, yspec.incr_expr.c_str(), incry);
+        // }
 
         //The minimum repeat is the region dimension
         size_t region_width = endx - startx + 1; //+1 since start/end are both inclusive
@@ -227,20 +227,43 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<int,in
                 size_t y_start = starty + ky * repeaty;
                 y_end = endy + ky * repeaty;
 
-                size_t x_max = std::min(x_end, grid_width - 1);
-                size_t y_max = std::min(y_end, grid_height - 1);
+                size_t x_max = std::min((int)x_end, grid_width - 1);
+                size_t y_max = std::min((int)y_end, grid_height - 1);
 
                 //Fill in the region
                 for (size_t x = x_start; x + (type->width - 1) <= x_max; x += incrx) {
                     for (size_t y = y_start; y + (type->height - 1) <= y_max; y += incry) {
-						grid[x][]
-                        set_grid_block_type(grid_loc_def.priority, type, x, y, grid, grid_priorities, grid_loc_def.meta);
+						
+                        set_grid_block_type(grid_loc_def->priority, type, x, y, grid);
                     }
                 }
             }
         }
+		int i;
+		std::cout<<"Grid is:"<<std::endl;
+		for (size_t x = 0; x<grid_width; x += 1) 
+			{
+			for (size_t y = 0; y <grid_height; y += 1) 
+				{
+				if (grid[x][y].first != nullptr){
+					std::cout<<"("<<grid[x][y].first<<","<<grid[x][y].second<<")\t";
+				} else {
+					std::cout<<"( unassigned, -1), ";
+				}
 
+				}
+			std::cout<<std::endl;
+			}
 	}
+/**
+ *  First is type (char*), second is priority
+ */ 
+void OdinGridAnalyzer::set_grid_block_type(int priority,t_physical_tile_type* type, int x, int y,std::vector<std::vector<std::pair<char*,int>>>  grid){
+	if (grid[x][y].second < priority){
+		grid[x][y].first = type->name;
+		grid[x][y].second = priority;
+	}
+}
 
 int OdinGridAnalyzer::findDesiredBlockPriority(t_grid_def& layout,std::string& typeTag){
 	int result = -1;
@@ -256,6 +279,7 @@ int OdinGridAnalyzer::findDesiredBlockPriority(t_grid_def& layout,std::string& t
 
 t_physical_tile_type* OdinGridAnalyzer::findAssociatedTileType(std::vector<t_physical_tile_type> tileTypes,std::string& typeTag){
 	t_physical_tile_type* result = nullptr;
+	std::cout<< "The type tag is"<<typeTag<<std::endl;
 	std::vector<t_physical_tile_type>::iterator pointer;
 	for (pointer =  tileTypes.begin();pointer< tileTypes.end(); pointer++){
 		std::string stringForComparison = std::string(pointer->name);
