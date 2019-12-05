@@ -47,7 +47,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		int temp;
 		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
 			temp = 1 << (i);
-			checkValue = temp && mix_soft_and_hard_logic;
+			checkValue = temp & mix_soft_and_hard_logic;
 			if (checkValue != 0){
 				_enabledOptimizations[i] = true;
 			}
