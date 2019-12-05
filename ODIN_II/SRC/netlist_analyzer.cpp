@@ -25,15 +25,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
     int i,j;
+	int result = 0;
 	if (node->traverse_visited != MULT_OPTIMIZATION_TRAVERSE_VALUE){
 		/*this is a new node so depth visit it */
 
 		/* mark that we have visitied this node now */
 		node->traverse_visited = MULT_OPTIMIZATION_TRAVERSE_VALUE;
-        int result = 1;
+        result = 1;
 		for (i = 0; i < node->num_output_pins; i++)
-		{
-			if (node->output_pins[i]->net)
+		{	
+			if (node->output_pins[i] && node->output_pins[i]->net)
 			{
 				nnet_t *next_net = node->output_pins[i]->net;
 				if(next_net->fanout_pins)
@@ -61,4 +62,5 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
         node->traverse_visited = PARTIAL_MAP_TRAVERSE_VALUE;
 		return result;
 	}
+	return result;
 }

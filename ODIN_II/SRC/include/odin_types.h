@@ -535,8 +535,10 @@ struct nnet_t {
 // Enumerator showing on which kinds of hard blocks
 // mixing of soft and hard logic implementation should
 // be performed. The Count should be the
-// the last element
-enum HardBlocksOptimizationTypesEnum { MULTIPLIERS, Count};
+// the last element. The order of the elements 
+// in this enum also determines order of optimizations
+// ADDERS SHOULD BE AFTER MULTS
+enum HardBlocksOptimizationTypesEnum { MULTIPLIERS, ADDERS, Count};
 
 struct signal_list_t {
     npin_t** pins;
