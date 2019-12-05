@@ -46,7 +46,7 @@ public:
     /* Returns whether the hard blocks and soft logic implementation 
      * of multipliers should be mixed in the process of synthesis
      */
-    bool mixMultipliers(){ return _enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS] ;}
+    bool mixHardBlocksOfType(HardBlocksOptimizationTypesEnum type);
     /*----------------------------------------------------------------------
      * Function: selectLogicToImplementInHardBlocks 
      *  For all the notes, that noted to be candidates to be implemented in the 
@@ -76,6 +76,8 @@ private:
     void parseAndSetOptimizationParameters(const config_t);
     int countHardBlocksInArch(t_grid_def& layout ,int hardBlockType,std::pair<int,int> size);
     void scaleHardBlockCounts();
+
+    void implementUnassignedLogicInSoftLogic(netlist_t* netlist);
     int inferHardBlocksFromNetlist(int currentOptimizationKind);
     void selectMultipliersToImplementInHardBlocks(netlist_t *netlist);
     /* This map holds estimated device sizes that would

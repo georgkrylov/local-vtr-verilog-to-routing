@@ -186,6 +186,11 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
 			break;
 
 		case ADD:
+			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS) ||
+				true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::ADDERS)  )
+			{
+				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::ADDERS);
+			} else
 			if (hard_adders && node->bit_width >= min_threshold_adder){
 				// Check if the size of this adder is greater than the hard vs soft logic threshold
 					instantiate_hard_adder(node, traverse_number, netlist);
@@ -253,7 +258,7 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
 			break;
 		case MULTIPLY:
         {
-			if (true == mixer->mixMultipliers()){
+			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS)){
 				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
 			} else
 			{
