@@ -54,6 +54,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 	std::string typeTag = getArchDescriptionTag(hardBlockType);
 	std::cout<<typeTag<<std::endl;
 	int priorityOfTheDesiredBlock = findDesiredBlockPriority(layout,typeTag);
+	std::cout<<"Desired block's priority is: "<<priorityOfTheDesiredBlock<<std::endl;
 	std::cout<<"BlockDefsAre:"<<std::endl;
 	for (pointer =  layout.loc_defs.begin();pointer<layout.loc_defs.end(); pointer++){
 		// Case of == is the tile type we are looking for, and a clash
@@ -65,7 +66,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 				{
 					std::cout<<" Was not able to find a tile"<<std::endl;
 					flush(std::cout);
-					exit;
+					exit(6);
 				}
 			t_physical_tile_type& tileTypeOfABlockWithHigherPriority = tileTypes[indexOfTile];
 			int w = 0;
@@ -314,14 +315,16 @@ int OdinGridAnalyzer::findDesiredBlockPriority(t_grid_def& layout,std::string& t
 
 ssize_t OdinGridAnalyzer::findIndexOfAssociatedTileType(std::vector<t_physical_tile_type> tileTypes,std::string& typeTag){
 	ssize_t result = -1;
+	ssize_t iter = -1;
 	std::cout<< "The type tag is"<<typeTag<<std::endl;
 	std::vector<t_physical_tile_type>::iterator pointer;
 
 	for (pointer =  tileTypes.begin();pointer< tileTypes.end(); pointer++){
-		result ++ ; 
+		iter ++ ; 
 		std::string stringForComparison = std::string(pointer->name);
 		std::cout << stringForComparison<<std::endl;
 		if (stringForComparison.compare(typeTag)==0){
+			result = iter;
 			break;
 		}
 	}
