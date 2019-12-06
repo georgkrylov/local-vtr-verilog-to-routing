@@ -53,7 +53,6 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 			}
 		}
 		_allOptsDisabled = false;
-	}
 	//Explicitly set all hard block numbers to max
 	for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
 	{
@@ -74,6 +73,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
 		_hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_exact_number_of_multipliers;
 		_allOptsDisabled = false;
+	}
 	}
 }
 
@@ -143,11 +143,13 @@ bool HardSoftLogicMixer::mixHardBlocksOfType(HardBlocksOptimizationTypesEnum typ
 	{ 
 		bool result = false;
 		if (type != HardBlocksOptimizationTypesEnum::Count)
-		result = _enabledOptimizations[type];
+			result = _enabledOptimizations[type];
 		return result;
 	}
 
 void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
+	if (_allOptsDisabled)
+		return;
 	calculateAllGridSizes();
 	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count;i++ ){
 		switch (i){
