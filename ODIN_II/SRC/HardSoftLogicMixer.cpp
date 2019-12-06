@@ -28,7 +28,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "OdinGridAnalyzer.hpp"
 #include <bits/stdc++.h> 
 #include "partial_map.h" // instantiate add_with_carry
-
+#include "adders.h" // instantiate_hard_adders
 HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config,std::vector<t_physical_tile_type> tileTypes):_analyzer(),_arch(arch){
 	_allOptsDisabled = true;
 	_tileTypes = tileTypes;
@@ -154,13 +154,13 @@ void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
 			case HardBlocksOptimizationTypesEnum::MULTIPLIERS: 
 				if (_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS])
 				{
-					selectMultipliersToImplementInHardBlocks(netlist);
+					chooseHardBlocks(netlist,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
 				}
 				break;
 			case HardBlocksOptimizationTypesEnum::ADDERS:	
 				if (_enabledOptimizations[HardBlocksOptimizationTypesEnum::ADDERS])
 				{
-
+					chooseHardBlocks(netlist,HardBlocksOptimizationTypesEnum::ADDERS);
 				}
 				break;
 			default:
@@ -199,8 +199,14 @@ HardSoftLogicMixer::implementUnassignedLogicInSoftLogic(netlist_t* netlist){
 }
 
 void 
-HardSoftLogicMixer::selectMultipliersToImplementInHardBlocks(netlist_t* netlist){
-	std::vector<nnode_t*>& nodesVector = potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
+HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist,HardBlocksOptimizationTypesEnum type){
+	if (type == HardBlocksOptimizationTypesEnum::Count)
+		{
+			std::cerr<<"Running choseHardBlocks with Count should never happen"
+			<<std::endl;
+			exit(6)	;
+		}
+	std::vector<nnode_t*>& nodesVector = potentialHardBlockNodes[type];
 	int nodesCount = nodesVector.size();
 	int* costs = new int[nodesCount];
 	for (int i = 0 ; i < nodesCount;i++){
@@ -223,7 +229,18 @@ HardSoftLogicMixer::selectMultipliersToImplementInHardBlocks(netlist_t* netlist)
 			}
 		}
 		costs[indexOfMaximum] = -1;
-		instantiate_hard_multiplier(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+		switch (type){
+		case HardBlocksOptimizationTypesEnum::MULTIPLIERS:
+			instantiate_hard_multiplier(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+			break;
+		case HardBlocksOptimizationTypesEnum::ADDERS:
+			instantiate_hard_adder(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+			break;
+		default:
+			std::cerr<<"Implementation of chooseHardBlocks for "<< type<<
+			" Hard block type is incomplete"<<std::endl;
+			break;
+		}
 	}
 
 	for (int i = nodesCount - 1 ; i >= 0; i--){

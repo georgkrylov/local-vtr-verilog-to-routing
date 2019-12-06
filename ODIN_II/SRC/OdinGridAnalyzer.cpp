@@ -213,12 +213,12 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,
 
         //The end must fall after (or equal) to the start
         if (endx < startx) {
-            printf("Grid location specification endx (%s = %d) can not come before startx (%s = %d) for block type '%s'",
+            printf("Grid location specification endx (%s = %lu) can not come before startx (%s = %lu) for block type '%s'",
                             xspec.end_expr.c_str(), endx, xspec.start_expr.c_str(), startx, type->name);
         }
 
         if (endy < starty) {
-            printf("Grid location specification endy (%s = %d) can not come before starty (%s = %d) for block type '%s'",
+            printf("Grid location specification endy (%s = %lu) can not come before starty (%s = %lu) for block type '%s'",
                             yspec.end_expr.c_str(), endy, yspec.start_expr.c_str(), starty, type->name);
         }
 
@@ -226,14 +226,14 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,
         VTR_ASSERT(type->width > 0);
         if (incrx < size_t(type->width)) {
             printf("Grid location specification incrx for block type '%s' must be at least"
-                            " block width (%d) to avoid overlapping instances (was %s = %d)",
-                            type, type->width, xspec.incr_expr.c_str(), incrx);
+                            " block width (%d) to avoid overlapping instances (was %s = %lu)",
+                            type->name, type->width, xspec.incr_expr.c_str(), incrx);
         }
 
         VTR_ASSERT(type->height > 0);
         if (incry < size_t(type->height)) {
              printf("Grid location specification incry for block type '%s' must be at least"
-                    " block height (%d) to avoid overlapping instances (was %s = %d)",
+                    " block height (%d) to avoid overlapping instances (was %s = %lu)",
                     type->name, type->height, yspec.incr_expr.c_str(), incry);
         }
 
@@ -241,14 +241,14 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,
         size_t region_width = endx - startx + 1; //+1 since start/end are both inclusive
         if (repeatx < region_width) {
 			printf(     "Grid location specification repeatx for block type '%s' must be at least"
-                    	" the region width (%d) to avoid overlapping instances (was %s = %d)",
+                    	" the region width (%lu) to avoid overlapping instances (was %s = %lu)",
                         type->name, region_width, xspec.repeat_expr.c_str(), repeatx);
         }
 
         size_t region_height = endy - starty + 1; //+1 since start/end are both inclusive
         if (repeaty < region_height) {
 			printf("Grid location specification repeaty for block type '%s' must be at least"
-                   " the region height (%d) to avoid overlapping instances (was %s = %d)",
+                   " the region height (%lu) to avoid overlapping instances (was %s = %lu)",
                    type->name, region_height, xspec.repeat_expr.c_str(), repeaty);
         }
 
