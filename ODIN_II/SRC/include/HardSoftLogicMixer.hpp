@@ -79,7 +79,7 @@ private:
 
     void implementUnassignedLogicInSoftLogic(netlist_t* netlist);
     int inferHardBlocksFromNetlist(int currentOptimizationKind);
-    void selectMultipliersToImplementInHardBlocks(netlist_t *netlist);
+    void chooseHardBlocks(netlist_t *netlist,HardBlocksOptimizationTypesEnum type);
     /* This map holds estimated device sizes that would
      * correspond to the architecture, keyed by the pointers to 
      * layout  description
