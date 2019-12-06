@@ -170,14 +170,18 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
 				true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::ADDERS)  )
 			{
 				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::ADDERS);
+				break;
 			} else
-			if (hard_adders && node->bit_width >= min_threshold_adder){
-				// Check if the size of this adder is greater than the hard vs soft logic threshold
-					instantiate_hard_adder(node, traverse_number, netlist);
-			}else{
-				instantiate_add_w_carry(node, traverse_number, netlist);
+			{
+				if (hard_adders && node->bit_width >= min_threshold_adder){
+					// Check if the size of this adder is greater than the hard vs soft logic threshold
+						instantiate_hard_adder(node, traverse_number, netlist);
+				}else{
+					instantiate_add_w_carry(node, traverse_number, netlist);
+				}
+				break;
 			}
-			break;
+
 		case MINUS:
 			if (hard_adders)
 			{
@@ -240,6 +244,7 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
         {
 			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS)){
 				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
+				break;
 			} else
 			{
 				int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);
@@ -248,8 +253,8 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
 				} else if (!hard_adders) {
 					instantiate_simple_soft_multiplier(node, traverse_number, netlist);
 				}
+				break;
 			}
-			break;
         }
         case MEMORY: {
             ast_node_t* ast_node = node->related_ast_node;
