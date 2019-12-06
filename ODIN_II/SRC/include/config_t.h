@@ -64,7 +64,7 @@ struct config_t
     std::string arch_file; // Name of the FPGA architecture file
 =======
 	// This variable shows the percentage of multipliers that will be implemented 
-	// in hard logic. The default value of the variable is 1.0f. The variable can
+	// in hard logic. The default value of the variable is -1.0f. The variable 
 	// will automaticaly set the rightmost bit of mix_soft_and_hard_logic to 1
 	// mults_mixing_exact_number_of_multipliers takes precedence
 	float mults_mixing_ratio;
