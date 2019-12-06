@@ -29,6 +29,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <bits/stdc++.h> 
 #include "partial_map.h" // instantiate add_with_carry
 #include "adders.h" // instantiate_hard_adders
+
 HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config,std::vector<t_physical_tile_type> tileTypes):_analyzer(),_arch(arch){
 	_allOptsDisabled = true;
 	_tileTypes = tileTypes;
@@ -41,40 +42,43 @@ HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config,std::v
 }
 
 void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config){
-	if (config.mix_soft_and_hard_logic!=0){
+	if (config.mix_soft_and_hard_logic!=0)
+		{
 		int checkValue = -1;
 		int mix_soft_and_hard_logic = config.mix_soft_and_hard_logic;
 		int temp;
-		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
+		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++)
+			{
 			temp = 1 << (i);
 			checkValue = temp & mix_soft_and_hard_logic;
 			if (checkValue != 0){
 				_enabledOptimizations[i] = true;
 			}
+			}
+		_allOptsDisabled = false;
+		//Explicitly set all hard block numbers to max
+		for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
+			{
+			_hardBlocksCount[i] = INT_MAX;
+			_hardBlocksMixingRatio[i] = 1.0f;
+			}
+
+		_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_ratio;
+		
+		if (config.mults_mixing_ratio >= 0.0f && config.mults_mixing_ratio <= 1.0f)
+			{	
+				_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
+				_allOptsDisabled = false;
+			}
+		
+		if (config.mults_mixing_exact_number_of_multipliers >= 0)
+			{
+			_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS]  = 1.0f;
+			_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
+			_hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_exact_number_of_multipliers;
+			_allOptsDisabled = false;
+			}
 		}
-		_allOptsDisabled = false;
-	//Explicitly set all hard block numbers to max
-	for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
-	{
-		_hardBlocksCount[i] = INT_MAX;
-		_hardBlocksMixingRatio[i] = 1.0f;
-	}
-
-	_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_ratio;
-	
-
-	if (config.mults_mixing_ratio >= 0.0f && config.mults_mixing_ratio <= 1.0f){
-		_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
-		_allOptsDisabled = false;
-	}
-
-	if (config.mults_mixing_exact_number_of_multipliers >= 0){
-		_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS]  = 1.0f;
-		_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
-		_hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_exact_number_of_multipliers;
-		_allOptsDisabled = false;
-	}
-	}
 }
 
 void HardSoftLogicMixer::calculateAllGridSizes(){
