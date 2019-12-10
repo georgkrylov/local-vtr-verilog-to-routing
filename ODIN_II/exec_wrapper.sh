@@ -100,6 +100,7 @@ Usage: ./exec_wrapper.sh [options] <path/to/arguments.file>
 			--time_limit                                * stops Odin after X seconds
 			--limit_ressource				            * limit ressource usage using ulimit -m (25% of hrdw memory) and nice value of 19
 			--verbosity [0, 1, 2]						* [0] no output, [1] output on error, [2] output the log to stdout
+			--no_color                                  * force no color on output
 "
 }
 
@@ -215,6 +216,12 @@ then
 	_exit_with_code "-1"
 fi
 
+if [[ -t 1 ]] && [[ -t 2 ]] && [[ ! -p /dev/stdout ]] && [[ ! -p /dev/stderr ]]
+then
+	COLORIZE_OUTPUT="on"
+	log_it "Using colorized output\n"
+fi
+
 while [[ "$#" > 0 ]]
 do 
 	case $1 in
@@ -244,6 +251,10 @@ do
 			RESTRICT_RESSOURCE="on" 
 			;;
 
+		--no_color)
+			COLORIZE_OUTPUT="off"
+			;;
+			
 		--verbosity)
 			case "_$2" in
 				_0)	VERBOSE="0";;
@@ -305,13 +316,6 @@ ARG_FILE=$1
 if [ "${RESTRICT_RESSOURCE}" == "on" ]
 then
 	restrict_ressource
-fi
-
-
-if [[ -t 1 ]] && [[ -t 2 ]] && [[ ! -p /dev/stdout ]] && [[ ! -p /dev/stderr ]]
-then
-	COLORIZE_OUTPUT="on"
-	log_it "Using colorized output\n"
 fi
 
 if [ "${USE_LOGS}" == "on" ]
