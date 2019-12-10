@@ -183,7 +183,7 @@ function create_temp() {
 
 		# put in the passed parameter for keepsake 
 		echo ${_TEST} > ${NEW_RUN_DIR}/cmd.task
-		echo $@ >> ${NEW_RUN_DIR}/cmd.task
+		echo ${INPUT} >> ${NEW_RUN_DIR}/cmd.task
 	fi
 }
 
