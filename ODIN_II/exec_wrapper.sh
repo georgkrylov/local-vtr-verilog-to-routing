@@ -23,6 +23,8 @@ PERF_EXEC="perf stat record -a -d -d -d -o"
 GDB_EXEC="gdb --args"
 EXEC_PREFIX=""
 
+TOOL_LIST=""
+
 TEST_NAME="N/A"
 LOG=""
 LOG_FILE=""
@@ -267,14 +269,17 @@ do
 			else
 				case $2 in
 					valgrind)
+						TOOL_LIST="valgrind ${TOOL_LIST}"
 						EXEC_PREFIX="${VALGRIND_EXEC} ${EXEC_PREFIX}"
 						;;
 					gdb)
+						TOOL_LIST="gdb ${TOOL_LIST}"
 						USE_TIMEOUT="off"
 						USE_LOGS="off"
 						EXEC_PREFIX="${GDB_EXEC} ${EXEC_PREFIX}"
 						;;
 					perf)
+						TOOL_LIST="perf ${TOOL_LIST}"
 						EXEC_PREFIX="${PERF_EXEC} ${EXEC_PREFIX}"
 						shift
 						;;
@@ -331,12 +336,14 @@ fi
 
 if [ "${USE_TIME}" == "on" ]
 then
+	TOOL_LIST="time ${TOOL_LIST}"
 	EXEC_PREFIX="${TIME_EXEC} --output=${LOG_FILE} --append ${EXEC_PREFIX}"
 	log_it "running with /bin/time\n"
 fi
 
 if [ "${USE_TIMEOUT}" == "on" ]
 then
+	TOOL_LIST="timeout ${TOOL_LIST}"
 	EXEC_PREFIX="timeout ${TIME_LIMIT} ${EXEC_PREFIX}"
 	log_it "running with timeout ${TIME_LIMIT}\n"
 fi
@@ -352,22 +359,51 @@ then
 	log_it "Must define a path to a valid argument file"
 	dump_log
 else
-	_ARGS=$(cat ${ARG_FILE})
-	if [ "${USE_LOGS}" == "on" ]
-	then
-		if [ "${VERBOSE}" == "2" ]
+	failed_requirements=""
+	# test all necessary tool
+	for tool_used in ${TOOL_LIST}
+	do
+		which ${tool_used} &> /dev/null
+		if [ "$?" != "0" ]; 
 		then
-			${EXEC_PREFIX} ${_ARGS} 2>&1 | tee ${LOG_FILE}
-		else
-			${EXEC_PREFIX} ${_ARGS} &>> ${LOG_FILE}
+			failed_requirements="${tool_used} ${failed_requirements}"
 		fi
-	else
-		${EXEC_PREFIX} ${_ARGS}
-	fi
-	EXIT_CODE=$?
-fi
+	done
 
-display "${EXIT_CODE}"
+	if [ "_${failed_requirements}" != "_" ];
+	then
+		if [ "${USE_LOGS}" == "on" ]
+		then
+			if [ "${VERBOSE}" == "2" ]
+			then
+				echo "missing \"${failed_requirements}\"" | tee ${LOG_FILE}
+			else
+				echo "missing \"${failed_requirements}\"" &>> ${LOG_FILE}
+			fi	
+		else
+			echo "missing \"${failed_requirements}\""
+		fi
+
+		EXIT_CODE="-1"
+		pretty_print_status "Missing package: ${failed_requirements}"
+
+	else
+		_ARGS=$(cat ${ARG_FILE})
+		if [ "${USE_LOGS}" == "on" ]
+		then
+			if [ "${VERBOSE}" == "2" ]
+			then
+				${EXEC_PREFIX} ${_ARGS} 2>&1 | tee ${LOG_FILE}
+			else
+				${EXEC_PREFIX} ${_ARGS} &>> ${LOG_FILE}
+			fi
+		else
+			${EXEC_PREFIX} ${_ARGS}
+		fi
+		EXIT_CODE=$?
+		display "${EXIT_CODE}"
+	fi
+fi
 
 EXIT_STATUS=0
 if [ "${EXIT_CODE}" != "0" ]
