@@ -78,9 +78,9 @@ _SUBTEST_LIST=""
 _NUMBER_OF_PROCESS="1"
 _SIM_COUNT="1"
 _RUN_DIR_OVERRIDE=""
+_EXTRA_CONFIG=""
 
-_CONFIG_OVERRIDE=""
-
+_OVERRIDE_CONFIG="off"
 _GENERATE_BENCH="off"
 _GENERATE_OUTPUT="off"
 _GENERATE_CONFIG="off"
@@ -103,12 +103,13 @@ printf "Called program with $INPUT
 		-b|--build_config               $(_prt_cur_arg ${_GENERATE_CONFIG}) Generate a config file for a given directory
 		-c|--clean                      $(_prt_cur_arg off ) Clean temporary directory
 		-f|--force_simulate             $(_prt_cur_arg ${_FORCE_SIM}) Force the simulation to be executed regardless of the config
+		--override						$(_prt_cur_arg ${_OVERRIDE_CONFIG}) if a config file is passed in, override arguments rather than append
 
 	OPTIONS
 		-h|--help                       $(_prt_cur_arg off) print this
 		-j|--nb_of_process < N >        $(_prt_cur_arg ${_NUMBER_OF_PROCESS}) Number of process requested to be used
 		-d|--output_dir < /abs/path >   $(_prt_cur_arg ${_RUN_DIR_OVERRIDE}) Change the run directory output
-		-C|--config <path/to/config>	$(_prt_cur_arg ${_CONFIG_OVERRIDE}) Add a config override file
+		-C|--config <path/to/config>	$(_prt_cur_arg ${_EXTRA_CONFIG}) Add a config file to append to the config for the tests
 		-t|--test < test name >         $(_prt_cur_arg ${_TEST}) Test name is either a absolute or relative path to 
 		                                                       a directory containing a task.conf, task_list.conf 
 		                                                       (see CONFIG FILE HELP) or one of the following predefined test
@@ -306,8 +307,8 @@ function parse_args() {
 						_exit_with_code "-1"
 					fi
 					
-					_CONFIG_OVERRIDE=$2
-					echo "Reading override from ${_CONFIG_OVERRIDE}"
+					_EXTRA_CONFIG=$2
+					echo "Reading extra config directive from ${_EXTRA_CONFIG}"
 
 					shift
 
@@ -336,7 +337,11 @@ function parse_args() {
 
 				;;-f|--force_simulate)   
 					_FORCE_SIM="on"
-					echo "Forcing Simulation"         
+					echo "Forcing Simulation"   
+
+				;;--override)
+					_OVERRIDE_CONFIG="on"
+					echo "Forcing override of config"    
 
 				;;*) 
 					PARSE_SUBTEST="on"
@@ -485,11 +490,21 @@ function populate_arg_from_file() {
 		IFS=${OLD_IFS}
 	fi
 
-	_regression_params=$(echo "${_local_regression_params} ")
-	_script_simulation_params=$(echo "${_local_script_simulation_params} ")
-	_script_synthesis_params=$(echo "${_local_script_synthesis_params} ")
-	_synthesis_params=$(echo "${_local_synthesis_params} ")
-	_simulation_params=$(echo "${_local_simulation_params} ")
+	if [ "${_OVERRIDE_CONFIG}" == "on" ];
+	then
+		_regression_params=$(echo "${_local_regression_params} ")
+		_script_simulation_params=$(echo "${_local_script_simulation_params} ")
+		_script_synthesis_params=$(echo "${_local_script_synthesis_params} ")
+		_synthesis_params=$(echo "${_local_synthesis_params} ")
+		_simulation_params=$(echo "${_local_simulation_params} ")
+	else
+		_regression_params=$(echo "${_local_regression_params} ${_regression_params} ")
+		_script_simulation_params=$(echo "${_local_script_simulation_params} ${_script_simulation_params} ")
+		_script_synthesis_params=$(echo "${_local_script_synthesis_params} ${_script_synthesis_params}")
+		_synthesis_params=$(echo "${_local_synthesis_params} ${_synthesis_params}")
+		_simulation_params=$(echo "${_local_simulation_params} ${_simulation_params}")
+	fi
+
 	_circuit_list=$(echo "${_circuit_list} ")
 	_arch_list=$(echo "${_arch_list} ")
 	_circuit_dir=$(echo "${THIS_DIR}/${_circuit_dir}")
@@ -650,15 +665,15 @@ function sim() {
 
 		##########################################
 		# use the overrides from the user
-		if [ "_${_CONFIG_OVERRIDE}" != "_" ]
+		if [ "_${_EXTRA_CONFIG}" != "_" ]
 		then
-			_CONFIG_OVERRIDE=$(readlink -f ${_CONFIG_OVERRIDE})
-			if [ ! -f ${_CONFIG_OVERRIDE} ] 
+			_EXTRA_CONFIG=$(readlink -f ${_EXTRA_CONFIG})
+			if [ ! -f ${_EXTRA_CONFIG} ] 
 			then
-				echo "Passed in an invalid global configuration file ${_CONFIG_OVERRIDE}"
+				echo "Passed in an invalid global configuration file ${_EXTRA_CONFIG}"
 				_exit_with_code "-1"
 			else
-				populate_arg_from_file "${_CONFIG_OVERRIDE}"
+				populate_arg_from_file "${_EXTRA_CONFIG}"
 			fi
 		fi
 
