@@ -165,7 +165,7 @@ function init_temp() {
 	n="1"
 	if [ "_${PREVIOUS_RUN_DIR}" != "_" ]
 	then
-		n=$(echo ${last_run##${OUTPUT_DIRECTORY}/run} | awk '{print $0 + 1}')
+		n=$(echo ${PREVIOUS_RUN_DIR##${OUTPUT_DIRECTORY}/run} | awk '{print $0 + 1}')
 	fi
 
 	NEW_RUN_DIR=${OUTPUT_DIRECTORY}/run$(printf "%03d" $n)
