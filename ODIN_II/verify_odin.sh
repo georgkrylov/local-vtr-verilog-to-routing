@@ -23,7 +23,17 @@ ODIN_EXEC="${THIS_DIR}/odin_II"
 
 
 BENCHMARK_DIR="${REGRESSION_DIR}/benchmark"
-TEST_DIR_LIST=$(ls -d ${BENCHMARK_DIR}/*/ | sed "s/\/$//g" | xargs -n1 -I TEST_FILE /bin/bash -c 'printf "$(basename TEST_FILE) "')
+
+VTR_REG_DIR="${THIS_DIR}/../vtr_flow/tasks/regression_tests"
+VTR_REG_LIST=$(ls ${VTR_REG_DIR} | grep "vtr_reg")
+
+SUITE_DIR="${BENCHMARK_DIR}/suite"
+SUITE_LIST=$(ls ${SUITE_DIR})
+
+TASK_DIR="${BENCHMARK_DIR}/task"
+TASK_LIST=$(ls ${TASK_DIR})
+
+PREVIOUS_RUN_DIR=""
 NEW_RUN_DIR="${REGRESSION_DIR}/run001/"
 
 ##############################################
@@ -63,6 +73,8 @@ _prt_cur_arg() {
 ##############
 # defaults
 _TEST=""
+_TEST_NAME=""
+_SUBTEST_LIST=""
 _NUMBER_OF_PROCESS="1"
 _SIM_COUNT="1"
 _RUN_DIR_OVERRIDE=""
@@ -78,22 +90,40 @@ function help() {
 
 printf "Called program with $INPUT
 	Usage: 
-		$0 [ OPTIONS / FLAGS ]
+		$0 [ OPTIONS / FLAGS ] [ SUBTEST_LIST ... ]
 
+	SUBTEST_LIST
+		should be a list of the form < task_name/test_file_name/architecture_file_name >
+		passing this in will limit a task to a subset of test
+		current: $(_prt_cur_arg ${_SUBTEST_LIST})
 
-	OPTIONS:
-		-h|--help                       $(_prt_cur_arg off) print this
-		-t|--test < test name >         $(_prt_cur_arg ${_TEST}) Test name is one of ( ${TEST_DIR_LIST} heavy_suite light_suite full_suite vtr_basic vtr_strong pre_commit pre_merge)
-		-j|--nb_of_process < N >        $(_prt_cur_arg ${_NUMBER_OF_PROCESS}) Number of process requested to be used
-		-d|--output_dir < /abs/path >   $(_prt_cur_arg ${_RUN_DIR_OVERRIDE}) Change the run directory output
-		-C|--config <path/to/config>	$(_prt_cur_arg ${_CONFIG_OVERRIDE}) Add a config override file
-
-	FLAGS:
+	FLAGS
 		-g|--generate_bench             $(_prt_cur_arg ${_GENERATE_BENCH}) Generate input and output vector for test
 		-o|--generate_output            $(_prt_cur_arg ${_GENERATE_OUTPUT}) Generate output vector for test given its input vector
 		-b|--build_config               $(_prt_cur_arg ${_GENERATE_CONFIG}) Generate a config file for a given directory
 		-c|--clean                      $(_prt_cur_arg off ) Clean temporary directory
 		-f|--force_simulate             $(_prt_cur_arg ${_FORCE_SIM}) Force the simulation to be executed regardless of the config
+
+	OPTIONS
+		-h|--help                       $(_prt_cur_arg off) print this
+		-j|--nb_of_process < N >        $(_prt_cur_arg ${_NUMBER_OF_PROCESS}) Number of process requested to be used
+		-d|--output_dir < /abs/path >   $(_prt_cur_arg ${_RUN_DIR_OVERRIDE}) Change the run directory output
+		-C|--config <path/to/config>	$(_prt_cur_arg ${_CONFIG_OVERRIDE}) Add a config override file
+		-t|--test < test name >         $(_prt_cur_arg ${_TEST}) Test name is either a absolute or relative path to 
+		                                                       a directory containing a task.conf, task_list.conf 
+		                                                       (see CONFIG FILE HELP) or one of the following predefined test
+
+	AVAILABLE_TEST:
+
+	  regression_test/benchmark/suite/     
+$( echo "${SUITE_LIST}" | awk '{print "\t                                  " $0}')
+
+	  regression_test/benchmark/task/
+$( echo "${TASK_LIST}" | awk '{print "\t                                 " $0}')
+
+	  vtr_reg_
+$( echo "${VTR_REG_LIST}" | awk '{print "\t          " substr($0,9)}')
+
 
 	CONFIG FILE HELP:
 "
@@ -131,9 +161,9 @@ function init_temp() {
 		OUTPUT_DIRECTORY=${_RUN_DIR_OVERRIDE}
 	fi
 
-	last_run=$(find ${OUTPUT_DIRECTORY}/run* -maxdepth 0 -type d 2>/dev/null | tail -1 )
+	PREVIOUS_RUN_DIR=$(find ${OUTPUT_DIRECTORY}/run* -maxdepth 0 -type d 2>/dev/null | tail -1 )
 	n="1"
-	if [ "_${last_run}" != "_" ]
+	if [ "_${PREVIOUS_RUN_DIR}" != "_" ]
 	then
 		n=$(echo ${last_run##${OUTPUT_DIRECTORY}/run} | awk '{print $0 + 1}')
 	fi
@@ -150,6 +180,10 @@ function create_temp() {
 		rm -Rf ${REGRESSION_DIR}/latest || /bin/true
 
 		ln -s ${NEW_RUN_DIR} ${REGRESSION_DIR}/latest
+
+		# put in the passed parameter for keepsake 
+		echo ${_TEST} > ${NEW_RUN_DIR}/cmd.task
+		echo $@ >> ${NEW_RUN_DIR}/cmd.task
 	fi
 }
 
@@ -212,94 +246,104 @@ function mv_failed() {
 	fi
 }
 
+
 function parse_args() {
+	PARSE_SUBTEST="off"
 	while [[ "$#" > 0 ]]
 	do 
-		case $1 in 
+		if [ ${PARSE_SUBTEST} == "on" ];
+		then
+		# parse subtest
+			_SUBTEST_LIST="$1 ${_SUBTEST_LIST}"
+			shift
+		else
+		# parse [ OPTIONS / FLAGS ] 
+			case $1 in 
 
-		# Help Desk
-			-h|--help)
-				echo "Printing Help information"
-				help
-				_exit_with_code "0"
+			# Help Desk
+				-h|--help)
+					echo "Printing Help information"
+					help
+					_exit_with_code "0"
 
-			
-		## directory in benchmark
-			;;-t|--test)
-				# this is handled down stream
-				if [ "_$2" == "_" ]
-				then 
-					echo "empty argument for $1"
-					_exit_with_code "-1"
-				fi
-
-				_TEST="$2"
-				shift
-
-			;;-d|--output_dir)
-
-				if [ "_$2" == "_" ]
-				then 
-					echo "empty argument for $1"
-					_exit_with_code "-1"
-				fi
 				
-				_RUN_DIR_OVERRIDE=$2
+			## directory in benchmark
+				;;-t|--test)
+					# this is handled down stream
+					if [ "_$2" == "_" ]
+					then 
+						echo "empty argument for $1"
+						_exit_with_code "-1"
+					fi
 
-				if [ ! -d "${_RUN_DIR_OVERRIDE}" ]
-				then
-					echo "Directory ${_RUN_DIR_OVERRIDE} does not exist"
-					_exit_with_code "-1"
-				fi
+					_TEST="$2"
+					shift
 
-				shift
+				;;-d|--output_dir)
 
-			;;-C|--config)
+					if [ "_$2" == "_" ]
+					then 
+						echo "empty argument for $1"
+						_exit_with_code "-1"
+					fi
+					
+					_RUN_DIR_OVERRIDE=$2
 
-				if [ "_$2" == "_" ]
-				then 
-					echo "empty argument for $1"
-					_exit_with_code "-1"
-				fi
-				
-				_CONFIG_OVERRIDE=$2
-				echo "Reading override from ${_CONFIG_OVERRIDE}"
+					if [ ! -d "${_RUN_DIR_OVERRIDE}" ]
+					then
+						echo "Directory ${_RUN_DIR_OVERRIDE} does not exist"
+						_exit_with_code "-1"
+					fi
 
-				shift
+					shift
 
-		## number
-			;;-j|--nb_of_process)
-				_NUMBER_OF_PROCESS=$(_flag_is_number $1 $2)
-				echo "Using [$2] processors for this benchmarking suite"
-				shift
+				;;-C|--config)
 
-		# Boolean flags
-			;;-g|--generate_bench)		
-				_GENERATE_BENCH="on"
-				echo "generating output vector for test given predefined input"
+					if [ "_$2" == "_" ]
+					then 
+						echo "empty argument for $1"
+						_exit_with_code "-1"
+					fi
+					
+					_CONFIG_OVERRIDE=$2
+					echo "Reading override from ${_CONFIG_OVERRIDE}"
 
-			;;-o|--generate_output)		
-				_GENERATE_OUTPUT="on"
-				echo "generating input and output vector for test"
+					shift
 
-			;;-b|--build_config)		
-				_GENERATE_CONFIG="on"
-				echo "generating a config file for test directory"
+			## number
+				;;-j|--nb_of_process)
+					_NUMBER_OF_PROCESS=$(_flag_is_number $1 $2)
+					echo "Using [$2] processors for this benchmarking suite"
+					shift
 
-			;;-c|--clean)				
-				echo "Cleaning temporary run in directory"
-				cleanup_temp
+			# Boolean flags
+				;;-g|--generate_bench)		
+					_GENERATE_BENCH="on"
+					echo "generating output vector for test given predefined input"
 
-			;;-f|--force_simulate)   
-				_FORCE_SIM="on"
-				echo "Forcing Simulation"         
+				;;-o|--generate_output)		
+					_GENERATE_OUTPUT="on"
+					echo "generating input and output vector for test"
 
-			;;*) 
-				echo "Unknown parameter passed: $1"
-				help 
-				_exit_with_code "-1"
-		esac
-		shift
+				;;-b|--build_config)		
+					_GENERATE_CONFIG="on"
+					echo "generating a config file for test directory"
+
+				;;-c|--clean)				
+					echo "Cleaning temporary run in directory"
+					cleanup_temp
+
+				;;-f|--force_simulate)   
+					_FORCE_SIM="on"
+					echo "Forcing Simulation"         
+
+				;;*) 
+					PARSE_SUBTEST="on"
+			esac
+
+			# keep the subtest in case we caught the end of options and flags
+			[ ${PARSE_SUBTEST} != "on" ] && shift
+		fi
 	done
 }
 
@@ -560,7 +604,6 @@ function run_bench_in_parallel() {
 
 function sim() {
 
-
 	###########################################
 	# find the benchmark
 	benchmark_dir=$1
@@ -578,6 +621,26 @@ function sim() {
 	benchmark_dir=$(readlink -f "${benchmark_dir}")
 	bench_name=$(basename ${benchmark_dir})
 	echo "Task is: ${bench_name}"
+
+	##########################################
+	# check if we only run some subtask
+	RECONSTRUCTED_SUBTEST_LIST=""
+	subtest_pairs=""
+	for subtest in ${_SUBTEST_LIST};
+	do
+		if [ "_${subtest%%/*}" == "_${bench_name}" ]
+		then
+			subtest_list=${subtest}
+		else
+			RECONSTRUCTED_SUBTEST_LIST="${subtest} ${RECONSTRUCTED_SUBTEST_LIST}"
+		fi
+	done
+	_SUBTEST_LIST=${RECONSTRUCTED_SUBTEST_LIST}
+
+	if [ "_${subtest_list}" != "_" ];
+	then
+		echo "Limiting this task to a list of subtest ${subtest_list}"
+	fi
 
 	##########################################
 	# setup the parameters
@@ -719,73 +782,83 @@ function sim() {
 			arch_name=$(basename ${arches%.*})
 
 			TEST_FULL_REF="${bench_name}/${circuit_name}/${arch_name}"
-			DIR="${NEW_RUN_DIR}/${TEST_FULL_REF}"
-			mkdir -p $DIR
 
-			###############################
-			# Synthesis
-			if [ "${_synthesis}" == "on" ]
+			run_this_test="on"
+			if [ "_${subtest_list}" != "_" ];
 			then
-			
-				# if synthesis was on, we need to specify a blif output name
-				input_blif_file="${DIR}/${circuit_name}.blif"
-
-				synthesis_params_file=${DIR}/synthesis_params
-
-				wrapper_command="${WRAPPER_EXEC}
-						${_script_synthesis_params}
-						--log_file ${DIR}/synthesis.log
-						--test_name ${TEST_FULL_REF}
-						--failure_log ${global_synthesis_failure}.log
-						${synthesis_params_file}"
-
-				synthesis_command="${ODIN_EXEC} 
-									${_synthesis_params}
-									${arch_cmd}
-									-V ${input_verilog_file}
-									-o ${input_blif_file}
-									-sim_dir ${DIR}"
-
-				_echo_args "${synthesis_command}" > ${synthesis_params_file}
-				_echo_args "${wrapper_command}"  > ${DIR}/${wrapper_synthesis_file_name}
+				echo ${subtest_list} | grep "${TEST_FULL_REF}" &> /dev/null
+				[ "$?" != "0" ] && run_this_test="off"
 			fi
-			###############################
-			# Simulation
-			if [ "${_simulation}" == "on" ]
+
+			if [ "${run_this_test}" == "on" ];
 			then
-				simulation_params_file=${DIR}/simulation_params
 
-				wrapper_command="${WRAPPER_EXEC}
-									${_script_simulation_params}
-									--log_file ${DIR}/simulation.log
-									--test_name ${TEST_FULL_REF}
-									--failure_log ${global_simulation_failure}.log
-									${simulation_params_file}"
+				DIR="${NEW_RUN_DIR}/${TEST_FULL_REF}"
+				mkdir -p $DIR
 
-				simulation_command="${ODIN_EXEC} 
-										${_simulation_params}
+				###############################
+				# Synthesis
+				if [ "${_synthesis}" == "on" ]
+				then
+				
+					# if synthesis was on, we need to specify a blif output name
+					input_blif_file="${DIR}/${circuit_name}.blif"
+
+					synthesis_params_file=${DIR}/synthesis_params
+
+					wrapper_command="${WRAPPER_EXEC}
+							${_script_synthesis_params}
+							--log_file ${DIR}/synthesis.log
+							--test_name ${TEST_FULL_REF}
+							--failure_log ${global_synthesis_failure}.log
+							${synthesis_params_file}"
+
+					synthesis_command="${ODIN_EXEC} 
+										${_synthesis_params}
 										${arch_cmd}
-										-b ${input_blif_file}
-										-sim_dir ${DIR}"										
+										-V ${input_verilog_file}
+										-o ${input_blif_file}
+										-sim_dir ${DIR}"
 
-				if [ "${_GENERATE_BENCH}" == "on" ] || [ ! -f ${input_vector_file} ]
-				then
-					_echo_args "${simulation_command}" > ${simulation_params_file}
-					_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_generate_io_file_name}
-
-				elif [ "${_GENERATE_OUTPUT}" == "on" ] || [ ! -f ${output_vector_file} ]
-				then
-					_echo_args "${simulation_command} -t ${input_vector_file}" > ${simulation_params_file}
-					_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_generate_output_file_name}
-
-				else
-					_echo_args "${simulation_command} -t ${input_vector_file} -T ${output_vector_file}" > ${simulation_params_file}
-					_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_predefined_io_file_name}
-
+					_echo_args "${synthesis_command}" > ${synthesis_params_file}
+					_echo_args "${wrapper_command}"  > ${DIR}/${wrapper_synthesis_file_name}
 				fi
+				###############################
+				# Simulation
+				if [ "${_simulation}" == "on" ]
+				then
+					simulation_params_file=${DIR}/simulation_params
 
+					wrapper_command="${WRAPPER_EXEC}
+										${_script_simulation_params}
+										--log_file ${DIR}/simulation.log
+										--test_name ${TEST_FULL_REF}
+										--failure_log ${global_simulation_failure}.log
+										${simulation_params_file}"
+
+					simulation_command="${ODIN_EXEC} 
+											${_simulation_params}
+											${arch_cmd}
+											-b ${input_blif_file}
+											-sim_dir ${DIR}"										
+
+					if [ "${_GENERATE_BENCH}" == "on" ] || [ ! -f ${input_vector_file} ]
+					then
+						_echo_args "${simulation_command}" > ${simulation_params_file}
+						_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_generate_io_file_name}
+
+					elif [ "${_GENERATE_OUTPUT}" == "on" ] || [ ! -f ${output_vector_file} ]
+					then
+						_echo_args "${simulation_command} -t ${input_vector_file}" > ${simulation_params_file}
+						_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_generate_output_file_name}
+
+					else
+						_echo_args "${simulation_command} -t ${input_vector_file} -T ${output_vector_file}" > ${simulation_params_file}
+						_echo_args "${wrapper_command}" > ${DIR}/${wrapper_simulation_predefined_io_file_name}
+
+					fi
+				fi
 			fi
-
 		done
 	done	
 
@@ -914,7 +987,7 @@ function run_suite() {
 							input_path=$(ls -d -1 ${THIS_DIR}/${input_path} 2> /dev/null)
 							;;
 					esac
-					
+
 					input_list=( ${input_list[@]} ${input_path[@]} )
 				done
 				
@@ -931,7 +1004,6 @@ function run_suite() {
 					;;
 
 				*)
-					# bash expand when possible
 					echo "no such Directory for task: ${current_input}"
 					;;
 			esac
@@ -978,8 +1050,9 @@ then
 fi
 
 _TEST=$(readlink -f ${_TEST})
+_TEST_NAME=$(basename ${_TEST})
 
-echo "Task: ${_TEST}"
+echo "Task: ${_TEST_NAME} (${_TEST})"
 
 input_list=( "${_TEST}" )
 
