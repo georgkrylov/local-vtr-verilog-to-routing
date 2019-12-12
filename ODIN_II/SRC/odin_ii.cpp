@@ -573,6 +573,32 @@ void get_options(int argc, char** argv) {
 			.metavar("PINS_TO_MONITOR")
 			;
 
+    auto& mixing_opt_grp = parser.add_argument_group("mixing hard and soft logic optimization");
+
+	mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_mults")
+			.help("To enable mixing hard block and soft logic implementation of multipliers")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
+	
+	mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_adders")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
+
+	mixing_opt_grp.add_argument(global_args.mults_mixing_exact_number_of_multipliers, "--mults_mixing_exact_number_of_multipliers")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("-1")
+			.action(argparse::Action::STORE)
+			;
+
+	mixing_opt_grp.add_argument(global_args.mults_mixing_ratio, "--multipliers_mixing_ratio")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("-1.0")
+			.action(argparse::Action::STORE)
+			;
+
 	parser.parse_args(argc, argv);
 
 	//Check required options
@@ -635,6 +661,18 @@ void get_options(int argc, char** argv) {
 	{
 		warning_message(ARG_ERROR,-1,-1, "%s", "Permissive flag is ON. Undefined behaviour may occur\n");
 	}
+	
+	if(global_args.mix_multipliers){
+		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
+	}
+
+	if(global_args.mix_adders){
+		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::ADDERS); 
+		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
+	}
+	configuration.mults_mixing_exact_number_of_multipliers  = global_args.mults_mixing_exact_number_of_multipliers;
+	configuration.mults_mixing_ratio  = global_args.mults_mixing_ratio;
 }
 
 /*---------------------------------------------------------------------------
@@ -665,4 +703,10 @@ void set_default_config()
 	*/
 	configuration.soft_logic_memory_width_threshold = 0;
 	configuration.soft_logic_memory_depth_threshold = 0;
+	/**
+	 * Mixing soft and hard logic parameters 
+	 */
+	configuration.mix_soft_and_hard_logic = 0;
+	configuration.mults_mixing_exact_number_of_multipliers = -1;
+	configuration.mults_mixing_ratio = -1.0f;
 }
