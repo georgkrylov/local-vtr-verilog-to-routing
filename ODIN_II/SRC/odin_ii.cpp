@@ -447,121 +447,166 @@ void get_options(int argc, char** argv) {
         .action(argparse::Action::STORE_TRUE);
 
     other_grp.add_argument(global_args.top_level_module_name, "--top_module")
-        .help("Allow to overwrite the top level module that odin would use")
-        .metavar("TOP_LEVEL_MODULE_NAME");
+            .help("Allow to overwrite the top level module that odin would use")
+			.metavar("TOP_LEVEL_MODULE_NAME")
+            ;
 
-    auto& rand_sim_grp = parser.add_argument_group("random simulation options");
+	auto& rand_sim_grp = parser.add_argument_group("random simulation options");
 
-    rand_sim_grp.add_argument(global_args.sim_num_test_vectors, "-g")
-        .help("Number of random test vectors to generate")
-        .metavar("NUM_VECTORS");
+	rand_sim_grp.add_argument(global_args.sim_num_test_vectors, "-g")
+			.help("Number of random test vectors to generate")
+			.metavar("NUM_VECTORS")
+			;
 
-    rand_sim_grp.add_argument(global_args.sim_min_coverage, "--coverage")
-        .help("using the g argument we will simulate in blocks until a certain coverage is attained")
-        .metavar("MIN_COVERAGE");
+	rand_sim_grp.add_argument(global_args.sim_min_coverage, "--coverage")
+			.help("using the g argument we will simulate in blocks until a certain coverage is attained")
+			.metavar("MIN_COVERAGE")
+			;
 
-    rand_sim_grp.add_argument(global_args.sim_achieve_best, "--best_coverage")
-        .help("using the g argument we will simulate in blocks until best coverage is attained")
-        .default_value("false")
-        .action(argparse::Action::STORE_TRUE);
+	rand_sim_grp.add_argument(global_args.sim_achieve_best, "--best_coverage")
+			.help("using the g argument we will simulate in blocks until best coverage is attained")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
+			
+	rand_sim_grp.add_argument(global_args.sim_random_seed, "-r")
+			.help("Random seed")
+			.default_value("0")
+			.metavar("SEED")
+			;
 
-    rand_sim_grp.add_argument(global_args.sim_random_seed, "-r")
-        .help("Random seed")
-        .default_value("0")
-        .metavar("SEED");
+	rand_sim_grp.add_argument(global_args.sim_hold_low, "-L")
+			.help("list of primary inputs to hold high at cycle 0, and low for all subsequent cycles")
+			.nargs('+')
+			.metavar("PRIMARY_INPUTS")
+			;
 
-    rand_sim_grp.add_argument(global_args.sim_hold_low, "-L")
-        .help("list of primary inputs to hold high at cycle 0, and low for all subsequent cycles")
-        .nargs('+')
-        .metavar("PRIMARY_INPUTS");
+	rand_sim_grp.add_argument(global_args.sim_hold_high, "-H")
+			.help("list of primary inputs to hold low at cycle 0, and high for all subsequent cycles")
+			.nargs('+')
+			.metavar("PRIMARY_INPUTS")
+			;
 
-    rand_sim_grp.add_argument(global_args.sim_hold_high, "-H")
-        .help("list of primary inputs to hold low at cycle 0, and high for all subsequent cycles")
-        .nargs('+')
-        .metavar("PRIMARY_INPUTS");
 
-    auto& vec_sim_grp = parser.add_argument_group("vector simulation options");
+	auto& vec_sim_grp = parser.add_argument_group("vector simulation options");
 
-    vec_sim_grp.add_argument(global_args.sim_vector_input_file, "-t")
-        .help("File of predefined input vectors to simulate")
-        .metavar("INPUT_VECTOR_FILE");
+	vec_sim_grp.add_argument(global_args.sim_vector_input_file, "-t")
+			.help("File of predefined input vectors to simulate")
+			.metavar("INPUT_VECTOR_FILE")
+			;
 
-    vec_sim_grp.add_argument(global_args.sim_vector_output_file, "-T")
-        .help("File of predefined output vectors to check against simulation")
-        .metavar("OUTPUT_VECTOR_FILE");
+	vec_sim_grp.add_argument(global_args.sim_vector_output_file, "-T")
+			.help("File of predefined output vectors to check against simulation")
+			.metavar("OUTPUT_VECTOR_FILE")
+			;
 
-    auto& other_sim_grp = parser.add_argument_group("other simulation options");
+	auto& other_sim_grp = parser.add_argument_group("other simulation options");
 
-    other_sim_grp.add_argument(global_args.parralelized_simulation, "-j")
-        .help("Number of threads allowed for simulator to use")
-        .default_value("1")
-        .metavar("PARALEL NODE COUNT");
+	other_sim_grp.add_argument(global_args.parralelized_simulation, "-j")
+			.help("Number of threads allowed for simulator to use")
+			.default_value("1")
+			.metavar("PARALEL NODE COUNT")
+			;
 
-    other_sim_grp.add_argument(global_args.parralelized_simulation_in_batch, "--batch")
-        .help("DEPRECATED")
-        .default_value("false")
-        .action(argparse::Action::STORE_TRUE)
-        .metavar("BATCH FLAG");
+	other_sim_grp.add_argument(global_args.parralelized_simulation_in_batch, "--batch")
+			.help("DEPRECATED")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			.metavar("BATCH FLAG")
+			;
 
-    other_sim_grp.add_argument(global_args.sim_directory, "-sim_dir")
-        .help("Directory output for simulation")
-        .default_value(DEFAULT_OUTPUT)
-        .metavar("SIMULATION_DIRECTORY");
+	other_sim_grp.add_argument(global_args.sim_directory, "-sim_dir")
+			.help("Directory output for simulation")
+			.default_value(DEFAULT_OUTPUT)
+			.metavar("SIMULATION_DIRECTORY")
+			;
 
-    other_sim_grp.add_argument(global_args.sim_generate_three_valued_logic, "-3")
-        .help("Generate three valued logic, instead of binary")
-        .default_value("false")
-        .action(argparse::Action::STORE_TRUE);
+	other_sim_grp.add_argument(global_args.sim_generate_three_valued_logic, "-3")
+			.help("Generate three valued logic, instead of binary")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
 
-    other_sim_grp.add_argument(global_args.interactive_simulation, "--interractive_simulation")
-        .help("prevent Odin from freeing element so that application leveraging the simulator can use the nodes")
-        .default_value("false")
-        .action(argparse::Action::STORE_TRUE);
+	other_sim_grp.add_argument(global_args.interactive_simulation, "--interractive_simulation")
+			.help("prevent Odin from freeing element so that application leveraging the simulator can use the nodes")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
 
-    other_sim_grp.add_argument<int, ParseInitRegState>(global_args.sim_initial_value, "-U")
-        .help("Default initial register state")
-        .default_value("X")
-        .metavar("INIT_REG_STATE");
+	other_sim_grp.add_argument<int,ParseInitRegState>(global_args.sim_initial_value, "-U")
+			.help("Default initial register state")
+			.default_value("X")
+			.metavar("INIT_REG_STATE")
+			;
 
-    other_sim_grp.add_argument(global_args.sim_output_both_edges, "-E")
-        .help("Output after both edges of the clock (This is by default)")
-        .default_value("true")
-        .action(argparse::Action::STORE_TRUE);
+	other_sim_grp.add_argument(global_args.sim_output_both_edges, "-E")
+			.help("Output after both edges of the clock (This is by default)")
+			.default_value("true")
+			.action(argparse::Action::STORE_TRUE)
+			;
 
-    other_sim_grp.add_argument(global_args.sim_output_both_edges, "-R")
-        .help("DEPRECATED Output after rising edges of the clock only (Default after both edges)")
-        .default_value("true")
-        .action(argparse::Action::STORE_TRUE);
+	other_sim_grp.add_argument(global_args.sim_output_both_edges, "-R")
+			.help("DEPRECATED Output after rising edges of the clock only (Default after both edges)")
+			.default_value("true")
+			.action(argparse::Action::STORE_TRUE)
+			;
+	
+	other_sim_grp.add_argument(global_args.read_mif_input, "--read_mif")
+			.help("look for a mif file to read")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
 
-    other_sim_grp.add_argument(global_args.read_mif_input, "--read_mif")
-        .help("look for a mif file to read")
-        .default_value("false")
-        .action(argparse::Action::STORE_TRUE);
+	other_sim_grp.add_argument(global_args.sim_additional_pins, "-p")
+			.help("list of additional pins/nodes to monitor during simulation.\n"
+					"Eg: \"-p input~0 input~1\" monitors pin 0 and 1 of input, \n"
+					"  or \"-p input\" monitors all pins of input as a single port. \n"
+					"  or \"-p input~\" monitors all pins of input as separate ports. (split) \n"
+					"- Note: Non-existent pins are ignored. \n"
+					"- Matching is done via strstr so general strings will match \n"
+					"  all similar pins and nodes.\n"
+					"    (Eg: FF_NODE will create a single port with all flipflops) \n")
+			.nargs('+')
+			.metavar("PINS_TO_MONITOR")
+			;
 
-    other_sim_grp.add_argument(global_args.sim_additional_pins, "-p")
-        .help(
-            "list of additional pins/nodes to monitor during simulation.\n"
-            "Eg: \"-p input~0 input~1\" monitors pin 0 and 1 of input, \n"
-            "  or \"-p input\" monitors all pins of input as a single port. \n"
-            "  or \"-p input~\" monitors all pins of input as separate ports. (split) \n"
-            "- Note: Non-existent pins are ignored. \n"
-            "- Matching is done via strstr so general strings will match \n"
-            "  all similar pins and nodes.\n"
-            "    (Eg: FF_NODE will create a single port with all flipflops) \n")
-        .nargs('+')
-        .metavar("PINS_TO_MONITOR");
+    auto& mixing_opt_grp = parser.add_argument_group("mixing hard and soft logic optimization");
 
-    parser.parse_args(argc, argv);
+	mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_mults")
+			.help("To enable mixing hard block and soft logic implementation of multipliers")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
+	
+	mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_adders")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("false")
+			.action(argparse::Action::STORE_TRUE)
+			;
 
-    //Check required options
-    if (!only_one_is_true({
-            global_args.config_file.provenance() == argparse::Provenance::SPECIFIED, //have a config file
-            global_args.blif_file.provenance() == argparse::Provenance::SPECIFIED,   //have a blif file
-            global_args.verilog_files.value().size() > 0                             //have a verilog input list
-        })) {
-        parser.print_usage();
-        error_message(PARSE_ARGS, 0, -1, "%s", "Must include only one of either:\n\ta config file(-c)\n\ta blif file(-b)\n\ta verilog file(-V)\n");
-    }
+	mixing_opt_grp.add_argument(global_args.mults_mixing_exact_number_of_multipliers, "--mults_mixing_exact_number_of_multipliers")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("-1")
+			.action(argparse::Action::STORE)
+			;
+
+	mixing_opt_grp.add_argument(global_args.mults_mixing_ratio, "--multipliers_mixing_ratio")
+			.help("To enable mixing hard block and soft logic implementation of adders")
+			.default_value("-1.0")
+			.action(argparse::Action::STORE)
+			;
+
+	parser.parse_args(argc, argv);
+
+	//Check required options
+	if(!only_one_is_true({	
+		global_args.config_file.provenance() == argparse::Provenance::SPECIFIED,					//have a config file
+		global_args.blif_file.provenance() == argparse::Provenance::SPECIFIED,						//have a blif file
+		global_args.verilog_files.value().size() > 0												//have a verilog input list
+	})){
+		parser.print_usage();
+		error_message(ARG_ERROR,0,-1, "%s", "Must include only one of either:\n\ta config file(-c)\n\ta blif file(-b)\n\ta verilog file(-V)\n");
+	}
 
     //adjust thread count
     int thread_requested = global_args.parralelized_simulation;
@@ -603,13 +648,22 @@ void get_options(int argc, char** argv) {
         global_args.sim_directory.set(configuration.debug_output_path, argparse::Provenance::SPECIFIED);
     }
 
-    if (configuration.debug_output_path == DEFAULT_OUTPUT) {
-        configuration.debug_output_path = global_args.sim_directory;
-    }
+	if(global_args.permissive.value())
+	{
+		warning_message(ARG_ERROR,-1,-1, "%s", "Permissive flag is ON. Undefined behaviour may occur\n");
+	}
+	
+	if(global_args.mix_multipliers){
+		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
+	}
 
-    if (global_args.permissive.value()) {
-        warning_message(PARSE_ARGS, -1, -1, "%s", "Permissive flag is ON. Undefined behaviour may occur\n");
-    }
+	if(global_args.mix_adders){
+		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::ADDERS); 
+		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
+	}
+	configuration.mults_mixing_exact_number_of_multipliers  = global_args.mults_mixing_exact_number_of_multipliers;
+	configuration.mults_mixing_ratio  = global_args.mults_mixing_ratio;
 }
 
 /*---------------------------------------------------------------------------
@@ -647,16 +701,18 @@ static void get_physical_luts(std::vector<t_pb_type*>& pb_lut_list, t_mode* mode
     }
 }
 
-static void get_physical_luts(std::vector<t_pb_type*>& pb_lut_list, t_pb_type* pb_type) {
-    if (pb_type) {
-        if (pb_type->class_type == LUT_CLASS) {
-            pb_lut_list.push_back(pb_type);
-        } else {
-            for (int i = 0; i < pb_type->num_modes; i++) {
-                get_physical_luts(pb_lut_list, &pb_type->modes[i]);
-            }
-        }
-    }
+	/*
+	* Soft logic cutoffs. If a memory or a memory resulting from a split
+	* has a width AND depth below these, it will be converted to soft logic.
+	*/
+	configuration.soft_logic_memory_width_threshold = 0;
+	configuration.soft_logic_memory_depth_threshold = 0;
+	/**
+	 * Mixing soft and hard logic parameters 
+	 */
+	configuration.mix_soft_and_hard_logic = 0;
+	configuration.mults_mixing_exact_number_of_multipliers = -1;
+	configuration.mults_mixing_ratio = -1.0f;
 }
 
 static void set_physical_lut_size() {

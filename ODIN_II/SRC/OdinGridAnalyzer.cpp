@@ -340,11 +340,15 @@ std::string OdinGridAnalyzer::getArchDescriptionTag(int hardBlockType){
 	switch (hardBlockType)
 	{
 	case HardBlocksOptimizationTypesEnum::MULTIPLIERS:
-		// TODO find all blocks
+	{	
 		result = "mult_36";
-		
 		break;
-	
+	}
+	case HardBlocksOptimizationTypesEnum::ADDERS:
+	{
+		result = "adder";
+		break;
+	}
 	default:
 		result = "The requested hardBlockType is not supported";
 		break;

@@ -48,13 +48,14 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		int mix_soft_and_hard_logic = config.mix_soft_and_hard_logic;
 		int temp;
 		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++)
-			{
+		{
 			temp = 1 << (i);
 			checkValue = temp & mix_soft_and_hard_logic;
-			if (checkValue != 0){
+			if (checkValue != 0)
+			{
 				_enabledOptimizations[i] = true;
 			}
-			}
+		}
 		_allOptsDisabled = false;
 		//Explicitly set all hard block numbers to max
 		for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
@@ -101,7 +102,6 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 		{
 			if (true == _enabledOptimizations[currentOptimizationKind])
 			{
-				// TODO make heterogeneous blocks happen
 				int availableHardBlocks = countHardBlocksInArch(ref,currentOptimizationKind,widthAndHeight);
 				int hardBlocksNeeded = inferHardBlocksFromNetlist(currentOptimizationKind);
 				int hardBlocksCount = availableHardBlocks;

@@ -139,7 +139,14 @@ struct global_args_t {
     // The seed for creating random simulation vector
     argparse::ArgValue<int> sim_random_seed;
 
-    argparse::ArgValue<bool> interactive_simulation;
+	argparse::ArgValue<bool> interactive_simulation;
+
+	// Arguments for mixing hard and soft logic
+	argparse::ArgValue<bool> mix_multipliers;
+	argparse::ArgValue<bool> mix_adders;
+	argparse::ArgValue<int> mults_mixing_exact_number_of_multipliers;
+	argparse::ArgValue<float> mults_mixing_ratio;
+	
 };
 
 /**
