@@ -118,6 +118,7 @@ my $check_place             = 0;
 my $use_old_abc_script      = 0;
 my $run_name = "";
 my $expect_fail = 0;
+my $custom_odin_config_full_name="basic_odin_config_split.xml";
 my $verbosity = 0;
 my $odin_adder_config_path = "default";
 my $odin_adder_cin_global = "";
@@ -212,6 +213,9 @@ while ( scalar(@ARGV) != 0 ) { #While non-empty
 	}
 	elsif ( $token eq "-use_odin_simulation" ){
 		$odin_run_simulation = 1;
+	}
+	elsif ( $token eq "-custom_odin_config_full_name" ){
+		$custom_odin_config_full_name = shift(@ARGV);
 	}
     elsif ( $token eq "-adder_cin_global" ){
         $odin_adder_cin_global = "--adder_cin_global";
@@ -311,8 +315,12 @@ if (    $stage_idx_abc >= $starting_stage
 	  or die "Cannot find ODIN_II executable ($odin2_path)";
 
 	$odin_config_file_name = "basic_odin_config_split.xml";
-
-	$odin_config_file_path = "$vtr_flow_path/misc/$odin_config_file_name";
+	if ( $custom_odin_config_full_name  ne  $odin_config_file_name)
+	{
+		$odin_config_file_path = "$custom_odin_config_full_name";
+	} else {
+		$odin_config_file_path = "$vtr_flow_path/misc/$odin_config_file_name";
+	}
 	( -e $odin_config_file_path )
 	  or die "Cannot find ODIN config template ($odin_config_file_path)";
 
