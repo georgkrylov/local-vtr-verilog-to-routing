@@ -17,6 +17,4 @@ arch_list_add=mults_fixed_12_by_12.xml
 parse_file=vpr_standard.txt
 
 #script_params_list_add=-valgrind
-script_params_list_add=-ending_stage odin
-script_params_list_add=-use_odin_simulation
-script_params_list_add=-custom_odin_config_full_name /home/george/vtr-verilog-to-routing/vtr_flow/tasks/mix_multipliers/config/multconfig.xml
+script_params_common =-ending_stage abc -use_odin_simulation -custom_odin_config_full_name /home/george/vtr-verilog-to-routing/vtr_flow/tasks/mix_multipliers/config/multconfig.xml
