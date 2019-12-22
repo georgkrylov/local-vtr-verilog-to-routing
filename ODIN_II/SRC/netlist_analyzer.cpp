@@ -34,7 +34,7 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
         result = 1;
 		for (i = 0; i < node->num_output_pins; i++)
 		{	
-			if (node->output_pins[i] && node->output_pins[i]->net)
+			if (node->output_pins[i]->net)
 			{
 				nnet_t *next_net = node->output_pins[i]->net;
 				if(next_net->fanout_pins)
