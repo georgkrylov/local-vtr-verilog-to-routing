@@ -215,6 +215,7 @@ sub generate_single_task_actions {
 	my $script_params_common = $shared_script_params;  # start with the shared ones then build unique ones
 	my @circuits_list;
 	my @archs_list;
+    my $custom_odin_config;
 	my @script_params_list;
 	my $cmos_tech_path = "";
 
@@ -254,6 +255,8 @@ sub generate_single_task_actions {
 			$circuits_dir = $value;
 		} elsif ( $key eq "archs_dir" ) {
 			$archs_dir = $value;
+		} elsif ( $key eq "custom_odin_config" ) {
+			$custom_odin_config = $value;
 		} elsif ( $key eq "circuit_list_add" ) {
 			push( @circuits_list, $value );
 		} elsif ( $key eq "arch_list_add" ) {
@@ -435,6 +438,12 @@ sub generate_single_task_actions {
                 my $dir = "$task_dir/$run_dir/${arch}/${circuit}/${full_params_dirname}";
 
                 my $name = sprintf("'%-25s %-54s'", "${task}:", "${arch}/${circuit}/${full_params_dirname}");
+                my $full_path_custom_config;
+                #To accomodate custom odin configuration
+                if ($custom_odin_config ne ""){
+                    $full_path_custom_config = "$task_dir/config/${custom_odin_config}";
+                    $full_params .= " -custom_odin_config_full_name " . "$full_path_custom_config";
+                }
 
                 #Do we expect a specific status?
                 my $expect_fail = "";
