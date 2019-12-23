@@ -28,7 +28,7 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
 	int result = 0;
 	if (node->traverse_visited != MULT_OPTIMIZATION_TRAVERSE_VALUE){
 		/*this is a new node so depth visit it */
-
+		int backup_value = node->traverse_visited;
 		/* mark that we have visitied this node now */
 		node->traverse_visited = MULT_OPTIMIZATION_TRAVERSE_VALUE;
         result = 1;
@@ -59,7 +59,7 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
 		}
 		if (node->type==MULTIPLY)
 			result = result * 5;
-        node->traverse_visited = PARTIAL_MAP_TRAVERSE_VALUE;
+        node->traverse_visited = backup_value;
 		return result;
 	}
 	return result;

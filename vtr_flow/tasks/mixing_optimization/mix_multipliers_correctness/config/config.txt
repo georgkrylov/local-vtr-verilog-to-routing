@@ -1,0 +1,20 @@
+##############################################
+# Configuration file for running experiments
+##############################################
+# Path to directory of circuits to use
+circuits_dir=benchmarks/mix_soft_and_hard_logic/
+
+# Path to directory of architectures to use
+archs_dir=arch/mix_soft_and_hard_logic
+
+# Add circuits to list to sweep (basic bm)
+circuit_list_add=two_multipliers.v
+
+# Add architectures to list to sweep
+arch_list_add=mults_fixed_12_by_12.xml
+
+# Parse info and how to parse
+parse_file=vpr_standard.txt
+
+#script_params_list_add=-valgrind
+script_params_common =-ending_stage abc -use_odin_simulation -custom_odin_config_full_name ~/vtr-verilog-to-routing/vtr_flow/tasks/mixing_optimization/mix_multipliers_correctness/config/multconfig.xml
