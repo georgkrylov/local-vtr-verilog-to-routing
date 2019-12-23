@@ -11,10 +11,12 @@ archs_dir=arch/mix_soft_and_hard_logic
 circuit_list_add=two_multipliers.v
 
 # Add architectures to list to sweep
-arch_list_add=mults_fixed_12_by_12.xml
+arch_list_add=k6_frac_N10_frac_chain_mem32K_40nm.xml
 
 # Parse info and how to parse
 parse_file=vpr_standard.txt
 
+custom_odin_config=multconfig.xml
+
 #script_params_list_add=-valgrind
-script_params_common =-ending_stage abc -use_odin_simulation -custom_odin_config_full_name ~/vtr-verilog-to-routing/vtr_flow/tasks/mixing_optimization/mix_multipliers_correctness/config/multconfig.xml
+script_params_common =-ending_stage abc -use_odin_simulation 
