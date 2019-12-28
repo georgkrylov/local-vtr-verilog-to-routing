@@ -216,7 +216,7 @@ sub generate_single_task_actions {
 	my $script_params_common = $shared_script_params;  # start with the shared ones then build unique ones
 	my @circuits_list;
 	my @archs_list;
-    my $custom_odin_config;
+    my $custom_odin_config="";
 	my @script_params_list;
 	my $cmos_tech_path = "";
 
