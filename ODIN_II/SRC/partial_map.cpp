@@ -264,7 +264,6 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
         {
 			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS)){
 				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
-				break;
 			} else
 			{
 				int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);
@@ -273,8 +272,8 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
 				} else if (!hard_adders) {
 					instantiate_simple_soft_multiplier(node, traverse_number, netlist);
 				}
-				break;
 			}
+			break;
         }
 		case MEMORY:
 		{
