@@ -8,11 +8,11 @@ circuits_dir=benchmarks/mix_soft_and_hard_logic/
 archs_dir=arch/mix_soft_and_hard_logic
 
 # Add circuits to list to sweep (basic bm)
-circuit_list_add=adders_mults.v
+circuit_list_add=tons_of_multipliers_5*5_no_bottleneck.v
+
 
 # Add architectures to list to sweep
-arch_list_add=mults_fixed_12_by_12.xml
-arch_list_add=k6_frac_N10_frac_chain_mem32K_40nm.xml
+arch_list_add=k6_frac_N10_mem32K_40nm.xml
 
 # Parse info and how to parse
 parse_file=vpr_standard.txt
@@ -20,4 +20,3 @@ parse_file=vpr_standard.txt
 custom_odin_config=multconfig.xml
 
 #script_params_list_add=-valgrind
-script_params_common =-ending_stage abc -use_odin_simulation 
