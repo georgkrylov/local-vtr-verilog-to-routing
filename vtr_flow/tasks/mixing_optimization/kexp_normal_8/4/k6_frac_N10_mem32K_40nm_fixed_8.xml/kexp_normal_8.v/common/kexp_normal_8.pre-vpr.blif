@@ -1,0 +1,3664 @@
+# Benchmark "top_module" written by ABC on Tue Jan 14 00:21:26 2020 
+
+.model top_module 
+
+.inputs top_module^a1~0 top_module^a1~1 top_module^a1~2 top_module^a1~3 top_module^a1~4 top_module^a1~5 top_module^a1~6 \
+ top_module^a1~7 top_module^a2~0 top_module^a2~1 top_module^a2~2 top_module^a2~3 top_module^a2~4 top_module^a2~5 \
+ top_module^a2~6 top_module^a2~7 top_module^a3~0 top_module^a3~1 top_module^a3~2 top_module^a3~3 top_module^a3~4 \
+ top_module^a3~5 top_module^a3~6 top_module^a3~7 top_module^a4~0 top_module^a4~1 top_module^a4~2 top_module^a4~3 \
+ top_module^a4~4 top_module^a4~5 top_module^a4~6 top_module^a4~7 top_module^a5~0 top_module^a5~1 top_module^a5~2 \
+ top_module^a5~3 top_module^a5~4 top_module^a5~5 top_module^a5~6 top_module^a5~7 top_module^b1~0 top_module^b1~1 \
+ top_module^b1~2 top_module^b1~3 top_module^b1~4 top_module^b1~5 top_module^b1~6 top_module^b1~7 top_module^b2~0 \
+ top_module^b2~1 top_module^b2~2 top_module^b2~3 top_module^b2~4 top_module^b2~5 top_module^b2~6 top_module^b2~7 \
+ top_module^b3~0 top_module^b3~1 top_module^b3~2 top_module^b3~3 top_module^b3~4 top_module^b3~5 top_module^b3~6 \
+ top_module^b3~7 top_module^b4~0 top_module^b4~1 top_module^b4~2 top_module^b4~3 top_module^b4~4 top_module^b4~5 \
+ top_module^b4~6 top_module^b4~7 top_module^b5~0 top_module^b5~1 top_module^b5~2 top_module^b5~3 top_module^b5~4 \
+ top_module^b5~5 top_module^b5~6 top_module^b5~7 top_module^a6~0 top_module^a6~1 top_module^a6~2 top_module^a6~3 \
+ top_module^a6~4 top_module^a6~5 top_module^a6~6 top_module^a6~7 top_module^b6~0 top_module^b6~1 top_module^b6~2 \
+ top_module^b6~3 top_module^b6~4 top_module^b6~5 top_module^b6~6 top_module^b6~7 
+
+.outputs top_module^c1~0 top_module^c1~1 top_module^c1~2 top_module^c1~3 top_module^c1~4 top_module^c1~5 top_module^c1~6 \
+ top_module^c1~7 top_module^c1~8 top_module^c1~9 top_module^c1~10 top_module^c1~11 top_module^c1~12 top_module^c1~13 \
+ top_module^c1~14 top_module^c1~15 top_module^c2~0 top_module^c2~1 top_module^c2~2 top_module^c2~3 top_module^c2~4 \
+ top_module^c2~5 top_module^c2~6 top_module^c2~7 top_module^c2~8 top_module^c2~9 top_module^c2~10 top_module^c2~11 \
+ top_module^c2~12 top_module^c2~13 top_module^c2~14 top_module^c2~15 top_module^c3~0 top_module^c3~1 top_module^c3~2 \
+ top_module^c3~3 top_module^c3~4 top_module^c3~5 top_module^c3~6 top_module^c3~7 top_module^c3~8 top_module^c3~9 \
+ top_module^c3~10 top_module^c3~11 top_module^c3~12 top_module^c3~13 top_module^c3~14 top_module^c3~15 top_module^c4~0 \
+ top_module^c4~1 top_module^c4~2 top_module^c4~3 top_module^c4~4 top_module^c4~5 top_module^c4~6 top_module^c4~7 \
+ top_module^c4~8 top_module^c4~9 top_module^c4~10 top_module^c4~11 top_module^c4~12 top_module^c4~13 top_module^c4~14 \
+ top_module^c4~15 top_module^c5~0 top_module^c5~1 top_module^c5~2 top_module^c5~3 top_module^c5~4 top_module^c5~5 \
+ top_module^c5~6 top_module^c5~7 top_module^c5~8 top_module^c5~9 top_module^c5~10 top_module^c5~11 top_module^c5~12 \
+ top_module^c5~13 top_module^c5~14 top_module^c5~15 top_module^c6~0 top_module^c6~1 top_module^c6~2 top_module^c6~3 \
+ top_module^c6~4 top_module^c6~5 top_module^c6~6 top_module^c6~7 top_module^c6~8 top_module^c6~9 top_module^c6~10 \
+ top_module^c6~11 top_module^c6~12 top_module^c6~13 top_module^c6~14 top_module^c6~15 
+
+
+.subckt multiply a[0]=top_module^a3~0 a[1]=top_module^a3~1 a[2]=top_module^a3~2 a[3]=top_module^a3~3 a[4]=top_module^a3~4 \
+ a[5]=top_module^a3~5 a[6]=top_module^a3~6 a[7]=top_module^a3~7 a[8]=unconn b[0]=top_module^b3~0 b[1]=top_module^b3~1 \
+ b[2]=top_module^b3~2 b[3]=top_module^b3~3 b[4]=top_module^b3~4 b[5]=top_module^b3~5 b[6]=top_module^b3~6 b[7]=top_module^b3~7 \
+ b[8]=unconn out[0]=top_module^MUL~34[0] out[1]=top_module^MUL~34[1] out[2]=top_module^MUL~34[2] out[3]=top_module^MUL~34[3] \
+ out[4]=top_module^MUL~34[4] out[5]=top_module^MUL~34[5] out[6]=top_module^MUL~34[6] out[7]=top_module^MUL~34[7] \
+ out[8]=top_module^MUL~34[8] out[9]=top_module^MUL~34[9] out[10]=top_module^MUL~34[10] out[11]=top_module^MUL~34[11] \
+ out[12]=top_module^MUL~34[12] out[13]=top_module^MUL~34[13] out[14]=top_module^MUL~34[14] out[15]=top_module^MUL~34[15] \
+ out[16]=top_module^MUL~34[16] out[17]=top_module^MUL~34[17] 
+
+.subckt multiply a[0]=top_module^a2~0 a[1]=top_module^a2~1 a[2]=top_module^a2~2 a[3]=top_module^a2~3 a[4]=top_module^a2~4 \
+ a[5]=top_module^a2~5 a[6]=top_module^a2~6 a[7]=top_module^a2~7 a[8]=unconn b[0]=top_module^b2~0 b[1]=top_module^b2~1 \
+ b[2]=top_module^b2~2 b[3]=top_module^b2~3 b[4]=top_module^b2~4 b[5]=top_module^b2~5 b[6]=top_module^b2~6 b[7]=top_module^b2~7 \
+ b[8]=unconn out[0]=top_module^MUL~17[0] out[1]=top_module^MUL~17[1] out[2]=top_module^MUL~17[2] out[3]=top_module^MUL~17[3] \
+ out[4]=top_module^MUL~17[4] out[5]=top_module^MUL~17[5] out[6]=top_module^MUL~17[6] out[7]=top_module^MUL~17[7] \
+ out[8]=top_module^MUL~17[8] out[9]=top_module^MUL~17[9] out[10]=top_module^MUL~17[10] out[11]=top_module^MUL~17[11] \
+ out[12]=top_module^MUL~17[12] out[13]=top_module^MUL~17[13] out[14]=top_module^MUL~17[14] out[15]=top_module^MUL~17[15] \
+ out[16]=top_module^MUL~17[16] out[17]=top_module^MUL~17[17] 
+
+.subckt multiply a[0]=top_module^a1~0 a[1]=top_module^a1~1 a[2]=top_module^a1~2 a[3]=top_module^a1~3 a[4]=top_module^a1~4 \
+ a[5]=top_module^a1~5 a[6]=top_module^a1~6 a[7]=top_module^a1~7 a[8]=unconn b[0]=top_module^b1~0 b[1]=top_module^b1~1 \
+ b[2]=top_module^b1~2 b[3]=top_module^b1~3 b[4]=top_module^b1~4 b[5]=top_module^b1~5 b[6]=top_module^b1~6 b[7]=top_module^b1~7 \
+ b[8]=unconn out[0]=top_module^MUL~0[0] out[1]=top_module^MUL~0[1] out[2]=top_module^MUL~0[2] out[3]=top_module^MUL~0[3] \
+ out[4]=top_module^MUL~0[4] out[5]=top_module^MUL~0[5] out[6]=top_module^MUL~0[6] out[7]=top_module^MUL~0[7] \
+ out[8]=top_module^MUL~0[8] out[9]=top_module^MUL~0[9] out[10]=top_module^MUL~0[10] out[11]=top_module^MUL~0[11] \
+ out[12]=top_module^MUL~0[12] out[13]=top_module^MUL~0[13] out[14]=top_module^MUL~0[14] out[15]=top_module^MUL~0[15] \
+ out[16]=top_module^MUL~0[16] out[17]=top_module^MUL~0[17] 
+
+
+
+.names top_module^a4~0 top_module^b4~0 top_module^c4~0 
+11 1 
+
+.names top_module^a4~0 top_module^b4~1 top_module^a4~1 top_module^b4~0 top_module^c4~1 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a4~2 top_module^b4~2 top_module^a4~1 top_module^b4~1 top_module^a4~0 top_module^b4~0 top_module^c4~2 
+---000 0 
+--0-00 0 
+-11110 0 
+-0-0-0 0 
+-00--0 0 
+1-1101 0 
+00--11 0 
+11--11 0 
+0--00- 0 
+0-0-0- 0 
+
+.names top_module^a4~0 top_module^b4~3 n301 n302 n303 top_module^c4~3 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names top_module^a4~1 top_module^b4~1 top_module^a4~2 top_module^b4~0 top_module^a4~0 top_module^b4~2 n301 
+11-011 1 
+--1111 1 
+
+.names top_module^a4~1 top_module^b4~2 n302 
+11 1 
+
+.names top_module^a4~0 top_module^a4~1 top_module^b4~1 top_module^b4~0 top_module^a4~2 top_module^a4~3 n303 
+111100 0 
+-01-10 0 
+-0-101 0 
+-11-11 0 
+--01-1 0 
+01-1-1 0 
+--101- 0 
+
+.names top_module^a4~0 top_module^b4~4 n305 n306 n310 top_module^c4~4 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n301 n302 n303 top_module^a4~0 top_module^b4~3 n305 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n301 n302 n303 n307 n308 n309 n306 
+-10000 1 
+1-0000 1 
+11-000 1 
+-01100 1 
+0-1100 1 
+00-100 1 
+-01010 1 
+0-1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+11-110 1 
+-01001 1 
+0-1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+11-101 1 
+-10011 1 
+1-0011 1 
+11-011 1 
+-01111 1 
+0-1111 1 
+00-111 1 
+
+.names top_module^a4~2 top_module^b4~2 n307 
+11 1 
+
+.names top_module^a4~3 top_module^b4~1 top_module^a4~4 top_module^b4~0 n308 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a4~0 top_module^a4~2 top_module^a4~1 top_module^a4~3 top_module^b4~0 top_module^b4~1 n309 
+1-1111 0 
+-1-111 0 
+-11-11 0 
+
+.names top_module^a4~1 top_module^b4~3 n310 
+11 1 
+
+.names top_module^a4~0 top_module^b4~5 n312 n313 n321 top_module^c4~5 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n305 n306 n310 top_module^a4~0 top_module^b4~4 n312 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n305 n306 n310 n314 n319 n320 n313 
+-10000 1 
+0-0000 1 
+01-000 1 
+-01100 1 
+1-1100 1 
+10-100 1 
+-01010 1 
+1-1010 1 
+10-010 1 
+-10110 1 
+0-0110 1 
+01-110 1 
+-01001 1 
+1-1001 1 
+10-001 1 
+-10101 1 
+0-0101 1 
+01-101 1 
+-10011 1 
+0-0011 1 
+01-011 1 
+-01111 1 
+1-1111 1 
+10-111 1 
+
+.names n316 n309 n315 n317 n318 n314 
+--100 1 
+00-00 1 
+-1010 1 
+1-010 1 
+-1001 1 
+1-001 1 
+--111 1 
+00-11 1 
+
+.names top_module^a4~3 top_module^a4~4 top_module^b4~0 top_module^b4~1 n315 
+1111 1 
+
+.names top_module^a4~4 top_module^a4~3 n316 
+00 1 
+
+.names top_module^a4~3 top_module^b4~2 n317 
+11 1 
+
+.names top_module^a4~4 top_module^b4~1 top_module^a4~5 top_module^b4~0 n318 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names n307 n301 n303 n302 n308 n309 n319 
+--0100 1 
+-1-100 1 
+-10-00 1 
+1---00 1 
+--0111 1 
+-1-111 1 
+-10-11 1 
+1---11 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a4~2 top_module^b4~3 n320 
+11 1 
+
+.names top_module^a4~1 top_module^b4~4 n321 
+11 1 
+
+.names top_module^a4~0 top_module^b4~6 n323 n324 n336 n337 top_module^c4~6 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n312 n313 n321 top_module^a4~0 top_module^b4~5 n323 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n325 n334 n335 n324 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names n326 n319 n327 n328 n332 n333 n325 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n309 n315 n318 n317 n326 
+-101 1 
+0-01 1 
+1011 1 
+
+.names n316 n309 n317 n318 n327 
+-100 1 
+1--0 1 
+0001 1 
+
+.names n316 n309 n315 n330 n329 n331 n328 
+----10 1 
+--10-0 1 
+00-0-0 1 
+---101 1 
+-10-01 1 
+1-0-01 1 
+
+.names top_module^a4~4 top_module^a4~5 top_module^b4~0 top_module^b4~1 n329 
+1111 1 
+
+.names top_module^a4~5 top_module^a4~4 n330 
+00 1 
+
+.names top_module^a4~5 top_module^b4~1 top_module^a4~6 top_module^b4~0 n331 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a4~3 top_module^b4~3 n332 
+11 1 
+
+.names top_module^a4~4 top_module^b4~2 n333 
+11 1 
+
+.names n320 n305 n306 n310 n314 n319 n334 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a4~2 top_module^b4~4 n335 
+11 1 
+
+.names n312 n313 n321 n336 
+-01 1 
+1-1 1 
+10- 1 
+
+.names top_module^a4~1 top_module^b4~5 n337 
+11 1 
+
+.names top_module^a4~0 top_module^b4~7 n339 n340 n354 n355 top_module^c4~7 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n323 n324 n336 n337 top_module^a4~0 top_module^b4~6 n339 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names top_module^a4~2 top_module^b4~5 n341 n352 n353 n340 
+11000 1 
+-0100 1 
+0-100 1 
+-0010 1 
+0-010 1 
+11110 1 
+-0001 1 
+0-001 1 
+11101 1 
+11011 1 
+-0111 1 
+0-111 1 
+
+.names n342 n334 n332 n343 n350 n351 n341 
+-11000 1 
+0-1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+10-100 1 
+-00010 1 
+1-0010 1 
+10-010 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+10-001 1 
+-11101 1 
+0-1101 1 
+01-101 1 
+-11011 1 
+0-1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+10-111 1 
+
+.names n326 n319 n327 n328 n333 n342 
+--100 1 
+00-00 1 
+-1010 1 
+1-010 1 
+-1001 1 
+1-001 1 
+--111 1 
+00-11 1 
+
+.names top_module^a4~5 top_module^b4~2 n344 n349 n343 
+-000 1 
+0-00 1 
+1110 1 
+1101 1 
+-011 1 
+0-11 1 
+
+.names n309 n346 n348 n331 n308 n344 
+-00-0 1 
+1-111 1 
+--00- 1 
+-011- 1 
+100-- 1 
+
+.names top_module^a4~4 top_module^b4~0 n346 
+11 1 
+
+.names top_module^a4~6 top_module^b4~0 n348 
+11 1 
+
+.names top_module^a4~6 top_module^b4~1 top_module^a4~7 top_module^b4~0 n349 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names n326 n319 n328 n333 n327 n350 
+---01 0 
+--0-1 0 
+--00- 0 
+00-0- 0 
+000-- 0 
+
+.names top_module^a4~4 top_module^b4~3 n351 
+11 1 
+
+.names n335 n312 n313 n321 n325 n334 n352 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a4~3 top_module^b4~4 n353 
+11 1 
+
+.names n323 n337 n324 n336 n354 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a4~1 top_module^b4~6 n355 
+11 1 
+
+.names n357 n358 n369 n370 n371 top_module^c4~8 
+10000 1 
+01000 1 
+00100 1 
+11100 1 
+00010 1 
+11010 1 
+10110 1 
+01110 1 
+00001 1 
+11001 1 
+10101 1 
+01101 1 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names n339 n340 n354 n355 top_module^a4~0 top_module^b4~7 n357 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names n360 n354 n359 n361 n367 n368 n358 
+--1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+-00010 1 
+1-0010 1 
+--1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+--1101 1 
+01-101 1 
+--1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+
+.names n341 n352 n353 top_module^a4~2 top_module^b4~5 n359 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names top_module^a4~2 n341 n352 n353 n360 
+0000 1 
+0110 1 
+0101 1 
+0011 1 
+
+.names n362 n365 n366 n361 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names top_module^b4~2 n363 n350 top_module^a4~5 top_module^b4~3 n364 n362 
+1-1100 1 
+11-100 1 
+-11-00 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-110-0 1 
+-00-01 1 
+0-0-01 1 
+00--01 1 
+-11111 1 
+110-11 1 
+101-11 1 
+--00-1 1 
+-0-0-1 1 
+
+.names n344 n349 n363 
+00 1 
+11 1 
+
+.names top_module^b4~0 n344 top_module^a4~6 top_module^b4~2 top_module^a4~7 top_module^b4~1 n364 
+--1100 1 
+10-010 1 
+100-10 1 
+0-11-0 1 
+-01001 1 
+01-011 1 
+1-1111 1 
+-10-11 1 
+0-0-11 1 
+-1110- 1 
+00111- 1 
+1111-- 1 
+
+.names n351 n342 n334 n332 n343 n350 n365 
+--1110 1 
+-0-110 1 
+-01-10 1 
+1---10 1 
+--1101 1 
+-0-101 1 
+-01-01 1 
+1---01 1 
+1-11-- 1 
+10-1-- 1 
+101--- 1 
+
+.names top_module^a4~4 top_module^b4~4 n366 
+11 1 
+
+.names n341 n352 n353 n367 
+-11 1 
+1-1 1 
+11- 1 
+
+.names top_module^a4~3 top_module^b4~5 n368 
+11 1 
+
+.names n339 n355 n340 n354 n369 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a4~1 top_module^b4~7 n370 
+11 1 
+
+.names top_module^a4~2 top_module^b4~6 n371 
+11 1 
+
+.names n373 n387 n388 top_module^c4~9 
+000 1 
+110 1 
+101 1 
+011 1 
+
+.names n358 n369 n371 n374 n385 n386 n373 
+-11000 1 
+1-1000 1 
+11-000 1 
+-00100 1 
+0-0100 1 
+00-100 1 
+-00010 1 
+0-0010 1 
+00-010 1 
+-11110 1 
+1-1110 1 
+11-110 1 
+-00001 1 
+0-0001 1 
+00-001 1 
+-11101 1 
+1-1101 1 
+11-101 1 
+-11011 1 
+1-1011 1 
+11-011 1 
+-00111 1 
+0-0111 1 
+00-111 1 
+
+.names top_module^a4~4 top_module^b4~5 n375 n383 n384 n374 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n376 n365 n377 n378 n380 n382 n375 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n363 n350 top_module^b4~2 n364 top_module^a4~5 top_module^b4~3 n376 
+-11011 1 
+1-1011 1 
+11-011 1 
+-00111 1 
+0-0111 1 
+00-111 1 
+
+.names top_module^a4~5 n363 n350 n364 n377 
+0-00 1 
+00-0 1 
+0111 1 
+
+.names top_module^a4~7 n379 top_module^b4~2 n378 
+-10 1 
+101 1 
+
+.names n344 top_module^a4~6 top_module^b4~0 top_module^a4~7 top_module^b4~1 n379 
+-1111 1 
+0-111 1 
+01-11 1 
+
+.names n363 top_module^a4~6 n350 top_module^a4~5 top_module^b4~2 n364 n380 
+-1--10 0 
+--1111 0 
+1--111 0 
+1-1--1 0 
+111--- 0 
+
+.names top_module^a4~6 top_module^b4~3 n382 
+11 1 
+
+.names n366 n341 n352 n353 n362 n365 n383 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a4~5 top_module^b4~4 n384 
+11 1 
+
+.names n359 n360 n354 n368 n361 n367 n385 
+---110 1 
+-01-10 1 
+1---10 1 
+---101 1 
+-01-01 1 
+1---01 1 
+-011-- 1 
+1--1-- 1 
+
+.names top_module^a4~3 top_module^b4~6 n386 
+11 1 
+
+.names n357 n370 n358 n369 n371 n387 
+-0000 1 
+0-000 1 
+-0110 1 
+0-110 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+00--- 1 
+
+.names top_module^a4~2 top_module^b4~7 n388 
+11 1 
+
+.names n373 n387 n388 n390 n399 n400 top_module^c4~10 
+-01000 1 
+1-1000 1 
+10-000 1 
+-10100 1 
+0-0100 1 
+01-100 1 
+-10010 1 
+0-0010 1 
+01-010 1 
+-01110 1 
+1-1110 1 
+10-110 1 
+-10001 1 
+0-0001 1 
+01-001 1 
+-01101 1 
+1-1101 1 
+10-101 1 
+-01011 1 
+1-1011 1 
+10-011 1 
+-10111 1 
+0-0111 1 
+01-111 1 
+
+.names n392 n385 n391 n393 n397 n398 n390 
+--1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+-00010 1 
+1-0010 1 
+--1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+--1101 1 
+01-101 1 
+--1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+
+.names n375 n383 n384 top_module^a4~4 top_module^b4~5 n391 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names top_module^a4~4 n375 n383 n384 n392 
+0100 1 
+0010 1 
+0001 1 
+0111 1 
+
+.names n375 n383 n384 n394 n395 n396 n393 
+-11000 1 
+0-1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+10-100 1 
+-00010 1 
+1-0010 1 
+10-010 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+10-001 1 
+-11101 1 
+0-1101 1 
+01-101 1 
+-11011 1 
+0-1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+10-111 1 
+
+.names n380 top_module^b4~2 n379 top_module^b4~3 top_module^a4~7 n394 
+--0-0 0 
+10--0 0 
+-1111 0 
+0-111 0 
+-000- 0 
+1-00- 0 
+10-0- 0 
+0101- 0 
+
+.names n376 n365 n382 n377 n380 n378 n395 
+---110 0 
+--0-10 0 
+00--10 0 
+---101 0 
+--0-01 0 
+00--01 0 
+--01-- 0 
+000--- 0 
+
+.names top_module^a4~6 top_module^b4~4 n396 
+11 1 
+
+.names top_module^a4~4 top_module^b4~6 n397 
+11 1 
+
+.names top_module^a4~5 top_module^b4~5 n398 
+11 1 
+
+.names n386 n358 n369 n371 n374 n385 n399 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a4~3 top_module^b4~7 n400 
+11 1 
+
+.names n402 n411 n412 top_module^c4~11 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names n403 n399 n397 n404 n409 n410 n402 
+-00000 1 
+0-0000 1 
+00-000 1 
+-11100 1 
+1-1100 1 
+11-100 1 
+-11010 1 
+1-1010 1 
+11-010 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-11001 1 
+1-1001 1 
+11-001 1 
+-00101 1 
+0-0101 1 
+00-101 1 
+-00011 1 
+0-0011 1 
+00-011 1 
+-11111 1 
+1-1111 1 
+11-111 1 
+
+.names n392 n385 n391 n393 n398 n403 
+--100 1 
+01-00 1 
+-0010 1 
+1-010 1 
+-0001 1 
+1-001 1 
+--111 1 
+01-11 1 
+
+.names top_module^a4~6 top_module^b4~5 n405 n408 n404 
+1100 1 
+-010 1 
+0-10 1 
+-001 1 
+0-01 1 
+1111 1 
+
+.names n406 n395 top_module^b4~4 n407 n405 
+-100 1 
+0010 1 
+100- 1 
+
+.names n380 n379 top_module^b4~2 top_module^b4~3 n406 
+-111 1 
+0-11 1 
+
+.names top_module^a4~7 n407 
+0 1 
+
+.names n396 n375 n383 n384 n394 n395 n408 
+--1110 1 
+-0-110 1 
+-01-10 1 
+1---10 1 
+--1101 1 
+-0-101 1 
+-01-01 1 
+1---01 1 
+1-11-- 1 
+10-1-- 1 
+101--- 1 
+
+.names n391 n392 n385 n393 n398 n409 
+---11 1 
+-01-1 1 
+1---1 1 
+-011- 1 
+1--1- 1 
+
+.names top_module^a4~5 top_module^b4~6 n410 
+11 1 
+
+.names n400 n373 n388 n387 n390 n399 n411 
+--0100 1 
+-0-100 1 
+-00-00 1 
+0---00 1 
+--0111 1 
+-0-111 1 
+-00-11 1 
+0---11 1 
+0-01-- 1 
+00-1-- 1 
+000--- 1 
+
+.names top_module^a4~4 top_module^b4~7 n412 
+11 1 
+
+.names n402 n411 n412 n414 n420 n421 top_module^c4~12 
+-01000 1 
+0-1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+11-100 1 
+-10010 1 
+1-0010 1 
+11-010 1 
+-01110 1 
+0-1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+11-001 1 
+-01101 1 
+0-1101 1 
+00-101 1 
+-01011 1 
+0-1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+11-111 1 
+
+.names n415 n409 n416 n417 n419 n414 
+-1000 1 
+1-000 1 
+--110 1 
+00-10 1 
+--101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+
+.names n405 n408 top_module^a4~6 top_module^b4~5 n415 
+1011 1 
+0111 1 
+
+.names top_module^a4~6 n405 n408 n416 
+000 1 
+011 1 
+
+.names top_module^b4~4 n418 n408 top_module^b4~5 top_module^a4~7 n417 
+-11-0 1 
+1-101 1 
+11-01 1 
+-0011 1 
+0-011 1 
+00-11 1 
+-110- 1 
+
+.names n395 n406 n407 n418 
+--1 0 
+00- 0 
+
+.names top_module^a4~6 top_module^b4~6 n419 
+11 1 
+
+.names n410 n403 n399 n397 n404 n409 n420 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a4~5 top_module^b4~7 n421 
+11 1 
+
+.names n423 n429 top_module^c4~13 
+00 1 
+11 1 
+
+.names top_module^b4~6 n424 n420 top_module^a4~6 top_module^b4~7 n425 n423 
+1-1100 1 
+10-100 1 
+-01-00 1 
+-10110 1 
+0-0110 1 
+01-110 1 
+-010-0 1 
+-10-01 1 
+0-0-01 1 
+01--01 1 
+-01111 1 
+100-11 1 
+111-11 1 
+--00-1 1 
+-1-0-1 1 
+
+.names n415 n409 n416 n417 n424 
+--10 1 
+00-0 1 
+-101 1 
+1-01 1 
+
+.names n415 n409 n426 n416 n427 n428 n425 
+-1-000 1 
+1--000 1 
+--1-00 1 
+----11 1 
+--01-1 1 
+000--1 1 
+
+.names n418 n408 top_module^b4~4 top_module^b4~5 n426 
+-111 1 
+1-11 1 
+
+.names top_module^a4~7 n427 
+0 1 
+
+.names top_module^a4~7 top_module^b4~6 n428 
+11 1 
+
+.names n421 n402 n412 n411 n414 n420 n429 
+--0100 1 
+-1-100 1 
+-10-00 1 
+0---00 1 
+--0111 1 
+-1-111 1 
+-10-11 1 
+0---11 1 
+0-01-- 1 
+01-1-- 1 
+010--- 1 
+
+.names top_module^a4~6 top_module^b4~7 n431 n429 n432 top_module^c4~14 
+--000 1 
+11-00 1 
+110-0 1 
+--111 1 
+-0-11 1 
+0--11 1 
+-01-1 1 
+0-1-1 1 
+
+.names n424 n420 n419 n425 n431 
+-000 1 
+1-00 1 
+10-0 1 
+-111 1 
+0-11 1 
+01-1 1 
+
+.names n424 n433 n420 n419 n434 n435 n432 
+--1100 1 
+0--100 1 
+0-1-00 1 
+-1--00 1 
+----11 1 
+-000-1 1 
+10-0-1 1 
+100--1 1 
+
+.names n409 n415 n426 n416 n428 n433 
+1--01 1 
+--1-1 1 
+-1--1 1 
+
+.names n428 n434 
+0 1 
+
+.names top_module^a4~7 top_module^b4~7 n435 
+11 1 
+
+.names n431 n429 top_module^a4~7 top_module^a4~6 top_module^b4~7 top_module^b4~6 top_module^c4~15 
+1-1-11 1 
+0-111- 1 
+-011-- 1 
+001--- 1 
+
+.names top_module^a5~0 top_module^b5~0 top_module^c5~0 
+11 1 
+
+.names top_module^a5~0 top_module^b5~1 top_module^a5~1 top_module^b5~0 top_module^c5~1 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a5~2 top_module^b5~2 top_module^a5~1 top_module^b5~1 top_module^a5~0 top_module^b5~0 top_module^c5~2 
+---000 0 
+--0-00 0 
+-11110 0 
+-0-0-0 0 
+-00--0 0 
+1-1101 0 
+00--11 0 
+11--11 0 
+0--00- 0 
+0-0-0- 0 
+
+.names top_module^a5~0 top_module^b5~3 n442 n443 n444 top_module^c5~3 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names top_module^a5~1 top_module^b5~1 top_module^a5~2 top_module^b5~0 top_module^a5~0 top_module^b5~2 n442 
+11-011 1 
+--1111 1 
+
+.names top_module^a5~1 top_module^b5~2 n443 
+11 1 
+
+.names top_module^a5~0 top_module^a5~1 top_module^b5~1 top_module^b5~0 top_module^a5~2 top_module^a5~3 n444 
+111100 0 
+-01-10 0 
+-0-101 0 
+-11-11 0 
+--01-1 0 
+01-1-1 0 
+--101- 0 
+
+.names top_module^a5~0 top_module^b5~4 n446 n447 n451 top_module^c5~4 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n442 n443 n444 top_module^a5~0 top_module^b5~3 n446 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n442 n443 n444 n448 n449 n450 n447 
+-10000 1 
+1-0000 1 
+11-000 1 
+-01100 1 
+0-1100 1 
+00-100 1 
+-01010 1 
+0-1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+11-110 1 
+-01001 1 
+0-1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+11-101 1 
+-10011 1 
+1-0011 1 
+11-011 1 
+-01111 1 
+0-1111 1 
+00-111 1 
+
+.names top_module^a5~2 top_module^b5~2 n448 
+11 1 
+
+.names top_module^a5~3 top_module^b5~1 top_module^a5~4 top_module^b5~0 n449 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a5~0 top_module^a5~2 top_module^a5~1 top_module^a5~3 top_module^b5~0 top_module^b5~1 n450 
+1-1111 0 
+-1-111 0 
+-11-11 0 
+
+.names top_module^a5~1 top_module^b5~3 n451 
+11 1 
+
+.names top_module^a5~0 top_module^b5~5 n453 n454 n462 top_module^c5~5 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n446 n447 n451 top_module^a5~0 top_module^b5~4 n453 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n446 n447 n451 n455 n460 n461 n454 
+-10000 1 
+0-0000 1 
+01-000 1 
+-01100 1 
+1-1100 1 
+10-100 1 
+-01010 1 
+1-1010 1 
+10-010 1 
+-10110 1 
+0-0110 1 
+01-110 1 
+-01001 1 
+1-1001 1 
+10-001 1 
+-10101 1 
+0-0101 1 
+01-101 1 
+-10011 1 
+0-0011 1 
+01-011 1 
+-01111 1 
+1-1111 1 
+10-111 1 
+
+.names n456 n457 n450 n458 n459 n455 
+-1000 1 
+1-000 1 
+11-00 1 
+-0110 1 
+0-110 1 
+00-10 1 
+-0101 1 
+0-101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+11-11 1 
+
+.names top_module^a5~3 top_module^b5~1 n456 
+11 1 
+
+.names top_module^a5~4 top_module^b5~0 n457 
+11 1 
+
+.names top_module^a5~3 top_module^b5~2 n458 
+11 1 
+
+.names top_module^a5~4 top_module^b5~1 top_module^a5~5 top_module^b5~0 n459 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names n448 n442 n444 n443 n449 n450 n460 
+--0100 1 
+-1-100 1 
+-10-00 1 
+1---00 1 
+--0111 1 
+-1-111 1 
+-10-11 1 
+1---11 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a5~2 top_module^b5~3 n461 
+11 1 
+
+.names top_module^a5~1 top_module^b5~4 n462 
+11 1 
+
+.names top_module^a5~0 top_module^b5~6 n464 n465 n477 n478 top_module^c5~6 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n453 n454 n462 top_module^a5~0 top_module^b5~5 n464 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n466 n475 n476 n465 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names n467 n460 n468 n469 n473 n474 n466 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n456 n457 n450 n459 n458 n467 
+-1001 1 
+1-001 1 
+11-01 1 
+-0111 1 
+0-111 1 
+00-11 1 
+
+.names n457 n450 n458 n459 n468 
+-100 1 
+0-00 1 
+1001 1 
+
+.names n470 n456 n450 n457 n487 n469 
+1-100 1 
+10-00 1 
+0-010 1 
+01-10 1 
+0--01 1 
+1--11 1 
+110-1 1 
+001-1 1 
+
+.names top_module^a5~5 top_module^b5~1 n470 
+11 1 
+
+.names top_module^a5~3 top_module^b5~3 n473 
+11 1 
+
+.names top_module^a5~4 top_module^b5~2 n474 
+11 1 
+
+.names n461 n446 n447 n451 n455 n460 n475 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a5~2 top_module^b5~4 n476 
+11 1 
+
+.names n453 n454 n462 n477 
+-01 1 
+1-1 1 
+10- 1 
+
+.names top_module^a5~1 top_module^b5~5 n478 
+11 1 
+
+.names top_module^a5~0 top_module^b5~7 n480 n481 n492 n493 top_module^c5~7 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n464 n465 n477 n478 top_module^a5~0 top_module^b5~6 n480 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names top_module^a5~2 top_module^b5~5 n482 n490 n491 n481 
+11000 1 
+-0100 1 
+0-100 1 
+-0010 1 
+0-010 1 
+11110 1 
+-0001 1 
+0-001 1 
+11101 1 
+11011 1 
+-0111 1 
+0-111 1 
+
+.names n484 n475 n473 n483 n485 n489 n482 
+-00000 1 
+0-0000 1 
+00-000 1 
+-11100 1 
+1-1100 1 
+11-100 1 
+-11010 1 
+1-1010 1 
+11-010 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-11001 1 
+1-1001 1 
+11-001 1 
+-00101 1 
+0-0101 1 
+00-101 1 
+-00011 1 
+0-0011 1 
+00-011 1 
+-11111 1 
+1-1111 1 
+11-111 1 
+
+.names n468 n467 n460 n469 n474 n483 
+---00 1 
+-00-0 1 
+1---0 1 
+-000- 1 
+1--0- 1 
+
+.names n467 n460 n468 n469 n474 n484 
+-1000 1 
+1-000 1 
+--110 1 
+00-10 1 
+--101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+
+.names top_module^a5~5 top_module^b5~2 n486 n488 n485 
+-000 1 
+0-00 1 
+1110 1 
+1101 1 
+-011 1 
+0-11 1 
+
+.names n470 n456 n450 n457 n487 n486 
+--100 1 
+-0-00 1 
+0---0 1 
+0--0- 1 
+001-- 1 
+
+.names top_module^a5~6 top_module^b5~0 n487 
+11 1 
+
+.names top_module^a5~6 top_module^b5~1 top_module^a5~7 top_module^b5~0 n488 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a5~4 top_module^b5~3 n489 
+11 1 
+
+.names n476 n453 n454 n462 n466 n475 n490 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a5~3 top_module^b5~4 n491 
+11 1 
+
+.names n464 n478 n465 n477 n492 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a5~1 top_module^b5~6 n493 
+11 1 
+
+.names n495 n496 n507 n508 n509 top_module^c5~8 
+00000 1 
+11000 1 
+10100 1 
+01100 1 
+10010 1 
+01010 1 
+00110 1 
+11110 1 
+10001 1 
+01001 1 
+00101 1 
+11101 1 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n480 n481 n492 n493 top_module^a5~0 top_module^b5~7 n495 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names n497 n492 n498 n499 n505 n506 n496 
+--1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+-10010 1 
+1-0010 1 
+--1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+--1101 1 
+00-101 1 
+--1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+
+.names n482 n490 n491 top_module^a5~2 top_module^b5~5 n497 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names top_module^a5~2 n482 n490 n491 n498 
+0000 1 
+0110 1 
+0101 1 
+0011 1 
+
+.names n500 n503 n504 n499 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names top_module^b5~2 n483 n501 top_module^a5~5 top_module^b5~3 n502 n500 
+1-0100 1 
+10-100 1 
+-00-00 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-000-0 1 
+-11-01 1 
+0-1-01 1 
+01--01 1 
+-00111 1 
+110-11 1 
+101-11 1 
+--10-1 1 
+-1-0-1 1 
+
+.names n486 n488 n501 
+10 1 
+01 1 
+
+.names top_module^b5~0 n486 top_module^a5~6 top_module^b5~2 top_module^a5~7 top_module^b5~1 n502 
+--1100 1 
+10-010 1 
+100-10 1 
+0-11-0 1 
+-01001 1 
+01-011 1 
+1-1111 1 
+-10-11 1 
+0-0-11 1 
+-1110- 1 
+00111- 1 
+1111-- 1 
+
+.names n489 n484 n475 n473 n485 n483 n503 
+--1100 1 
+-1-100 1 
+-11-00 1 
+1---00 1 
+--1111 1 
+-1-111 1 
+-11-11 1 
+1---11 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a5~4 top_module^b5~4 n504 
+11 1 
+
+.names n482 n490 n491 n505 
+-11 1 
+1-1 1 
+11- 1 
+
+.names top_module^a5~3 top_module^b5~5 n506 
+11 1 
+
+.names n480 n493 n481 n492 n507 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a5~1 top_module^b5~7 n508 
+11 1 
+
+.names top_module^a5~2 top_module^b5~6 n509 
+11 1 
+
+.names n511 n525 n526 top_module^c5~9 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names n496 n507 n509 n512 n523 n524 n511 
+-11000 1 
+0-1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+10-100 1 
+-00010 1 
+1-0010 1 
+10-010 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+10-001 1 
+-11101 1 
+0-1101 1 
+01-101 1 
+-11011 1 
+0-1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+10-111 1 
+
+.names top_module^a5~4 top_module^b5~5 n513 n521 n522 n512 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n514 n503 n515 n516 n518 n520 n513 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n483 n501 top_module^b5~2 n502 top_module^a5~5 top_module^b5~3 n514 
+-01011 1 
+0-1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+11-111 1 
+
+.names top_module^a5~5 n483 n501 n502 n515 
+0-10 1 
+01-0 1 
+0001 1 
+
+.names top_module^a5~7 n517 top_module^b5~2 n516 
+-10 1 
+101 1 
+
+.names n486 top_module^a5~6 top_module^b5~0 top_module^a5~7 top_module^b5~1 n517 
+-1111 1 
+0-111 1 
+01-11 1 
+
+.names n483 n501 top_module^a5~6 top_module^a5~5 top_module^b5~2 n502 n518 
+--1-10 1 
+-0-111 1 
+0--111 1 
+00---1 1 
+0-11-- 1 
+001--- 1 
+
+.names top_module^a5~6 top_module^b5~3 n520 
+11 1 
+
+.names n504 n482 n490 n491 n503 n500 n521 
+--0000 1 
+-0-000 1 
+-00-00 1 
+0---00 1 
+--0011 1 
+-0-011 1 
+-00-11 1 
+0---11 1 
+0-00-- 1 
+00-0-- 1 
+000--- 1 
+
+.names top_module^a5~5 top_module^b5~4 n522 
+11 1 
+
+.names n497 n492 n506 n498 n499 n505 n523 
+---100 0 
+--0-00 0 
+00--00 0 
+---111 0 
+--0-11 0 
+00--11 0 
+--01-- 0 
+000--- 0 
+
+.names top_module^a5~3 top_module^b5~6 n524 
+11 1 
+
+.names n495 n508 n496 n507 n509 n525 
+-1000 1 
+1-000 1 
+-1110 1 
+1-110 1 
+-1101 1 
+1-101 1 
+-1011 1 
+1-011 1 
+11--- 1 
+
+.names top_module^a5~2 top_module^b5~7 n526 
+11 1 
+
+.names n511 n525 n526 n528 n537 n538 top_module^c5~10 
+-00000 1 
+0-0000 1 
+00-000 1 
+-11100 1 
+1-1100 1 
+11-100 1 
+-11010 1 
+1-1010 1 
+11-010 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-11001 1 
+1-1001 1 
+11-001 1 
+-00101 1 
+0-0101 1 
+00-101 1 
+-00011 1 
+0-0011 1 
+00-011 1 
+-11111 1 
+1-1111 1 
+11-111 1 
+
+.names n529 n523 n530 n531 n535 n536 n528 
+--1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+-10010 1 
+1-0010 1 
+--1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+--1101 1 
+00-101 1 
+--1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+
+.names n513 n521 n522 top_module^a5~4 top_module^b5~5 n529 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names top_module^a5~4 n513 n521 n522 n530 
+0100 1 
+0010 1 
+0001 1 
+0111 1 
+
+.names n513 n521 n522 n532 n533 n534 n531 
+-10000 1 
+0-0000 1 
+01-000 1 
+-01100 1 
+1-1100 1 
+10-100 1 
+-01010 1 
+1-1010 1 
+10-010 1 
+-10110 1 
+0-0110 1 
+01-110 1 
+-01001 1 
+1-1001 1 
+10-001 1 
+-10101 1 
+0-0101 1 
+01-101 1 
+-10011 1 
+0-0011 1 
+01-011 1 
+-01111 1 
+1-1111 1 
+10-111 1 
+
+.names n518 top_module^b5~2 n517 top_module^b5~3 top_module^a5~7 n532 
+--0-0 0 
+00--0 0 
+-1111 0 
+1-111 0 
+-000- 0 
+0-00- 0 
+00-0- 0 
+1101- 0 
+
+.names n514 n503 n520 n515 n516 n518 n533 
+---100 0 
+--0-00 0 
+00--00 0 
+---111 0 
+--0-11 0 
+00--11 0 
+--01-- 0 
+000--- 0 
+
+.names top_module^a5~6 top_module^b5~4 n534 
+11 1 
+
+.names top_module^a5~4 top_module^b5~6 n535 
+11 1 
+
+.names top_module^a5~5 top_module^b5~5 n536 
+11 1 
+
+.names n524 n496 n507 n509 n523 n512 n537 
+--0000 1 
+-1-000 1 
+-10-00 1 
+0---00 1 
+--0011 1 
+-1-011 1 
+-10-11 1 
+0---11 1 
+0-00-- 1 
+01-0-- 1 
+010--- 1 
+
+.names top_module^a5~3 top_module^b5~7 n538 
+11 1 
+
+.names n540 n541 n550 top_module^c5~11 
+000 1 
+110 1 
+101 1 
+011 1 
+
+.names n538 n511 n525 n526 n528 n537 n540 
+--0010 1 
+-0-010 1 
+-00-10 1 
+0---10 1 
+--0001 1 
+-0-001 1 
+-00-01 1 
+0---01 1 
+0-00-- 1 
+00-0-- 1 
+000--- 1 
+
+.names n542 n537 n535 n543 n548 n549 n541 
+-01000 1 
+1-1000 1 
+10-000 1 
+-10100 1 
+0-0100 1 
+01-100 1 
+-10010 1 
+0-0010 1 
+01-010 1 
+-01110 1 
+1-1110 1 
+10-110 1 
+-10001 1 
+0-0001 1 
+01-001 1 
+-01101 1 
+1-1101 1 
+10-101 1 
+-01011 1 
+1-1011 1 
+10-011 1 
+-10111 1 
+0-0111 1 
+01-111 1 
+
+.names n529 n523 n530 n531 n536 n542 
+--100 1 
+00-00 1 
+-1010 1 
+1-010 1 
+-1001 1 
+1-001 1 
+--111 1 
+00-11 1 
+
+.names top_module^a5~6 top_module^b5~5 n544 n547 n543 
+1100 1 
+-010 1 
+0-10 1 
+-001 1 
+0-01 1 
+1111 1 
+
+.names n545 n533 top_module^b5~4 n546 n544 
+-100 1 
+0010 1 
+100- 1 
+
+.names n518 n517 top_module^b5~2 top_module^b5~3 n545 
+-111 1 
+10-1 1 
+
+.names top_module^a5~7 n546 
+0 1 
+
+.names n534 n513 n521 n522 n532 n533 n547 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names n529 n523 n531 n536 n530 n548 
+---01 0 
+--1-1 0 
+--10- 0 
+00-0- 0 
+001-- 0 
+
+.names top_module^a5~5 top_module^b5~6 n549 
+11 1 
+
+.names top_module^a5~4 top_module^b5~7 n550 
+11 1 
+
+.names n540 n541 n550 n552 n558 n559 top_module^c5~12 
+-11000 1 
+0-1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+10-100 1 
+-00010 1 
+1-0010 1 
+10-010 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+10-001 1 
+-11101 1 
+0-1101 1 
+01-101 1 
+-11011 1 
+0-1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+10-111 1 
+
+.names n553 n548 n554 n555 n557 n552 
+-1000 1 
+1-000 1 
+--110 1 
+00-10 1 
+--101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+
+.names n544 n547 top_module^a5~6 top_module^b5~5 n553 
+1011 1 
+0111 1 
+
+.names top_module^a5~6 n544 n547 n554 
+000 1 
+011 1 
+
+.names top_module^b5~4 n556 n547 top_module^b5~5 top_module^a5~7 n555 
+-11-0 1 
+1-101 1 
+11-01 1 
+-0011 1 
+0-011 1 
+00-11 1 
+-110- 1 
+
+.names n533 n545 n546 n556 
+--1 0 
+00- 0 
+
+.names top_module^a5~6 top_module^b5~6 n557 
+11 1 
+
+.names n549 n542 n537 n535 n543 n548 n558 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a5~5 top_module^b5~7 n559 
+11 1 
+
+.names n561 n567 top_module^c5~13 
+10 1 
+01 1 
+
+.names top_module^b5~6 n562 n558 top_module^a5~6 top_module^b5~7 n563 n561 
+1-1100 1 
+10-100 1 
+-01-00 1 
+-10110 1 
+0-0110 1 
+01-110 1 
+-010-0 1 
+-10-01 1 
+0-0-01 1 
+01--01 1 
+-01111 1 
+100-11 1 
+111-11 1 
+--00-1 1 
+-1-0-1 1 
+
+.names n553 n548 n554 n555 n562 
+--10 1 
+00-0 1 
+-101 1 
+1-01 1 
+
+.names n553 n548 n564 n554 n565 n566 n563 
+-1-000 1 
+1--000 1 
+--1-00 1 
+----11 1 
+--01-1 1 
+000--1 1 
+
+.names n556 n547 top_module^b5~4 top_module^b5~5 n564 
+-111 1 
+1-11 1 
+
+.names top_module^a5~7 n565 
+0 1 
+
+.names top_module^a5~7 top_module^b5~6 n566 
+11 1 
+
+.names n559 n540 n541 n550 n552 n558 n567 
+--1110 1 
+-0-110 1 
+-01-10 1 
+1---10 1 
+--1101 1 
+-0-101 1 
+-01-01 1 
+1---01 1 
+1-11-- 1 
+10-1-- 1 
+101--- 1 
+
+.names top_module^a5~6 top_module^b5~7 n569 n567 n570 top_module^c5~14 
+--110 1 
+11-10 1 
+111-0 1 
+--001 1 
+-0-01 1 
+0--01 1 
+-00-1 1 
+0-0-1 1 
+
+.names n562 n558 n557 n563 n569 
+-110 1 
+0-10 1 
+01-0 1 
+-001 1 
+1-01 1 
+10-1 1 
+
+.names n562 n571 n558 n557 n572 n573 n570 
+--1100 1 
+0--100 1 
+0-1-00 1 
+-1--00 1 
+----11 1 
+-000-1 1 
+10-0-1 1 
+100--1 1 
+
+.names n548 n553 n564 n554 n566 n571 
+1--01 1 
+--1-1 1 
+-1--1 1 
+
+.names n566 n572 
+0 1 
+
+.names top_module^a5~7 top_module^b5~7 n573 
+11 1 
+
+.names n569 top_module^a5~7 n567 top_module^a5~6 top_module^b5~7 top_module^b5~6 top_module^c5~15 
+01--11 1 
+11-11- 1 
+-111-- 1 
+111--- 1 
+
+.names top_module^a6~0 top_module^b6~0 top_module^c6~0 
+11 1 
+
+.names top_module^a6~0 top_module^b6~1 top_module^a6~1 top_module^b6~0 top_module^c6~1 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a6~2 top_module^b6~2 top_module^a6~1 top_module^b6~1 top_module^a6~0 top_module^b6~0 top_module^c6~2 
+---000 0 
+--0-00 0 
+-11110 0 
+-0-0-0 0 
+-00--0 0 
+1-1101 0 
+00--11 0 
+11--11 0 
+0--00- 0 
+0-0-0- 0 
+
+.names top_module^a6~0 top_module^b6~3 n580 n581 n582 top_module^c6~3 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names top_module^a6~1 top_module^b6~1 top_module^a6~2 top_module^b6~0 top_module^a6~0 top_module^b6~2 n580 
+11-011 1 
+--1111 1 
+
+.names top_module^a6~1 top_module^b6~2 n581 
+11 1 
+
+.names top_module^a6~0 top_module^a6~1 top_module^b6~1 top_module^b6~0 top_module^a6~2 top_module^a6~3 n582 
+111100 0 
+-01-10 0 
+-0-101 0 
+-11-11 0 
+--01-1 0 
+01-1-1 0 
+--101- 0 
+
+.names top_module^a6~0 top_module^b6~4 n584 n585 n589 top_module^c6~4 
+-0000 1 
+0-000 1 
+11100 1 
+11010 1 
+-0110 1 
+0-110 1 
+11001 1 
+-0101 1 
+0-101 1 
+-0011 1 
+0-011 1 
+11111 1 
+
+.names n580 n581 n582 top_module^a6~0 top_module^b6~3 n584 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n580 n581 n582 n586 n587 n588 n585 
+-10000 1 
+1-0000 1 
+11-000 1 
+-01100 1 
+0-1100 1 
+00-100 1 
+-01010 1 
+0-1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+11-110 1 
+-01001 1 
+0-1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+11-101 1 
+-10011 1 
+1-0011 1 
+11-011 1 
+-01111 1 
+0-1111 1 
+00-111 1 
+
+.names top_module^a6~2 top_module^b6~2 n586 
+11 1 
+
+.names top_module^a6~3 top_module^b6~1 top_module^a6~4 top_module^b6~0 n587 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a6~0 top_module^a6~2 top_module^a6~1 top_module^a6~3 top_module^b6~0 top_module^b6~1 n588 
+1-1111 0 
+-1-111 0 
+-11-11 0 
+
+.names top_module^a6~1 top_module^b6~3 n589 
+11 1 
+
+.names top_module^a6~0 top_module^b6~5 n591 n592 n600 top_module^c6~5 
+11000 1 
+-0100 1 
+0-100 1 
+-0010 1 
+0-010 1 
+11110 1 
+-0001 1 
+0-001 1 
+11101 1 
+11011 1 
+-0111 1 
+0-111 1 
+
+.names n584 n585 n589 top_module^a6~0 top_module^b6~4 n591 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n584 n585 n589 n593 n598 n599 n592 
+-01000 1 
+1-1000 1 
+10-000 1 
+-10100 1 
+0-0100 1 
+01-100 1 
+-10010 1 
+0-0010 1 
+01-010 1 
+-01110 1 
+1-1110 1 
+10-110 1 
+-10001 1 
+0-0001 1 
+01-001 1 
+-01101 1 
+1-1101 1 
+10-101 1 
+-01011 1 
+1-1011 1 
+10-011 1 
+-10111 1 
+0-0111 1 
+01-111 1 
+
+.names n595 n588 n594 n596 n597 n593 
+--100 1 
+00-00 1 
+-1010 1 
+1-010 1 
+-1001 1 
+1-001 1 
+--111 1 
+00-11 1 
+
+.names top_module^a6~3 top_module^a6~4 top_module^b6~0 top_module^b6~1 n594 
+1111 1 
+
+.names top_module^a6~4 top_module^a6~3 n595 
+00 1 
+
+.names top_module^a6~3 top_module^b6~2 n596 
+11 1 
+
+.names top_module^a6~4 top_module^b6~1 top_module^a6~5 top_module^b6~0 n597 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names n586 n580 n582 n581 n587 n588 n598 
+--0100 1 
+-1-100 1 
+-10-00 1 
+1---00 1 
+--0111 1 
+-1-111 1 
+-10-11 1 
+1---11 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a6~2 top_module^b6~3 n599 
+11 1 
+
+.names top_module^a6~1 top_module^b6~4 n600 
+11 1 
+
+.names top_module^a6~0 top_module^b6~6 n602 n603 n615 n616 top_module^c6~6 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n591 n592 n600 top_module^a6~0 top_module^b6~5 n602 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names n604 n613 n614 n603 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names n605 n598 n606 n607 n611 n612 n604 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n588 n594 n597 n596 n605 
+-101 1 
+0-01 1 
+1011 1 
+
+.names n595 n588 n596 n597 n606 
+-100 1 
+1--0 1 
+0001 1 
+
+.names n595 n588 n594 n609 n608 n610 n607 
+----10 1 
+--10-0 1 
+00-0-0 1 
+---101 1 
+-10-01 1 
+1-0-01 1 
+
+.names top_module^a6~4 top_module^a6~5 top_module^b6~0 top_module^b6~1 n608 
+1111 1 
+
+.names top_module^a6~5 top_module^a6~4 n609 
+00 1 
+
+.names top_module^a6~5 top_module^b6~1 top_module^a6~6 top_module^b6~0 n610 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names top_module^a6~3 top_module^b6~3 n611 
+11 1 
+
+.names top_module^a6~4 top_module^b6~2 n612 
+11 1 
+
+.names n599 n584 n585 n589 n593 n598 n613 
+--0110 1 
+-1-110 1 
+-10-10 1 
+1---10 1 
+--0101 1 
+-1-101 1 
+-10-01 1 
+1---01 1 
+1-01-- 1 
+11-1-- 1 
+110--- 1 
+
+.names top_module^a6~2 top_module^b6~4 n614 
+11 1 
+
+.names n591 n592 n600 n615 
+-11 1 
+1-1 1 
+11- 1 
+
+.names top_module^a6~1 top_module^b6~5 n616 
+11 1 
+
+.names top_module^a6~0 top_module^b6~7 n618 n619 n633 n634 top_module^c6~7 
+110000 1 
+-01000 1 
+0-1000 1 
+-00100 1 
+0-0100 1 
+111100 1 
+-00010 1 
+0-0010 1 
+111010 1 
+110110 1 
+-01110 1 
+0-1110 1 
+-00001 1 
+0-0001 1 
+111001 1 
+110101 1 
+-01101 1 
+0-1101 1 
+110011 1 
+-01011 1 
+0-1011 1 
+-00111 1 
+0-0111 1 
+111111 1 
+
+.names n602 n603 n615 n616 top_module^a6~0 top_module^b6~6 n618 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names top_module^a6~2 top_module^b6~5 n620 n631 n632 n619 
+11000 1 
+-0100 1 
+0-100 1 
+-0010 1 
+0-010 1 
+11110 1 
+-0001 1 
+0-001 1 
+11101 1 
+11011 1 
+-0111 1 
+0-111 1 
+
+.names n621 n613 n611 n622 n629 n630 n620 
+-11000 1 
+1-1000 1 
+11-000 1 
+-00100 1 
+0-0100 1 
+00-100 1 
+-00010 1 
+0-0010 1 
+00-010 1 
+-11110 1 
+1-1110 1 
+11-110 1 
+-00001 1 
+0-0001 1 
+00-001 1 
+-11101 1 
+1-1101 1 
+11-101 1 
+-11011 1 
+1-1011 1 
+11-011 1 
+-00111 1 
+0-0111 1 
+00-111 1 
+
+.names n605 n598 n606 n607 n612 n621 
+-1000 1 
+1-000 1 
+--110 1 
+00-10 1 
+--101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+
+.names top_module^a6~5 top_module^b6~2 n623 n628 n622 
+-000 1 
+0-00 1 
+1110 1 
+1101 1 
+-011 1 
+0-11 1 
+
+.names n588 n625 n627 n610 n587 n623 
+-00-0 1 
+1-111 1 
+--00- 1 
+-011- 1 
+100-- 1 
+
+.names top_module^a6~4 top_module^b6~0 n625 
+11 1 
+
+.names top_module^a6~6 top_module^b6~0 n627 
+11 1 
+
+.names top_module^a6~6 top_module^b6~1 top_module^a6~7 top_module^b6~0 n628 
+11-0 1 
+-011 1 
+0-11 1 
+110- 1 
+
+.names n605 n598 n607 n612 n606 n629 
+---01 0 
+--0-1 0 
+--00- 0 
+00-0- 0 
+000-- 0 
+
+.names top_module^a6~4 top_module^b6~3 n630 
+11 1 
+
+.names n614 n591 n592 n600 n604 n613 n631 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a6~3 top_module^b6~4 n632 
+11 1 
+
+.names n602 n616 n603 n615 n633 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a6~1 top_module^b6~6 n634 
+11 1 
+
+.names n636 n637 n648 n649 n650 top_module^c6~8 
+00000 1 
+11000 1 
+10100 1 
+01100 1 
+10010 1 
+01010 1 
+00110 1 
+11110 1 
+10001 1 
+01001 1 
+00101 1 
+11101 1 
+00011 1 
+11011 1 
+10111 1 
+01111 1 
+
+.names n618 n619 n633 n634 top_module^a6~0 top_module^b6~7 n636 
+100011 1 
+010011 1 
+001011 1 
+111011 1 
+000111 1 
+110111 1 
+101111 1 
+011111 1 
+
+.names n638 n633 n639 n640 n646 n647 n637 
+--1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+-10010 1 
+1-0010 1 
+--1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+--1101 1 
+00-101 1 
+--1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+
+.names n620 n631 n632 top_module^a6~2 top_module^b6~5 n638 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names top_module^a6~2 n620 n631 n632 n639 
+0000 1 
+0110 1 
+0101 1 
+0011 1 
+
+.names n641 n644 n645 n640 
+100 1 
+010 1 
+001 1 
+111 1 
+
+.names top_module^b6~2 n642 n629 top_module^a6~5 top_module^b6~3 n643 n641 
+1-1100 1 
+11-100 1 
+-11-00 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-110-0 1 
+-00-01 1 
+0-0-01 1 
+00--01 1 
+-11111 1 
+110-11 1 
+101-11 1 
+--00-1 1 
+-0-0-1 1 
+
+.names n623 n628 n642 
+00 1 
+11 1 
+
+.names top_module^b6~0 n623 top_module^a6~6 top_module^b6~2 top_module^a6~7 top_module^b6~1 n643 
+--1100 1 
+10-010 1 
+100-10 1 
+0-11-0 1 
+-01001 1 
+01-011 1 
+1-1111 1 
+-10-11 1 
+0-0-11 1 
+-1110- 1 
+00111- 1 
+1111-- 1 
+
+.names n630 n621 n613 n611 n622 n629 n644 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a6~4 top_module^b6~4 n645 
+11 1 
+
+.names n620 n631 n632 n646 
+-11 1 
+1-1 1 
+11- 1 
+
+.names top_module^a6~3 top_module^b6~5 n647 
+11 1 
+
+.names n618 n634 n619 n633 n648 
+-110 1 
+1-10 1 
+-101 1 
+1-01 1 
+11-- 1 
+
+.names top_module^a6~1 top_module^b6~7 n649 
+11 1 
+
+.names top_module^a6~2 top_module^b6~6 n650 
+11 1 
+
+.names n652 n666 n667 top_module^c6~9 
+000 1 
+110 1 
+101 1 
+011 1 
+
+.names n637 n648 n650 n653 n664 n665 n652 
+-00000 1 
+1-0000 1 
+10-000 1 
+-11100 1 
+0-1100 1 
+01-100 1 
+-11010 1 
+0-1010 1 
+01-010 1 
+-00110 1 
+1-0110 1 
+10-110 1 
+-11001 1 
+0-1001 1 
+01-001 1 
+-00101 1 
+1-0101 1 
+10-101 1 
+-00011 1 
+1-0011 1 
+10-011 1 
+-11111 1 
+0-1111 1 
+01-111 1 
+
+.names top_module^a6~4 top_module^b6~5 n654 n662 n663 n653 
+11000 1 
+-0100 1 
+0-100 1 
+-0010 1 
+0-010 1 
+11110 1 
+-0001 1 
+0-001 1 
+11101 1 
+11011 1 
+-0111 1 
+0-111 1 
+
+.names n655 n644 n656 n657 n659 n661 n654 
+-10000 1 
+1-0000 1 
+--1100 1 
+00-100 1 
+--1010 1 
+00-010 1 
+-10110 1 
+1-0110 1 
+--1001 1 
+00-001 1 
+-10101 1 
+1-0101 1 
+-10011 1 
+1-0011 1 
+--1111 1 
+00-111 1 
+
+.names n642 n629 top_module^b6~2 n643 top_module^a6~5 top_module^b6~3 n655 
+-11011 1 
+1-1011 1 
+11-011 1 
+-00111 1 
+0-0111 1 
+00-111 1 
+
+.names top_module^a6~5 n642 n629 n643 n656 
+0-00 1 
+00-0 1 
+0111 1 
+
+.names top_module^a6~7 n658 top_module^b6~2 n657 
+-10 1 
+101 1 
+
+.names n623 top_module^a6~6 top_module^b6~0 top_module^a6~7 top_module^b6~1 n658 
+-1111 1 
+0-111 1 
+01-11 1 
+
+.names n642 top_module^a6~6 n629 top_module^a6~5 top_module^b6~2 n643 n659 
+-1--10 1 
+--1111 1 
+1--111 1 
+1-1--1 1 
+-111-- 1 
+111--- 1 
+
+.names top_module^a6~6 top_module^b6~3 n661 
+11 1 
+
+.names n645 n620 n631 n632 n641 n644 n662 
+--1110 1 
+-1-110 1 
+-11-10 1 
+1---10 1 
+--1101 1 
+-1-101 1 
+-11-01 1 
+1---01 1 
+1-11-- 1 
+11-1-- 1 
+111--- 1 
+
+.names top_module^a6~5 top_module^b6~4 n663 
+11 1 
+
+.names n638 n633 n647 n639 n640 n646 n664 
+---100 0 
+--0-00 0 
+00--00 0 
+---111 0 
+--0-11 0 
+00--11 0 
+--01-- 0 
+000--- 0 
+
+.names top_module^a6~3 top_module^b6~6 n665 
+11 1 
+
+.names n636 n649 n637 n648 n650 n666 
+-1000 1 
+1-000 1 
+-1110 1 
+1-110 1 
+-1101 1 
+1-101 1 
+-1011 1 
+1-011 1 
+11--- 1 
+
+.names top_module^a6~2 top_module^b6~7 n667 
+11 1 
+
+.names n652 n666 n667 n669 n678 n679 top_module^c6~10 
+-00000 1 
+1-0000 1 
+10-000 1 
+-11100 1 
+0-1100 1 
+01-100 1 
+-11010 1 
+0-1010 1 
+01-010 1 
+-00110 1 
+1-0110 1 
+10-110 1 
+-11001 1 
+0-1001 1 
+01-001 1 
+-00101 1 
+1-0101 1 
+10-101 1 
+-00011 1 
+1-0011 1 
+10-011 1 
+-11111 1 
+0-1111 1 
+01-111 1 
+
+.names n670 n664 n671 n672 n676 n677 n669 
+--1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+-10010 1 
+1-0010 1 
+--1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+--1101 1 
+00-101 1 
+--1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+
+.names n654 n662 n663 top_module^a6~4 top_module^b6~5 n670 
+10011 1 
+01011 1 
+00111 1 
+11111 1 
+
+.names top_module^a6~4 n654 n662 n663 n671 
+0000 1 
+0110 1 
+0101 1 
+0011 1 
+
+.names n654 n662 n663 n673 n674 n675 n672 
+-00000 1 
+0-0000 1 
+00-000 1 
+-11100 1 
+1-1100 1 
+11-100 1 
+-11010 1 
+1-1010 1 
+11-010 1 
+-00110 1 
+0-0110 1 
+00-110 1 
+-11001 1 
+1-1001 1 
+11-001 1 
+-00101 1 
+0-0101 1 
+00-101 1 
+-00011 1 
+0-0011 1 
+00-011 1 
+-11111 1 
+1-1111 1 
+11-111 1 
+
+.names n659 top_module^b6~2 n658 top_module^b6~3 top_module^a6~7 n673 
+--0-0 0 
+00--0 0 
+-1111 0 
+1-111 0 
+-000- 0 
+0-00- 0 
+00-0- 0 
+1101- 0 
+
+.names n655 n644 n661 n656 n657 n659 n674 
+---100 0 
+--0-00 0 
+00--00 0 
+---111 0 
+--0-11 0 
+00--11 0 
+--01-- 0 
+000--- 0 
+
+.names top_module^a6~6 top_module^b6~4 n675 
+11 1 
+
+.names top_module^a6~4 top_module^b6~6 n676 
+11 1 
+
+.names top_module^a6~5 top_module^b6~5 n677 
+11 1 
+
+.names n665 n637 n648 n650 n664 n653 n678 
+--0000 1 
+-1-000 1 
+-10-00 1 
+0---00 1 
+--0011 1 
+-1-011 1 
+-10-11 1 
+0---11 1 
+0-00-- 1 
+01-0-- 1 
+010--- 1 
+
+.names top_module^a6~3 top_module^b6~7 n679 
+11 1 
+
+.names n681 n690 n691 top_module^c6~11 
+000 1 
+110 1 
+101 1 
+011 1 
+
+.names n682 n678 n676 n683 n688 n689 n681 
+-01000 1 
+0-1000 1 
+00-000 1 
+-10100 1 
+1-0100 1 
+11-100 1 
+-10010 1 
+1-0010 1 
+11-010 1 
+-01110 1 
+0-1110 1 
+00-110 1 
+-10001 1 
+1-0001 1 
+11-001 1 
+-01101 1 
+0-1101 1 
+00-101 1 
+-01011 1 
+0-1011 1 
+00-011 1 
+-10111 1 
+1-0111 1 
+11-111 1 
+
+.names n670 n664 n671 n672 n677 n682 
+-1000 1 
+1-000 1 
+--110 1 
+00-10 1 
+--101 1 
+00-01 1 
+-1011 1 
+1-011 1 
+
+.names top_module^a6~6 top_module^b6~5 n684 n687 n683 
+-000 1 
+0-00 1 
+1110 1 
+1101 1 
+-011 1 
+0-11 1 
+
+.names n685 n674 top_module^b6~4 n686 n684 
+-100 1 
+0010 1 
+100- 1 
+
+.names n659 n658 top_module^b6~2 top_module^b6~3 n685 
+-111 1 
+1-11 1 
+
+.names top_module^a6~7 n686 
+0 1 
+
+.names n675 n654 n662 n663 n674 n673 n687 
+--0000 1 
+-0-000 1 
+-00-00 1 
+0---00 1 
+--0011 1 
+-0-011 1 
+-00-11 1 
+0---11 1 
+0-00-- 1 
+00-0-- 1 
+000--- 1 
+
+.names n671 n670 n664 n672 n677 n688 
+---10 1 
+-00-0 1 
+1---0 1 
+-001- 1 
+1--1- 1 
+
+.names top_module^a6~5 top_module^b6~6 n689 
+11 1 
+
+.names n679 n652 n666 n667 n678 n669 n690 
+--1100 1 
+-0-100 1 
+-01-00 1 
+1---00 1 
+--1111 1 
+-0-111 1 
+-01-11 1 
+1---11 1 
+1-11-- 1 
+10-1-- 1 
+101--- 1 
+
+.names top_module^a6~4 top_module^b6~7 n691 
+11 1 
+
+.names n681 n690 n691 n693 n698 n699 top_module^c6~12 
+-11000 1 
+0-1000 1 
+01-000 1 
+-00100 1 
+1-0100 1 
+10-100 1 
+-00010 1 
+1-0010 1 
+10-010 1 
+-11110 1 
+0-1110 1 
+01-110 1 
+-00001 1 
+1-0001 1 
+10-001 1 
+-11101 1 
+0-1101 1 
+01-101 1 
+-11011 1 
+0-1011 1 
+01-011 1 
+-00111 1 
+1-0111 1 
+10-111 1 
+
+.names n695 n688 top_module^a6~6 top_module^b6~6 n694 n696 n693 
+-11100 1 
+1-1100 1 
+---010 1 
+--0-10 1 
+00-0-0 1 
+000--0 1 
+-1-001 1 
+1--001 1 
+-10-01 1 
+1-0-01 1 
+--1111 1 
+0011-1 1 
+
+.names n684 n687 top_module^a6~6 top_module^b6~5 n694 
+0011 1 
+1111 1 
+
+.names top_module^a6~6 n684 n687 n695 
+010 1 
+001 1 
+
+.names top_module^b6~4 n697 n687 top_module^b6~5 top_module^a6~7 n696 
+-10-0 1 
+1-001 1 
+11-01 1 
+-0111 1 
+0-111 1 
+00-11 1 
+-100- 1 
+
+.names n674 n685 n686 n697 
+--1 0 
+00- 0 
+
+.names n689 n682 n678 n676 n688 n683 n698 
+--0100 1 
+-0-100 1 
+-00-00 1 
+1---00 1 
+--0111 1 
+-0-111 1 
+-00-11 1 
+1---11 1 
+1-01-- 1 
+10-1-- 1 
+100--- 1 
+
+.names top_module^a6~5 top_module^b6~7 n699 
+11 1 
+
+.names top_module^a6~6 top_module^b6~7 n701 n702 top_module^c6~13 
+1100 1 
+-010 1 
+0-10 1 
+-001 1 
+0-01 1 
+1111 1 
+
+.names n699 n681 n690 n691 n693 n698 n701 
+--1110 1 
+-0-110 1 
+-01-10 1 
+1---10 1 
+--1101 1 
+-0-101 1 
+-01-01 1 
+1---01 1 
+1-11-- 1 
+10-1-- 1 
+101--- 1 
+
+.names n704 n698 n703 n705 n702 
+--10 1 
+01-0 1 
+-001 1 
+1-01 1 
+
+.names n688 n694 n696 top_module^a6~6 top_module^b6~6 n703 
+0-011 1 
+10111 1 
+-10-1 1 
+
+.names top_module^a6~6 n695 n688 n696 n704 
+0--0 1 
+000- 1 
+
+.names n695 n688 n694 n706 n707 n708 n705 
+---100 1 
+--1-00 1 
+00--00 1 
+----11 1 
+-100-1 1 
+1-00-1 1 
+
+.names n697 n687 top_module^b6~4 top_module^b6~5 n706 
+-011 1 
+1-11 1 
+
+.names top_module^a6~7 n707 
+0 1 
+
+.names top_module^a6~7 top_module^b6~6 n708 
+11 1 
+
+.names top_module^a6~6 top_module^b6~7 n701 n702 n710 top_module^c6~14 
+--110 1 
+11-10 1 
+111-0 1 
+--001 1 
+-0-01 1 
+0--01 1 
+-00-1 1 
+0-0-1 1 
+
+.names n704 n698 n703 n711 n712 n713 n710 
+---100 1 
+--1-00 1 
+01--00 1 
+----11 1 
+-000-1 1 
+1-00-1 1 
+
+.names n688 n695 n706 n694 n708 n711 
+---11 1 
+--1-1 1 
+00--1 1 
+
+.names n708 n712 
+0 1 
+
+.names top_module^a6~7 top_module^b6~7 n713 
+11 1 
+
+.names n701 top_module^a6~7 n702 top_module^a6~6 top_module^b6~7 top_module^b6~6 top_module^c6~15 
+-10-11 1 
+-1111- 1 
+11-1-- 1 
+111--- 1 
+
+.names unconn 
+0 
+
+.names top_module^MUL~0[0] top_module^c1~0 
+1 1 
+
+.names top_module^MUL~0[1] top_module^c1~1 
+1 1 
+
+.names top_module^MUL~0[2] top_module^c1~2 
+1 1 
+
+.names top_module^MUL~0[3] top_module^c1~3 
+1 1 
+
+.names top_module^MUL~0[4] top_module^c1~4 
+1 1 
+
+.names top_module^MUL~0[5] top_module^c1~5 
+1 1 
+
+.names top_module^MUL~0[6] top_module^c1~6 
+1 1 
+
+.names top_module^MUL~0[7] top_module^c1~7 
+1 1 
+
+.names top_module^MUL~0[8] top_module^c1~8 
+1 1 
+
+.names top_module^MUL~0[9] top_module^c1~9 
+1 1 
+
+.names top_module^MUL~0[10] top_module^c1~10 
+1 1 
+
+.names top_module^MUL~0[11] top_module^c1~11 
+1 1 
+
+.names top_module^MUL~0[12] top_module^c1~12 
+1 1 
+
+.names top_module^MUL~0[13] top_module^c1~13 
+1 1 
+
+.names top_module^MUL~0[14] top_module^c1~14 
+1 1 
+
+.names top_module^MUL~0[15] top_module^c1~15 
+1 1 
+
+.names top_module^MUL~17[0] top_module^c2~0 
+1 1 
+
+.names top_module^MUL~17[1] top_module^c2~1 
+1 1 
+
+.names top_module^MUL~17[2] top_module^c2~2 
+1 1 
+
+.names top_module^MUL~17[3] top_module^c2~3 
+1 1 
+
+.names top_module^MUL~17[4] top_module^c2~4 
+1 1 
+
+.names top_module^MUL~17[5] top_module^c2~5 
+1 1 
+
+.names top_module^MUL~17[6] top_module^c2~6 
+1 1 
+
+.names top_module^MUL~17[7] top_module^c2~7 
+1 1 
+
+.names top_module^MUL~17[8] top_module^c2~8 
+1 1 
+
+.names top_module^MUL~17[9] top_module^c2~9 
+1 1 
+
+.names top_module^MUL~17[10] top_module^c2~10 
+1 1 
+
+.names top_module^MUL~17[11] top_module^c2~11 
+1 1 
+
+.names top_module^MUL~17[12] top_module^c2~12 
+1 1 
+
+.names top_module^MUL~17[13] top_module^c2~13 
+1 1 
+
+.names top_module^MUL~17[14] top_module^c2~14 
+1 1 
+
+.names top_module^MUL~17[15] top_module^c2~15 
+1 1 
+
+.names top_module^MUL~34[0] top_module^c3~0 
+1 1 
+
+.names top_module^MUL~34[1] top_module^c3~1 
+1 1 
+
+.names top_module^MUL~34[2] top_module^c3~2 
+1 1 
+
+.names top_module^MUL~34[3] top_module^c3~3 
+1 1 
+
+.names top_module^MUL~34[4] top_module^c3~4 
+1 1 
+
+.names top_module^MUL~34[5] top_module^c3~5 
+1 1 
+
+.names top_module^MUL~34[6] top_module^c3~6 
+1 1 
+
+.names top_module^MUL~34[7] top_module^c3~7 
+1 1 
+
+.names top_module^MUL~34[8] top_module^c3~8 
+1 1 
+
+.names top_module^MUL~34[9] top_module^c3~9 
+1 1 
+
+.names top_module^MUL~34[10] top_module^c3~10 
+1 1 
+
+.names top_module^MUL~34[11] top_module^c3~11 
+1 1 
+
+.names top_module^MUL~34[12] top_module^c3~12 
+1 1 
+
+.names top_module^MUL~34[13] top_module^c3~13 
+1 1 
+
+.names top_module^MUL~34[14] top_module^c3~14 
+1 1 
+
+.names top_module^MUL~34[15] top_module^c3~15 
+1 1 
+
+.end 
+
+
+
+.model multiply 
+
+.inputs a[0] a[1] a[2] a[3] a[4] a[5] a[6] a[7] a[8] b[0] b[1] b[2] b[3] b[4] b[5] b[6] b[7] b[8] 
+
+.outputs out[0] out[1] out[2] out[3] out[4] out[5] out[6] out[7] out[8] out[9] out[10] out[11] out[12] out[13] out[14] \
+ out[15] out[16] out[17] 
+
+.blackbox 
+
+.end 

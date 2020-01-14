@@ -1,0 +1,1790 @@
+# Benchmark "top_module" written by ABC on Mon Jan 13 19:03:40 2020 
+
+.model top_module 
+
+.inputs top_module^a1~0 top_module^a1~1 top_module^a1~2 top_module^a1~3 top_module^a1~4 top_module^a1~5 top_module^a1~6 \
+ top_module^a1~7 top_module^a1~8 top_module^a1~9 top_module^a1~10 top_module^a1~11 top_module^a1~12 top_module^a1~13 \
+ top_module^a1~14 top_module^a1~15 top_module^a1~16 top_module^a1~17 top_module^a1~18 top_module^a1~19 top_module^a1~20 \
+ top_module^a1~21 top_module^a1~22 top_module^a2~0 top_module^a2~1 top_module^a2~2 top_module^a2~3 top_module^a2~4 \
+ top_module^a2~5 top_module^a2~6 top_module^a2~7 top_module^a2~8 top_module^a2~9 top_module^a2~10 top_module^a2~11 \
+ top_module^a2~12 top_module^a2~13 top_module^a2~14 top_module^a2~15 top_module^a2~16 top_module^a2~17 top_module^a2~18 \
+ top_module^a2~19 top_module^a2~20 top_module^a2~21 top_module^a2~22 top_module^a3~0 top_module^a3~1 top_module^a3~2 \
+ top_module^a3~3 top_module^a3~4 top_module^a3~5 top_module^a3~6 top_module^a3~7 top_module^a3~8 top_module^a3~9 \
+ top_module^a3~10 top_module^a3~11 top_module^a3~12 top_module^a3~13 top_module^a3~14 top_module^a3~15 top_module^a3~16 \
+ top_module^a3~17 top_module^a3~18 top_module^a3~19 top_module^a3~20 top_module^a3~21 top_module^a3~22 top_module^a4~0 \
+ top_module^a4~1 top_module^a4~2 top_module^a4~3 top_module^a4~4 top_module^a4~5 top_module^a4~6 top_module^a4~7 \
+ top_module^a4~8 top_module^a4~9 top_module^a4~10 top_module^a4~11 top_module^a4~12 top_module^a4~13 top_module^a4~14 \
+ top_module^a4~15 top_module^a4~16 top_module^a4~17 top_module^a4~18 top_module^a4~19 top_module^a4~20 top_module^a4~21 \
+ top_module^a4~22 top_module^a5~0 top_module^a5~1 top_module^a5~2 top_module^a5~3 top_module^a5~4 top_module^a5~5 \
+ top_module^a5~6 top_module^a5~7 top_module^a5~8 top_module^a5~9 top_module^a5~10 top_module^a5~11 top_module^a5~12 \
+ top_module^a5~13 top_module^a5~14 top_module^a5~15 top_module^a5~16 top_module^a5~17 top_module^a5~18 top_module^a5~19 \
+ top_module^a5~20 top_module^a5~21 top_module^a5~22 top_module^b1~0 top_module^b1~1 top_module^b1~2 top_module^b1~3 \
+ top_module^b1~4 top_module^b1~5 top_module^b1~6 top_module^b1~7 top_module^b1~8 top_module^b1~9 top_module^b1~10 \
+ top_module^b1~11 top_module^b1~12 top_module^b1~13 top_module^b1~14 top_module^b1~15 top_module^b1~16 top_module^b1~17 \
+ top_module^b1~18 top_module^b1~19 top_module^b1~20 top_module^b1~21 top_module^b1~22 top_module^b2~0 top_module^b2~1 \
+ top_module^b2~2 top_module^b2~3 top_module^b2~4 top_module^b2~5 top_module^b2~6 top_module^b2~7 top_module^b2~8 \
+ top_module^b2~9 top_module^b2~10 top_module^b2~11 top_module^b2~12 top_module^b2~13 top_module^b2~14 top_module^b2~15 \
+ top_module^b2~16 top_module^b2~17 top_module^b2~18 top_module^b2~19 top_module^b2~20 top_module^b2~21 top_module^b2~22 \
+ top_module^b3~0 top_module^b3~1 top_module^b3~2 top_module^b3~3 top_module^b3~4 top_module^b3~5 top_module^b3~6 \
+ top_module^b3~7 top_module^b3~8 top_module^b3~9 top_module^b3~10 top_module^b3~11 top_module^b3~12 top_module^b3~13 \
+ top_module^b3~14 top_module^b3~15 top_module^b3~16 top_module^b3~17 top_module^b3~18 top_module^b3~19 top_module^b3~20 \
+ top_module^b3~21 top_module^b3~22 top_module^b4~0 top_module^b4~1 top_module^b4~2 top_module^b4~3 top_module^b4~4 \
+ top_module^b4~5 top_module^b4~6 top_module^b4~7 top_module^b4~8 top_module^b4~9 top_module^b4~10 top_module^b4~11 \
+ top_module^b4~12 top_module^b4~13 top_module^b4~14 top_module^b4~15 top_module^b4~16 top_module^b4~17 top_module^b4~18 \
+ top_module^b4~19 top_module^b4~20 top_module^b4~21 top_module^b4~22 top_module^b5~0 top_module^b5~1 top_module^b5~2 \
+ top_module^b5~3 top_module^b5~4 top_module^b5~5 top_module^b5~6 top_module^b5~7 top_module^b5~8 top_module^b5~9 \
+ top_module^b5~10 top_module^b5~11 top_module^b5~12 top_module^b5~13 top_module^b5~14 top_module^b5~15 top_module^b5~16 \
+ top_module^b5~17 top_module^b5~18 top_module^b5~19 top_module^b5~20 top_module^b5~21 top_module^b5~22 
+
+.outputs top_module^c1~0 top_module^c1~1 top_module^c1~2 top_module^c1~3 top_module^c1~4 top_module^c1~5 top_module^c1~6 \
+ top_module^c1~7 top_module^c1~8 top_module^c1~9 top_module^c1~10 top_module^c1~11 top_module^c1~12 top_module^c1~13 \
+ top_module^c1~14 top_module^c1~15 top_module^c1~16 top_module^c1~17 top_module^c1~18 top_module^c1~19 top_module^c1~20 \
+ top_module^c1~21 top_module^c1~22 top_module^c1~23 top_module^c1~24 top_module^c1~25 top_module^c1~26 top_module^c1~27 \
+ top_module^c1~28 top_module^c1~29 top_module^c1~30 top_module^c1~31 top_module^c1~32 top_module^c1~33 top_module^c1~34 \
+ top_module^c1~35 top_module^c1~36 top_module^c1~37 top_module^c1~38 top_module^c1~39 top_module^c1~40 top_module^c1~41 \
+ top_module^c1~42 top_module^c1~43 top_module^c1~44 top_module^c1~45 top_module^c2~0 top_module^c2~1 top_module^c2~2 \
+ top_module^c2~3 top_module^c2~4 top_module^c2~5 top_module^c2~6 top_module^c2~7 top_module^c2~8 top_module^c2~9 \
+ top_module^c2~10 top_module^c2~11 top_module^c2~12 top_module^c2~13 top_module^c2~14 top_module^c2~15 top_module^c2~16 \
+ top_module^c2~17 top_module^c2~18 top_module^c2~19 top_module^c2~20 top_module^c2~21 top_module^c2~22 top_module^c2~23 \
+ top_module^c2~24 top_module^c2~25 top_module^c2~26 top_module^c2~27 top_module^c2~28 top_module^c2~29 top_module^c2~30 \
+ top_module^c2~31 top_module^c2~32 top_module^c2~33 top_module^c2~34 top_module^c2~35 top_module^c2~36 top_module^c2~37 \
+ top_module^c2~38 top_module^c2~39 top_module^c2~40 top_module^c2~41 top_module^c2~42 top_module^c2~43 top_module^c2~44 \
+ top_module^c2~45 top_module^c3~0 top_module^c3~1 top_module^c3~2 top_module^c3~3 top_module^c3~4 top_module^c3~5 \
+ top_module^c3~6 top_module^c3~7 top_module^c3~8 top_module^c3~9 top_module^c3~10 top_module^c3~11 top_module^c3~12 \
+ top_module^c3~13 top_module^c3~14 top_module^c3~15 top_module^c3~16 top_module^c3~17 top_module^c3~18 top_module^c3~19 \
+ top_module^c3~20 top_module^c3~21 top_module^c3~22 top_module^c3~23 top_module^c3~24 top_module^c3~25 top_module^c3~26 \
+ top_module^c3~27 top_module^c3~28 top_module^c3~29 top_module^c3~30 top_module^c3~31 top_module^c3~32 top_module^c3~33 \
+ top_module^c3~34 top_module^c3~35 top_module^c3~36 top_module^c3~37 top_module^c3~38 top_module^c3~39 top_module^c3~40 \
+ top_module^c3~41 top_module^c3~42 top_module^c3~43 top_module^c3~44 top_module^c3~45 top_module^c4~0 top_module^c4~1 \
+ top_module^c4~2 top_module^c4~3 top_module^c4~4 top_module^c4~5 top_module^c4~6 top_module^c4~7 top_module^c4~8 \
+ top_module^c4~9 top_module^c4~10 top_module^c4~11 top_module^c4~12 top_module^c4~13 top_module^c4~14 top_module^c4~15 \
+ top_module^c4~16 top_module^c4~17 top_module^c4~18 top_module^c4~19 top_module^c4~20 top_module^c4~21 top_module^c4~22 \
+ top_module^c4~23 top_module^c4~24 top_module^c4~25 top_module^c4~26 top_module^c4~27 top_module^c4~28 top_module^c4~29 \
+ top_module^c4~30 top_module^c4~31 top_module^c4~32 top_module^c4~33 top_module^c4~34 top_module^c4~35 top_module^c4~36 \
+ top_module^c4~37 top_module^c4~38 top_module^c4~39 top_module^c4~40 top_module^c4~41 top_module^c4~42 top_module^c4~43 \
+ top_module^c4~44 top_module^c4~45 top_module^c5~0 top_module^c5~1 top_module^c5~2 top_module^c5~3 top_module^c5~4 \
+ top_module^c5~5 top_module^c5~6 top_module^c5~7 top_module^c5~8 top_module^c5~9 top_module^c5~10 top_module^c5~11 \
+ top_module^c5~12 top_module^c5~13 top_module^c5~14 top_module^c5~15 top_module^c5~16 top_module^c5~17 top_module^c5~18 \
+ top_module^c5~19 top_module^c5~20 top_module^c5~21 top_module^c5~22 top_module^c5~23 top_module^c5~24 top_module^c5~25 \
+ top_module^c5~26 top_module^c5~27 top_module^c5~28 top_module^c5~29 top_module^c5~30 top_module^c5~31 top_module^c5~32 \
+ top_module^c5~33 top_module^c5~34 top_module^c5~35 top_module^c5~36 top_module^c5~37 top_module^c5~38 top_module^c5~39 \
+ top_module^c5~40 top_module^c5~41 top_module^c5~42 top_module^c5~43 top_module^c5~44 top_module^c5~45 top_module^c6~0 \
+ top_module^c6~1 top_module^c6~2 top_module^c6~3 top_module^c6~4 top_module^c6~5 top_module^c6~6 top_module^c6~7 \
+ top_module^c6~8 top_module^c6~9 top_module^c6~10 top_module^c6~11 top_module^c6~12 top_module^c6~13 top_module^c6~14 \
+ top_module^c6~15 top_module^c6~16 top_module^c6~17 top_module^c6~18 top_module^c6~19 top_module^c6~20 top_module^c6~21 \
+ top_module^c6~22 top_module^c6~23 top_module^c6~24 top_module^c6~25 top_module^c6~26 top_module^c6~27 top_module^c6~28 \
+ top_module^c6~29 top_module^c6~30 top_module^c6~31 top_module^c6~32 top_module^c6~33 top_module^c6~34 top_module^c6~35 \
+ top_module^c6~36 top_module^c6~37 top_module^c6~38 top_module^c6~39 top_module^c6~40 top_module^c6~41 top_module^c6~42 \
+ top_module^c6~43 top_module^c6~44 top_module^c6~45 top_module^c7~0 top_module^c7~1 top_module^c7~2 top_module^c7~3 \
+ top_module^c7~4 top_module^c7~5 top_module^c7~6 top_module^c7~7 top_module^c7~8 top_module^c7~9 top_module^c7~10 \
+ top_module^c7~11 top_module^c7~12 top_module^c7~13 top_module^c7~14 top_module^c7~15 top_module^c7~16 top_module^c7~17 \
+ top_module^c7~18 top_module^c7~19 top_module^c7~20 top_module^c7~21 top_module^c7~22 top_module^c7~23 top_module^c7~24 \
+ top_module^c7~25 top_module^c7~26 top_module^c7~27 top_module^c7~28 top_module^c7~29 top_module^c7~30 top_module^c7~31 \
+ top_module^c7~32 top_module^c7~33 top_module^c7~34 top_module^c7~35 top_module^c7~36 top_module^c7~37 top_module^c7~38 \
+ top_module^c7~39 top_module^c7~40 top_module^c7~41 top_module^c7~42 top_module^c7~43 top_module^c7~44 top_module^c7~45 \
+ top_module^c8~0 top_module^c8~1 top_module^c8~2 top_module^c8~3 top_module^c8~4 top_module^c8~5 top_module^c8~6 \
+ top_module^c8~7 top_module^c8~8 top_module^c8~9 top_module^c8~10 top_module^c8~11 top_module^c8~12 top_module^c8~13 \
+ top_module^c8~14 top_module^c8~15 top_module^c8~16 top_module^c8~17 top_module^c8~18 top_module^c8~19 top_module^c8~20 \
+ top_module^c8~21 top_module^c8~22 top_module^c8~23 top_module^c8~24 top_module^c8~25 top_module^c8~26 top_module^c8~27 \
+ top_module^c8~28 top_module^c8~29 top_module^c8~30 top_module^c8~31 top_module^c8~32 top_module^c8~33 top_module^c8~34 \
+ top_module^c8~35 top_module^c8~36 top_module^c8~37 top_module^c8~38 top_module^c8~39 top_module^c8~40 top_module^c8~41 \
+ top_module^c8~42 top_module^c8~43 top_module^c8~44 top_module^c8~45 top_module^c9~0 top_module^c9~1 top_module^c9~2 \
+ top_module^c9~3 top_module^c9~4 top_module^c9~5 top_module^c9~6 top_module^c9~7 top_module^c9~8 top_module^c9~9 \
+ top_module^c9~10 top_module^c9~11 top_module^c9~12 top_module^c9~13 top_module^c9~14 top_module^c9~15 top_module^c9~16 \
+ top_module^c9~17 top_module^c9~18 top_module^c9~19 top_module^c9~20 top_module^c9~21 top_module^c9~22 top_module^c9~23 \
+ top_module^c9~24 top_module^c9~25 top_module^c9~26 top_module^c9~27 top_module^c9~28 top_module^c9~29 top_module^c9~30 \
+ top_module^c9~31 top_module^c9~32 top_module^c9~33 top_module^c9~34 top_module^c9~35 top_module^c9~36 top_module^c9~37 \
+ top_module^c9~38 top_module^c9~39 top_module^c9~40 top_module^c9~41 top_module^c9~42 top_module^c9~43 top_module^c9~44 \
+ top_module^c9~45 top_module^c10~0 top_module^c10~1 top_module^c10~2 top_module^c10~3 top_module^c10~4 top_module^c10~5 \
+ top_module^c10~6 top_module^c10~7 top_module^c10~8 top_module^c10~9 top_module^c10~10 top_module^c10~11 top_module^c10~12 \
+ top_module^c10~13 top_module^c10~14 top_module^c10~15 top_module^c10~16 top_module^c10~17 top_module^c10~18 top_module^c10~19 \
+ top_module^c10~20 top_module^c10~21 top_module^c10~22 top_module^c10~23 top_module^c10~24 top_module^c10~25 top_module^c10~26 \
+ top_module^c10~27 top_module^c10~28 top_module^c10~29 top_module^c10~30 top_module^c10~31 top_module^c10~32 top_module^c10~33 \
+ top_module^c10~34 top_module^c10~35 top_module^c10~36 top_module^c10~37 top_module^c10~38 top_module^c10~39 top_module^c10~40 \
+ top_module^c10~41 top_module^c10~42 top_module^c10~43 top_module^c10~44 top_module^c10~45 
+
+
+.subckt multiply a[0]=top_module^a5~0 a[1]=top_module^a5~1 a[2]=top_module^a5~2 a[3]=top_module^a5~3 a[4]=top_module^a5~4 \
+ a[5]=top_module^a5~5 a[6]=top_module^a5~6 a[7]=top_module^a5~7 a[8]=top_module^a5~8 a[9]=top_module^a5~9 \
+ a[10]=top_module^a5~10 a[11]=top_module^a5~11 a[12]=top_module^a5~12 a[13]=top_module^a5~13 a[14]=top_module^a5~14 \
+ a[15]=top_module^a5~15 a[16]=top_module^a5~16 a[17]=top_module^a5~17 a[18]=top_module^a5~18 a[19]=top_module^a5~19 \
+ a[20]=top_module^a5~20 a[21]=top_module^a5~21 a[22]=top_module^a5~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b1~0 b[1]=top_module^b1~1 b[2]=top_module^b1~2 b[3]=top_module^b1~3 b[4]=top_module^b1~4 b[5]=top_module^b1~5 \
+ b[6]=top_module^b1~6 b[7]=top_module^b1~7 b[8]=top_module^b1~8 b[9]=top_module^b1~9 b[10]=top_module^b1~10 \
+ b[11]=top_module^b1~11 b[12]=top_module^b1~12 b[13]=top_module^b1~13 b[14]=top_module^b1~14 b[15]=top_module^b1~15 \
+ b[16]=top_module^b1~16 b[17]=top_module^b1~17 b[18]=top_module^b1~18 b[19]=top_module^b1~19 b[20]=top_module^b1~20 \
+ b[21]=top_module^b1~21 b[22]=top_module^b1~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~423[0] \
+ out[1]=top_module^MUL~423[1] out[2]=top_module^MUL~423[2] out[3]=top_module^MUL~423[3] out[4]=top_module^MUL~423[4] \
+ out[5]=top_module^MUL~423[5] out[6]=top_module^MUL~423[6] out[7]=top_module^MUL~423[7] out[8]=top_module^MUL~423[8] \
+ out[9]=top_module^MUL~423[9] out[10]=top_module^MUL~423[10] out[11]=top_module^MUL~423[11] out[12]=top_module^MUL~423[12] \
+ out[13]=top_module^MUL~423[13] out[14]=top_module^MUL~423[14] out[15]=top_module^MUL~423[15] out[16]=top_module^MUL~423[16] \
+ out[17]=top_module^MUL~423[17] out[18]=top_module^MUL~423[18] out[19]=top_module^MUL~423[19] out[20]=top_module^MUL~423[20] \
+ out[21]=top_module^MUL~423[21] out[22]=top_module^MUL~423[22] out[23]=top_module^MUL~423[23] out[24]=top_module^MUL~423[24] \
+ out[25]=top_module^MUL~423[25] out[26]=top_module^MUL~423[26] out[27]=top_module^MUL~423[27] out[28]=top_module^MUL~423[28] \
+ out[29]=top_module^MUL~423[29] out[30]=top_module^MUL~423[30] out[31]=top_module^MUL~423[31] out[32]=top_module^MUL~423[32] \
+ out[33]=top_module^MUL~423[33] out[34]=top_module^MUL~423[34] out[35]=top_module^MUL~423[35] out[36]=top_module^MUL~423[36] \
+ out[37]=top_module^MUL~423[37] out[38]=top_module^MUL~423[38] out[39]=top_module^MUL~423[39] out[40]=top_module^MUL~423[40] \
+ out[41]=top_module^MUL~423[41] out[42]=top_module^MUL~423[42] out[43]=top_module^MUL~423[43] out[44]=top_module^MUL~423[44] \
+ out[45]=top_module^MUL~423[45] out[46]=top_module^MUL~423[46] out[47]=top_module^MUL~423[47] out[48]=top_module^MUL~423[48] \
+ out[49]=top_module^MUL~423[49] out[50]=top_module^MUL~423[50] out[51]=top_module^MUL~423[51] out[52]=top_module^MUL~423[52] \
+ out[53]=top_module^MUL~423[53] out[54]=top_module^MUL~423[54] out[55]=top_module^MUL~423[55] out[56]=top_module^MUL~423[56] \
+ out[57]=top_module^MUL~423[57] out[58]=top_module^MUL~423[58] out[59]=top_module^MUL~423[59] out[60]=top_module^MUL~423[60] \
+ out[61]=top_module^MUL~423[61] out[62]=top_module^MUL~423[62] out[63]=top_module^MUL~423[63] out[64]=top_module^MUL~423[64] \
+ out[65]=top_module^MUL~423[65] out[66]=top_module^MUL~423[66] out[67]=top_module^MUL~423[67] out[68]=top_module^MUL~423[68] \
+ out[69]=top_module^MUL~423[69] out[70]=top_module^MUL~423[70] out[71]=top_module^MUL~423[71] 
+
+.subckt multiply a[0]=top_module^a4~0 a[1]=top_module^a4~1 a[2]=top_module^a4~2 a[3]=top_module^a4~3 a[4]=top_module^a4~4 \
+ a[5]=top_module^a4~5 a[6]=top_module^a4~6 a[7]=top_module^a4~7 a[8]=top_module^a4~8 a[9]=top_module^a4~9 \
+ a[10]=top_module^a4~10 a[11]=top_module^a4~11 a[12]=top_module^a4~12 a[13]=top_module^a4~13 a[14]=top_module^a4~14 \
+ a[15]=top_module^a4~15 a[16]=top_module^a4~16 a[17]=top_module^a4~17 a[18]=top_module^a4~18 a[19]=top_module^a4~19 \
+ a[20]=top_module^a4~20 a[21]=top_module^a4~21 a[22]=top_module^a4~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b2~0 b[1]=top_module^b2~1 b[2]=top_module^b2~2 b[3]=top_module^b2~3 b[4]=top_module^b2~4 b[5]=top_module^b2~5 \
+ b[6]=top_module^b2~6 b[7]=top_module^b2~7 b[8]=top_module^b2~8 b[9]=top_module^b2~9 b[10]=top_module^b2~10 \
+ b[11]=top_module^b2~11 b[12]=top_module^b2~12 b[13]=top_module^b2~13 b[14]=top_module^b2~14 b[15]=top_module^b2~15 \
+ b[16]=top_module^b2~16 b[17]=top_module^b2~17 b[18]=top_module^b2~18 b[19]=top_module^b2~19 b[20]=top_module^b2~20 \
+ b[21]=top_module^b2~21 b[22]=top_module^b2~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~376[0] \
+ out[1]=top_module^MUL~376[1] out[2]=top_module^MUL~376[2] out[3]=top_module^MUL~376[3] out[4]=top_module^MUL~376[4] \
+ out[5]=top_module^MUL~376[5] out[6]=top_module^MUL~376[6] out[7]=top_module^MUL~376[7] out[8]=top_module^MUL~376[8] \
+ out[9]=top_module^MUL~376[9] out[10]=top_module^MUL~376[10] out[11]=top_module^MUL~376[11] out[12]=top_module^MUL~376[12] \
+ out[13]=top_module^MUL~376[13] out[14]=top_module^MUL~376[14] out[15]=top_module^MUL~376[15] out[16]=top_module^MUL~376[16] \
+ out[17]=top_module^MUL~376[17] out[18]=top_module^MUL~376[18] out[19]=top_module^MUL~376[19] out[20]=top_module^MUL~376[20] \
+ out[21]=top_module^MUL~376[21] out[22]=top_module^MUL~376[22] out[23]=top_module^MUL~376[23] out[24]=top_module^MUL~376[24] \
+ out[25]=top_module^MUL~376[25] out[26]=top_module^MUL~376[26] out[27]=top_module^MUL~376[27] out[28]=top_module^MUL~376[28] \
+ out[29]=top_module^MUL~376[29] out[30]=top_module^MUL~376[30] out[31]=top_module^MUL~376[31] out[32]=top_module^MUL~376[32] \
+ out[33]=top_module^MUL~376[33] out[34]=top_module^MUL~376[34] out[35]=top_module^MUL~376[35] out[36]=top_module^MUL~376[36] \
+ out[37]=top_module^MUL~376[37] out[38]=top_module^MUL~376[38] out[39]=top_module^MUL~376[39] out[40]=top_module^MUL~376[40] \
+ out[41]=top_module^MUL~376[41] out[42]=top_module^MUL~376[42] out[43]=top_module^MUL~376[43] out[44]=top_module^MUL~376[44] \
+ out[45]=top_module^MUL~376[45] out[46]=top_module^MUL~376[46] out[47]=top_module^MUL~376[47] out[48]=top_module^MUL~376[48] \
+ out[49]=top_module^MUL~376[49] out[50]=top_module^MUL~376[50] out[51]=top_module^MUL~376[51] out[52]=top_module^MUL~376[52] \
+ out[53]=top_module^MUL~376[53] out[54]=top_module^MUL~376[54] out[55]=top_module^MUL~376[55] out[56]=top_module^MUL~376[56] \
+ out[57]=top_module^MUL~376[57] out[58]=top_module^MUL~376[58] out[59]=top_module^MUL~376[59] out[60]=top_module^MUL~376[60] \
+ out[61]=top_module^MUL~376[61] out[62]=top_module^MUL~376[62] out[63]=top_module^MUL~376[63] out[64]=top_module^MUL~376[64] \
+ out[65]=top_module^MUL~376[65] out[66]=top_module^MUL~376[66] out[67]=top_module^MUL~376[67] out[68]=top_module^MUL~376[68] \
+ out[69]=top_module^MUL~376[69] out[70]=top_module^MUL~376[70] out[71]=top_module^MUL~376[71] 
+
+.subckt multiply a[0]=top_module^a3~0 a[1]=top_module^a3~1 a[2]=top_module^a3~2 a[3]=top_module^a3~3 a[4]=top_module^a3~4 \
+ a[5]=top_module^a3~5 a[6]=top_module^a3~6 a[7]=top_module^a3~7 a[8]=top_module^a3~8 a[9]=top_module^a3~9 \
+ a[10]=top_module^a3~10 a[11]=top_module^a3~11 a[12]=top_module^a3~12 a[13]=top_module^a3~13 a[14]=top_module^a3~14 \
+ a[15]=top_module^a3~15 a[16]=top_module^a3~16 a[17]=top_module^a3~17 a[18]=top_module^a3~18 a[19]=top_module^a3~19 \
+ a[20]=top_module^a3~20 a[21]=top_module^a3~21 a[22]=top_module^a3~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b3~0 b[1]=top_module^b3~1 b[2]=top_module^b3~2 b[3]=top_module^b3~3 b[4]=top_module^b3~4 b[5]=top_module^b3~5 \
+ b[6]=top_module^b3~6 b[7]=top_module^b3~7 b[8]=top_module^b3~8 b[9]=top_module^b3~9 b[10]=top_module^b3~10 \
+ b[11]=top_module^b3~11 b[12]=top_module^b3~12 b[13]=top_module^b3~13 b[14]=top_module^b3~14 b[15]=top_module^b3~15 \
+ b[16]=top_module^b3~16 b[17]=top_module^b3~17 b[18]=top_module^b3~18 b[19]=top_module^b3~19 b[20]=top_module^b3~20 \
+ b[21]=top_module^b3~21 b[22]=top_module^b3~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~329[0] \
+ out[1]=top_module^MUL~329[1] out[2]=top_module^MUL~329[2] out[3]=top_module^MUL~329[3] out[4]=top_module^MUL~329[4] \
+ out[5]=top_module^MUL~329[5] out[6]=top_module^MUL~329[6] out[7]=top_module^MUL~329[7] out[8]=top_module^MUL~329[8] \
+ out[9]=top_module^MUL~329[9] out[10]=top_module^MUL~329[10] out[11]=top_module^MUL~329[11] out[12]=top_module^MUL~329[12] \
+ out[13]=top_module^MUL~329[13] out[14]=top_module^MUL~329[14] out[15]=top_module^MUL~329[15] out[16]=top_module^MUL~329[16] \
+ out[17]=top_module^MUL~329[17] out[18]=top_module^MUL~329[18] out[19]=top_module^MUL~329[19] out[20]=top_module^MUL~329[20] \
+ out[21]=top_module^MUL~329[21] out[22]=top_module^MUL~329[22] out[23]=top_module^MUL~329[23] out[24]=top_module^MUL~329[24] \
+ out[25]=top_module^MUL~329[25] out[26]=top_module^MUL~329[26] out[27]=top_module^MUL~329[27] out[28]=top_module^MUL~329[28] \
+ out[29]=top_module^MUL~329[29] out[30]=top_module^MUL~329[30] out[31]=top_module^MUL~329[31] out[32]=top_module^MUL~329[32] \
+ out[33]=top_module^MUL~329[33] out[34]=top_module^MUL~329[34] out[35]=top_module^MUL~329[35] out[36]=top_module^MUL~329[36] \
+ out[37]=top_module^MUL~329[37] out[38]=top_module^MUL~329[38] out[39]=top_module^MUL~329[39] out[40]=top_module^MUL~329[40] \
+ out[41]=top_module^MUL~329[41] out[42]=top_module^MUL~329[42] out[43]=top_module^MUL~329[43] out[44]=top_module^MUL~329[44] \
+ out[45]=top_module^MUL~329[45] out[46]=top_module^MUL~329[46] out[47]=top_module^MUL~329[47] out[48]=top_module^MUL~329[48] \
+ out[49]=top_module^MUL~329[49] out[50]=top_module^MUL~329[50] out[51]=top_module^MUL~329[51] out[52]=top_module^MUL~329[52] \
+ out[53]=top_module^MUL~329[53] out[54]=top_module^MUL~329[54] out[55]=top_module^MUL~329[55] out[56]=top_module^MUL~329[56] \
+ out[57]=top_module^MUL~329[57] out[58]=top_module^MUL~329[58] out[59]=top_module^MUL~329[59] out[60]=top_module^MUL~329[60] \
+ out[61]=top_module^MUL~329[61] out[62]=top_module^MUL~329[62] out[63]=top_module^MUL~329[63] out[64]=top_module^MUL~329[64] \
+ out[65]=top_module^MUL~329[65] out[66]=top_module^MUL~329[66] out[67]=top_module^MUL~329[67] out[68]=top_module^MUL~329[68] \
+ out[69]=top_module^MUL~329[69] out[70]=top_module^MUL~329[70] out[71]=top_module^MUL~329[71] 
+
+.subckt multiply a[0]=top_module^a2~0 a[1]=top_module^a2~1 a[2]=top_module^a2~2 a[3]=top_module^a2~3 a[4]=top_module^a2~4 \
+ a[5]=top_module^a2~5 a[6]=top_module^a2~6 a[7]=top_module^a2~7 a[8]=top_module^a2~8 a[9]=top_module^a2~9 \
+ a[10]=top_module^a2~10 a[11]=top_module^a2~11 a[12]=top_module^a2~12 a[13]=top_module^a2~13 a[14]=top_module^a2~14 \
+ a[15]=top_module^a2~15 a[16]=top_module^a2~16 a[17]=top_module^a2~17 a[18]=top_module^a2~18 a[19]=top_module^a2~19 \
+ a[20]=top_module^a2~20 a[21]=top_module^a2~21 a[22]=top_module^a2~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b4~0 b[1]=top_module^b4~1 b[2]=top_module^b4~2 b[3]=top_module^b4~3 b[4]=top_module^b4~4 b[5]=top_module^b4~5 \
+ b[6]=top_module^b4~6 b[7]=top_module^b4~7 b[8]=top_module^b4~8 b[9]=top_module^b4~9 b[10]=top_module^b4~10 \
+ b[11]=top_module^b4~11 b[12]=top_module^b4~12 b[13]=top_module^b4~13 b[14]=top_module^b4~14 b[15]=top_module^b4~15 \
+ b[16]=top_module^b4~16 b[17]=top_module^b4~17 b[18]=top_module^b4~18 b[19]=top_module^b4~19 b[20]=top_module^b4~20 \
+ b[21]=top_module^b4~21 b[22]=top_module^b4~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~282[0] \
+ out[1]=top_module^MUL~282[1] out[2]=top_module^MUL~282[2] out[3]=top_module^MUL~282[3] out[4]=top_module^MUL~282[4] \
+ out[5]=top_module^MUL~282[5] out[6]=top_module^MUL~282[6] out[7]=top_module^MUL~282[7] out[8]=top_module^MUL~282[8] \
+ out[9]=top_module^MUL~282[9] out[10]=top_module^MUL~282[10] out[11]=top_module^MUL~282[11] out[12]=top_module^MUL~282[12] \
+ out[13]=top_module^MUL~282[13] out[14]=top_module^MUL~282[14] out[15]=top_module^MUL~282[15] out[16]=top_module^MUL~282[16] \
+ out[17]=top_module^MUL~282[17] out[18]=top_module^MUL~282[18] out[19]=top_module^MUL~282[19] out[20]=top_module^MUL~282[20] \
+ out[21]=top_module^MUL~282[21] out[22]=top_module^MUL~282[22] out[23]=top_module^MUL~282[23] out[24]=top_module^MUL~282[24] \
+ out[25]=top_module^MUL~282[25] out[26]=top_module^MUL~282[26] out[27]=top_module^MUL~282[27] out[28]=top_module^MUL~282[28] \
+ out[29]=top_module^MUL~282[29] out[30]=top_module^MUL~282[30] out[31]=top_module^MUL~282[31] out[32]=top_module^MUL~282[32] \
+ out[33]=top_module^MUL~282[33] out[34]=top_module^MUL~282[34] out[35]=top_module^MUL~282[35] out[36]=top_module^MUL~282[36] \
+ out[37]=top_module^MUL~282[37] out[38]=top_module^MUL~282[38] out[39]=top_module^MUL~282[39] out[40]=top_module^MUL~282[40] \
+ out[41]=top_module^MUL~282[41] out[42]=top_module^MUL~282[42] out[43]=top_module^MUL~282[43] out[44]=top_module^MUL~282[44] \
+ out[45]=top_module^MUL~282[45] out[46]=top_module^MUL~282[46] out[47]=top_module^MUL~282[47] out[48]=top_module^MUL~282[48] \
+ out[49]=top_module^MUL~282[49] out[50]=top_module^MUL~282[50] out[51]=top_module^MUL~282[51] out[52]=top_module^MUL~282[52] \
+ out[53]=top_module^MUL~282[53] out[54]=top_module^MUL~282[54] out[55]=top_module^MUL~282[55] out[56]=top_module^MUL~282[56] \
+ out[57]=top_module^MUL~282[57] out[58]=top_module^MUL~282[58] out[59]=top_module^MUL~282[59] out[60]=top_module^MUL~282[60] \
+ out[61]=top_module^MUL~282[61] out[62]=top_module^MUL~282[62] out[63]=top_module^MUL~282[63] out[64]=top_module^MUL~282[64] \
+ out[65]=top_module^MUL~282[65] out[66]=top_module^MUL~282[66] out[67]=top_module^MUL~282[67] out[68]=top_module^MUL~282[68] \
+ out[69]=top_module^MUL~282[69] out[70]=top_module^MUL~282[70] out[71]=top_module^MUL~282[71] 
+
+.subckt multiply a[0]=top_module^a1~0 a[1]=top_module^a1~1 a[2]=top_module^a1~2 a[3]=top_module^a1~3 a[4]=top_module^a1~4 \
+ a[5]=top_module^a1~5 a[6]=top_module^a1~6 a[7]=top_module^a1~7 a[8]=top_module^a1~8 a[9]=top_module^a1~9 \
+ a[10]=top_module^a1~10 a[11]=top_module^a1~11 a[12]=top_module^a1~12 a[13]=top_module^a1~13 a[14]=top_module^a1~14 \
+ a[15]=top_module^a1~15 a[16]=top_module^a1~16 a[17]=top_module^a1~17 a[18]=top_module^a1~18 a[19]=top_module^a1~19 \
+ a[20]=top_module^a1~20 a[21]=top_module^a1~21 a[22]=top_module^a1~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b5~0 b[1]=top_module^b5~1 b[2]=top_module^b5~2 b[3]=top_module^b5~3 b[4]=top_module^b5~4 b[5]=top_module^b5~5 \
+ b[6]=top_module^b5~6 b[7]=top_module^b5~7 b[8]=top_module^b5~8 b[9]=top_module^b5~9 b[10]=top_module^b5~10 \
+ b[11]=top_module^b5~11 b[12]=top_module^b5~12 b[13]=top_module^b5~13 b[14]=top_module^b5~14 b[15]=top_module^b5~15 \
+ b[16]=top_module^b5~16 b[17]=top_module^b5~17 b[18]=top_module^b5~18 b[19]=top_module^b5~19 b[20]=top_module^b5~20 \
+ b[21]=top_module^b5~21 b[22]=top_module^b5~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~235[0] \
+ out[1]=top_module^MUL~235[1] out[2]=top_module^MUL~235[2] out[3]=top_module^MUL~235[3] out[4]=top_module^MUL~235[4] \
+ out[5]=top_module^MUL~235[5] out[6]=top_module^MUL~235[6] out[7]=top_module^MUL~235[7] out[8]=top_module^MUL~235[8] \
+ out[9]=top_module^MUL~235[9] out[10]=top_module^MUL~235[10] out[11]=top_module^MUL~235[11] out[12]=top_module^MUL~235[12] \
+ out[13]=top_module^MUL~235[13] out[14]=top_module^MUL~235[14] out[15]=top_module^MUL~235[15] out[16]=top_module^MUL~235[16] \
+ out[17]=top_module^MUL~235[17] out[18]=top_module^MUL~235[18] out[19]=top_module^MUL~235[19] out[20]=top_module^MUL~235[20] \
+ out[21]=top_module^MUL~235[21] out[22]=top_module^MUL~235[22] out[23]=top_module^MUL~235[23] out[24]=top_module^MUL~235[24] \
+ out[25]=top_module^MUL~235[25] out[26]=top_module^MUL~235[26] out[27]=top_module^MUL~235[27] out[28]=top_module^MUL~235[28] \
+ out[29]=top_module^MUL~235[29] out[30]=top_module^MUL~235[30] out[31]=top_module^MUL~235[31] out[32]=top_module^MUL~235[32] \
+ out[33]=top_module^MUL~235[33] out[34]=top_module^MUL~235[34] out[35]=top_module^MUL~235[35] out[36]=top_module^MUL~235[36] \
+ out[37]=top_module^MUL~235[37] out[38]=top_module^MUL~235[38] out[39]=top_module^MUL~235[39] out[40]=top_module^MUL~235[40] \
+ out[41]=top_module^MUL~235[41] out[42]=top_module^MUL~235[42] out[43]=top_module^MUL~235[43] out[44]=top_module^MUL~235[44] \
+ out[45]=top_module^MUL~235[45] out[46]=top_module^MUL~235[46] out[47]=top_module^MUL~235[47] out[48]=top_module^MUL~235[48] \
+ out[49]=top_module^MUL~235[49] out[50]=top_module^MUL~235[50] out[51]=top_module^MUL~235[51] out[52]=top_module^MUL~235[52] \
+ out[53]=top_module^MUL~235[53] out[54]=top_module^MUL~235[54] out[55]=top_module^MUL~235[55] out[56]=top_module^MUL~235[56] \
+ out[57]=top_module^MUL~235[57] out[58]=top_module^MUL~235[58] out[59]=top_module^MUL~235[59] out[60]=top_module^MUL~235[60] \
+ out[61]=top_module^MUL~235[61] out[62]=top_module^MUL~235[62] out[63]=top_module^MUL~235[63] out[64]=top_module^MUL~235[64] \
+ out[65]=top_module^MUL~235[65] out[66]=top_module^MUL~235[66] out[67]=top_module^MUL~235[67] out[68]=top_module^MUL~235[68] \
+ out[69]=top_module^MUL~235[69] out[70]=top_module^MUL~235[70] out[71]=top_module^MUL~235[71] 
+
+.subckt multiply a[0]=top_module^a5~0 a[1]=top_module^a5~1 a[2]=top_module^a5~2 a[3]=top_module^a5~3 a[4]=top_module^a5~4 \
+ a[5]=top_module^a5~5 a[6]=top_module^a5~6 a[7]=top_module^a5~7 a[8]=top_module^a5~8 a[9]=top_module^a5~9 \
+ a[10]=top_module^a5~10 a[11]=top_module^a5~11 a[12]=top_module^a5~12 a[13]=top_module^a5~13 a[14]=top_module^a5~14 \
+ a[15]=top_module^a5~15 a[16]=top_module^a5~16 a[17]=top_module^a5~17 a[18]=top_module^a5~18 a[19]=top_module^a5~19 \
+ a[20]=top_module^a5~20 a[21]=top_module^a5~21 a[22]=top_module^a5~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b5~0 b[1]=top_module^b5~1 b[2]=top_module^b5~2 b[3]=top_module^b5~3 b[4]=top_module^b5~4 b[5]=top_module^b5~5 \
+ b[6]=top_module^b5~6 b[7]=top_module^b5~7 b[8]=top_module^b5~8 b[9]=top_module^b5~9 b[10]=top_module^b5~10 \
+ b[11]=top_module^b5~11 b[12]=top_module^b5~12 b[13]=top_module^b5~13 b[14]=top_module^b5~14 b[15]=top_module^b5~15 \
+ b[16]=top_module^b5~16 b[17]=top_module^b5~17 b[18]=top_module^b5~18 b[19]=top_module^b5~19 b[20]=top_module^b5~20 \
+ b[21]=top_module^b5~21 b[22]=top_module^b5~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~188[0] \
+ out[1]=top_module^MUL~188[1] out[2]=top_module^MUL~188[2] out[3]=top_module^MUL~188[3] out[4]=top_module^MUL~188[4] \
+ out[5]=top_module^MUL~188[5] out[6]=top_module^MUL~188[6] out[7]=top_module^MUL~188[7] out[8]=top_module^MUL~188[8] \
+ out[9]=top_module^MUL~188[9] out[10]=top_module^MUL~188[10] out[11]=top_module^MUL~188[11] out[12]=top_module^MUL~188[12] \
+ out[13]=top_module^MUL~188[13] out[14]=top_module^MUL~188[14] out[15]=top_module^MUL~188[15] out[16]=top_module^MUL~188[16] \
+ out[17]=top_module^MUL~188[17] out[18]=top_module^MUL~188[18] out[19]=top_module^MUL~188[19] out[20]=top_module^MUL~188[20] \
+ out[21]=top_module^MUL~188[21] out[22]=top_module^MUL~188[22] out[23]=top_module^MUL~188[23] out[24]=top_module^MUL~188[24] \
+ out[25]=top_module^MUL~188[25] out[26]=top_module^MUL~188[26] out[27]=top_module^MUL~188[27] out[28]=top_module^MUL~188[28] \
+ out[29]=top_module^MUL~188[29] out[30]=top_module^MUL~188[30] out[31]=top_module^MUL~188[31] out[32]=top_module^MUL~188[32] \
+ out[33]=top_module^MUL~188[33] out[34]=top_module^MUL~188[34] out[35]=top_module^MUL~188[35] out[36]=top_module^MUL~188[36] \
+ out[37]=top_module^MUL~188[37] out[38]=top_module^MUL~188[38] out[39]=top_module^MUL~188[39] out[40]=top_module^MUL~188[40] \
+ out[41]=top_module^MUL~188[41] out[42]=top_module^MUL~188[42] out[43]=top_module^MUL~188[43] out[44]=top_module^MUL~188[44] \
+ out[45]=top_module^MUL~188[45] out[46]=top_module^MUL~188[46] out[47]=top_module^MUL~188[47] out[48]=top_module^MUL~188[48] \
+ out[49]=top_module^MUL~188[49] out[50]=top_module^MUL~188[50] out[51]=top_module^MUL~188[51] out[52]=top_module^MUL~188[52] \
+ out[53]=top_module^MUL~188[53] out[54]=top_module^MUL~188[54] out[55]=top_module^MUL~188[55] out[56]=top_module^MUL~188[56] \
+ out[57]=top_module^MUL~188[57] out[58]=top_module^MUL~188[58] out[59]=top_module^MUL~188[59] out[60]=top_module^MUL~188[60] \
+ out[61]=top_module^MUL~188[61] out[62]=top_module^MUL~188[62] out[63]=top_module^MUL~188[63] out[64]=top_module^MUL~188[64] \
+ out[65]=top_module^MUL~188[65] out[66]=top_module^MUL~188[66] out[67]=top_module^MUL~188[67] out[68]=top_module^MUL~188[68] \
+ out[69]=top_module^MUL~188[69] out[70]=top_module^MUL~188[70] out[71]=top_module^MUL~188[71] 
+
+.subckt multiply a[0]=top_module^a4~0 a[1]=top_module^a4~1 a[2]=top_module^a4~2 a[3]=top_module^a4~3 a[4]=top_module^a4~4 \
+ a[5]=top_module^a4~5 a[6]=top_module^a4~6 a[7]=top_module^a4~7 a[8]=top_module^a4~8 a[9]=top_module^a4~9 \
+ a[10]=top_module^a4~10 a[11]=top_module^a4~11 a[12]=top_module^a4~12 a[13]=top_module^a4~13 a[14]=top_module^a4~14 \
+ a[15]=top_module^a4~15 a[16]=top_module^a4~16 a[17]=top_module^a4~17 a[18]=top_module^a4~18 a[19]=top_module^a4~19 \
+ a[20]=top_module^a4~20 a[21]=top_module^a4~21 a[22]=top_module^a4~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b4~0 b[1]=top_module^b4~1 b[2]=top_module^b4~2 b[3]=top_module^b4~3 b[4]=top_module^b4~4 b[5]=top_module^b4~5 \
+ b[6]=top_module^b4~6 b[7]=top_module^b4~7 b[8]=top_module^b4~8 b[9]=top_module^b4~9 b[10]=top_module^b4~10 \
+ b[11]=top_module^b4~11 b[12]=top_module^b4~12 b[13]=top_module^b4~13 b[14]=top_module^b4~14 b[15]=top_module^b4~15 \
+ b[16]=top_module^b4~16 b[17]=top_module^b4~17 b[18]=top_module^b4~18 b[19]=top_module^b4~19 b[20]=top_module^b4~20 \
+ b[21]=top_module^b4~21 b[22]=top_module^b4~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~141[0] \
+ out[1]=top_module^MUL~141[1] out[2]=top_module^MUL~141[2] out[3]=top_module^MUL~141[3] out[4]=top_module^MUL~141[4] \
+ out[5]=top_module^MUL~141[5] out[6]=top_module^MUL~141[6] out[7]=top_module^MUL~141[7] out[8]=top_module^MUL~141[8] \
+ out[9]=top_module^MUL~141[9] out[10]=top_module^MUL~141[10] out[11]=top_module^MUL~141[11] out[12]=top_module^MUL~141[12] \
+ out[13]=top_module^MUL~141[13] out[14]=top_module^MUL~141[14] out[15]=top_module^MUL~141[15] out[16]=top_module^MUL~141[16] \
+ out[17]=top_module^MUL~141[17] out[18]=top_module^MUL~141[18] out[19]=top_module^MUL~141[19] out[20]=top_module^MUL~141[20] \
+ out[21]=top_module^MUL~141[21] out[22]=top_module^MUL~141[22] out[23]=top_module^MUL~141[23] out[24]=top_module^MUL~141[24] \
+ out[25]=top_module^MUL~141[25] out[26]=top_module^MUL~141[26] out[27]=top_module^MUL~141[27] out[28]=top_module^MUL~141[28] \
+ out[29]=top_module^MUL~141[29] out[30]=top_module^MUL~141[30] out[31]=top_module^MUL~141[31] out[32]=top_module^MUL~141[32] \
+ out[33]=top_module^MUL~141[33] out[34]=top_module^MUL~141[34] out[35]=top_module^MUL~141[35] out[36]=top_module^MUL~141[36] \
+ out[37]=top_module^MUL~141[37] out[38]=top_module^MUL~141[38] out[39]=top_module^MUL~141[39] out[40]=top_module^MUL~141[40] \
+ out[41]=top_module^MUL~141[41] out[42]=top_module^MUL~141[42] out[43]=top_module^MUL~141[43] out[44]=top_module^MUL~141[44] \
+ out[45]=top_module^MUL~141[45] out[46]=top_module^MUL~141[46] out[47]=top_module^MUL~141[47] out[48]=top_module^MUL~141[48] \
+ out[49]=top_module^MUL~141[49] out[50]=top_module^MUL~141[50] out[51]=top_module^MUL~141[51] out[52]=top_module^MUL~141[52] \
+ out[53]=top_module^MUL~141[53] out[54]=top_module^MUL~141[54] out[55]=top_module^MUL~141[55] out[56]=top_module^MUL~141[56] \
+ out[57]=top_module^MUL~141[57] out[58]=top_module^MUL~141[58] out[59]=top_module^MUL~141[59] out[60]=top_module^MUL~141[60] \
+ out[61]=top_module^MUL~141[61] out[62]=top_module^MUL~141[62] out[63]=top_module^MUL~141[63] out[64]=top_module^MUL~141[64] \
+ out[65]=top_module^MUL~141[65] out[66]=top_module^MUL~141[66] out[67]=top_module^MUL~141[67] out[68]=top_module^MUL~141[68] \
+ out[69]=top_module^MUL~141[69] out[70]=top_module^MUL~141[70] out[71]=top_module^MUL~141[71] 
+
+.subckt multiply a[0]=top_module^a2~0 a[1]=top_module^a2~1 a[2]=top_module^a2~2 a[3]=top_module^a2~3 a[4]=top_module^a2~4 \
+ a[5]=top_module^a2~5 a[6]=top_module^a2~6 a[7]=top_module^a2~7 a[8]=top_module^a2~8 a[9]=top_module^a2~9 \
+ a[10]=top_module^a2~10 a[11]=top_module^a2~11 a[12]=top_module^a2~12 a[13]=top_module^a2~13 a[14]=top_module^a2~14 \
+ a[15]=top_module^a2~15 a[16]=top_module^a2~16 a[17]=top_module^a2~17 a[18]=top_module^a2~18 a[19]=top_module^a2~19 \
+ a[20]=top_module^a2~20 a[21]=top_module^a2~21 a[22]=top_module^a2~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b2~0 b[1]=top_module^b2~1 b[2]=top_module^b2~2 b[3]=top_module^b2~3 b[4]=top_module^b2~4 b[5]=top_module^b2~5 \
+ b[6]=top_module^b2~6 b[7]=top_module^b2~7 b[8]=top_module^b2~8 b[9]=top_module^b2~9 b[10]=top_module^b2~10 \
+ b[11]=top_module^b2~11 b[12]=top_module^b2~12 b[13]=top_module^b2~13 b[14]=top_module^b2~14 b[15]=top_module^b2~15 \
+ b[16]=top_module^b2~16 b[17]=top_module^b2~17 b[18]=top_module^b2~18 b[19]=top_module^b2~19 b[20]=top_module^b2~20 \
+ b[21]=top_module^b2~21 b[22]=top_module^b2~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~47[0] \
+ out[1]=top_module^MUL~47[1] out[2]=top_module^MUL~47[2] out[3]=top_module^MUL~47[3] out[4]=top_module^MUL~47[4] \
+ out[5]=top_module^MUL~47[5] out[6]=top_module^MUL~47[6] out[7]=top_module^MUL~47[7] out[8]=top_module^MUL~47[8] \
+ out[9]=top_module^MUL~47[9] out[10]=top_module^MUL~47[10] out[11]=top_module^MUL~47[11] out[12]=top_module^MUL~47[12] \
+ out[13]=top_module^MUL~47[13] out[14]=top_module^MUL~47[14] out[15]=top_module^MUL~47[15] out[16]=top_module^MUL~47[16] \
+ out[17]=top_module^MUL~47[17] out[18]=top_module^MUL~47[18] out[19]=top_module^MUL~47[19] out[20]=top_module^MUL~47[20] \
+ out[21]=top_module^MUL~47[21] out[22]=top_module^MUL~47[22] out[23]=top_module^MUL~47[23] out[24]=top_module^MUL~47[24] \
+ out[25]=top_module^MUL~47[25] out[26]=top_module^MUL~47[26] out[27]=top_module^MUL~47[27] out[28]=top_module^MUL~47[28] \
+ out[29]=top_module^MUL~47[29] out[30]=top_module^MUL~47[30] out[31]=top_module^MUL~47[31] out[32]=top_module^MUL~47[32] \
+ out[33]=top_module^MUL~47[33] out[34]=top_module^MUL~47[34] out[35]=top_module^MUL~47[35] out[36]=top_module^MUL~47[36] \
+ out[37]=top_module^MUL~47[37] out[38]=top_module^MUL~47[38] out[39]=top_module^MUL~47[39] out[40]=top_module^MUL~47[40] \
+ out[41]=top_module^MUL~47[41] out[42]=top_module^MUL~47[42] out[43]=top_module^MUL~47[43] out[44]=top_module^MUL~47[44] \
+ out[45]=top_module^MUL~47[45] out[46]=top_module^MUL~47[46] out[47]=top_module^MUL~47[47] out[48]=top_module^MUL~47[48] \
+ out[49]=top_module^MUL~47[49] out[50]=top_module^MUL~47[50] out[51]=top_module^MUL~47[51] out[52]=top_module^MUL~47[52] \
+ out[53]=top_module^MUL~47[53] out[54]=top_module^MUL~47[54] out[55]=top_module^MUL~47[55] out[56]=top_module^MUL~47[56] \
+ out[57]=top_module^MUL~47[57] out[58]=top_module^MUL~47[58] out[59]=top_module^MUL~47[59] out[60]=top_module^MUL~47[60] \
+ out[61]=top_module^MUL~47[61] out[62]=top_module^MUL~47[62] out[63]=top_module^MUL~47[63] out[64]=top_module^MUL~47[64] \
+ out[65]=top_module^MUL~47[65] out[66]=top_module^MUL~47[66] out[67]=top_module^MUL~47[67] out[68]=top_module^MUL~47[68] \
+ out[69]=top_module^MUL~47[69] out[70]=top_module^MUL~47[70] out[71]=top_module^MUL~47[71] 
+
+.subckt multiply a[0]=top_module^a1~0 a[1]=top_module^a1~1 a[2]=top_module^a1~2 a[3]=top_module^a1~3 a[4]=top_module^a1~4 \
+ a[5]=top_module^a1~5 a[6]=top_module^a1~6 a[7]=top_module^a1~7 a[8]=top_module^a1~8 a[9]=top_module^a1~9 \
+ a[10]=top_module^a1~10 a[11]=top_module^a1~11 a[12]=top_module^a1~12 a[13]=top_module^a1~13 a[14]=top_module^a1~14 \
+ a[15]=top_module^a1~15 a[16]=top_module^a1~16 a[17]=top_module^a1~17 a[18]=top_module^a1~18 a[19]=top_module^a1~19 \
+ a[20]=top_module^a1~20 a[21]=top_module^a1~21 a[22]=top_module^a1~22 a[23]=unconn a[24]=unconn a[25]=unconn a[26]=unconn \
+ a[27]=unconn a[28]=unconn a[29]=unconn a[30]=unconn a[31]=unconn a[32]=unconn a[33]=unconn a[34]=unconn a[35]=unconn \
+ b[0]=top_module^b1~0 b[1]=top_module^b1~1 b[2]=top_module^b1~2 b[3]=top_module^b1~3 b[4]=top_module^b1~4 b[5]=top_module^b1~5 \
+ b[6]=top_module^b1~6 b[7]=top_module^b1~7 b[8]=top_module^b1~8 b[9]=top_module^b1~9 b[10]=top_module^b1~10 \
+ b[11]=top_module^b1~11 b[12]=top_module^b1~12 b[13]=top_module^b1~13 b[14]=top_module^b1~14 b[15]=top_module^b1~15 \
+ b[16]=top_module^b1~16 b[17]=top_module^b1~17 b[18]=top_module^b1~18 b[19]=top_module^b1~19 b[20]=top_module^b1~20 \
+ b[21]=top_module^b1~21 b[22]=top_module^b1~22 b[23]=unconn b[24]=unconn b[25]=unconn b[26]=unconn b[27]=unconn b[28]=unconn \
+ b[29]=unconn b[30]=unconn b[31]=unconn b[32]=unconn b[33]=unconn b[34]=unconn b[35]=unconn out[0]=top_module^MUL~0[0] \
+ out[1]=top_module^MUL~0[1] out[2]=top_module^MUL~0[2] out[3]=top_module^MUL~0[3] out[4]=top_module^MUL~0[4] \
+ out[5]=top_module^MUL~0[5] out[6]=top_module^MUL~0[6] out[7]=top_module^MUL~0[7] out[8]=top_module^MUL~0[8] \
+ out[9]=top_module^MUL~0[9] out[10]=top_module^MUL~0[10] out[11]=top_module^MUL~0[11] out[12]=top_module^MUL~0[12] \
+ out[13]=top_module^MUL~0[13] out[14]=top_module^MUL~0[14] out[15]=top_module^MUL~0[15] out[16]=top_module^MUL~0[16] \
+ out[17]=top_module^MUL~0[17] out[18]=top_module^MUL~0[18] out[19]=top_module^MUL~0[19] out[20]=top_module^MUL~0[20] \
+ out[21]=top_module^MUL~0[21] out[22]=top_module^MUL~0[22] out[23]=top_module^MUL~0[23] out[24]=top_module^MUL~0[24] \
+ out[25]=top_module^MUL~0[25] out[26]=top_module^MUL~0[26] out[27]=top_module^MUL~0[27] out[28]=top_module^MUL~0[28] \
+ out[29]=top_module^MUL~0[29] out[30]=top_module^MUL~0[30] out[31]=top_module^MUL~0[31] out[32]=top_module^MUL~0[32] \
+ out[33]=top_module^MUL~0[33] out[34]=top_module^MUL~0[34] out[35]=top_module^MUL~0[35] out[36]=top_module^MUL~0[36] \
+ out[37]=top_module^MUL~0[37] out[38]=top_module^MUL~0[38] out[39]=top_module^MUL~0[39] out[40]=top_module^MUL~0[40] \
+ out[41]=top_module^MUL~0[41] out[42]=top_module^MUL~0[42] out[43]=top_module^MUL~0[43] out[44]=top_module^MUL~0[44] \
+ out[45]=top_module^MUL~0[45] out[46]=top_module^MUL~0[46] out[47]=top_module^MUL~0[47] out[48]=top_module^MUL~0[48] \
+ out[49]=top_module^MUL~0[49] out[50]=top_module^MUL~0[50] out[51]=top_module^MUL~0[51] out[52]=top_module^MUL~0[52] \
+ out[53]=top_module^MUL~0[53] out[54]=top_module^MUL~0[54] out[55]=top_module^MUL~0[55] out[56]=top_module^MUL~0[56] \
+ out[57]=top_module^MUL~0[57] out[58]=top_module^MUL~0[58] out[59]=top_module^MUL~0[59] out[60]=top_module^MUL~0[60] \
+ out[61]=top_module^MUL~0[61] out[62]=top_module^MUL~0[62] out[63]=top_module^MUL~0[63] out[64]=top_module^MUL~0[64] \
+ out[65]=top_module^MUL~0[65] out[66]=top_module^MUL~0[66] out[67]=top_module^MUL~0[67] out[68]=top_module^MUL~0[68] \
+ out[69]=top_module^MUL~0[69] out[70]=top_module^MUL~0[70] out[71]=top_module^MUL~0[71] 
+
+
+
+.names unconn 
+0 
+
+.names top_module^MUL~0[0] top_module^c1~0 
+1 1 
+
+.names top_module^MUL~0[1] top_module^c1~1 
+1 1 
+
+.names top_module^MUL~0[2] top_module^c1~2 
+1 1 
+
+.names top_module^MUL~0[3] top_module^c1~3 
+1 1 
+
+.names top_module^MUL~0[4] top_module^c1~4 
+1 1 
+
+.names top_module^MUL~0[5] top_module^c1~5 
+1 1 
+
+.names top_module^MUL~0[6] top_module^c1~6 
+1 1 
+
+.names top_module^MUL~0[7] top_module^c1~7 
+1 1 
+
+.names top_module^MUL~0[8] top_module^c1~8 
+1 1 
+
+.names top_module^MUL~0[9] top_module^c1~9 
+1 1 
+
+.names top_module^MUL~0[10] top_module^c1~10 
+1 1 
+
+.names top_module^MUL~0[11] top_module^c1~11 
+1 1 
+
+.names top_module^MUL~0[12] top_module^c1~12 
+1 1 
+
+.names top_module^MUL~0[13] top_module^c1~13 
+1 1 
+
+.names top_module^MUL~0[14] top_module^c1~14 
+1 1 
+
+.names top_module^MUL~0[15] top_module^c1~15 
+1 1 
+
+.names top_module^MUL~0[16] top_module^c1~16 
+1 1 
+
+.names top_module^MUL~0[17] top_module^c1~17 
+1 1 
+
+.names top_module^MUL~0[18] top_module^c1~18 
+1 1 
+
+.names top_module^MUL~0[19] top_module^c1~19 
+1 1 
+
+.names top_module^MUL~0[20] top_module^c1~20 
+1 1 
+
+.names top_module^MUL~0[21] top_module^c1~21 
+1 1 
+
+.names top_module^MUL~0[22] top_module^c1~22 
+1 1 
+
+.names top_module^MUL~0[23] top_module^c1~23 
+1 1 
+
+.names top_module^MUL~0[24] top_module^c1~24 
+1 1 
+
+.names top_module^MUL~0[25] top_module^c1~25 
+1 1 
+
+.names top_module^MUL~0[26] top_module^c1~26 
+1 1 
+
+.names top_module^MUL~0[27] top_module^c1~27 
+1 1 
+
+.names top_module^MUL~0[28] top_module^c1~28 
+1 1 
+
+.names top_module^MUL~0[29] top_module^c1~29 
+1 1 
+
+.names top_module^MUL~0[30] top_module^c1~30 
+1 1 
+
+.names top_module^MUL~0[31] top_module^c1~31 
+1 1 
+
+.names top_module^MUL~0[32] top_module^c1~32 
+1 1 
+
+.names top_module^MUL~0[33] top_module^c1~33 
+1 1 
+
+.names top_module^MUL~0[34] top_module^c1~34 
+1 1 
+
+.names top_module^MUL~0[35] top_module^c1~35 
+1 1 
+
+.names top_module^MUL~0[36] top_module^c1~36 
+1 1 
+
+.names top_module^MUL~0[37] top_module^c1~37 
+1 1 
+
+.names top_module^MUL~0[38] top_module^c1~38 
+1 1 
+
+.names top_module^MUL~0[39] top_module^c1~39 
+1 1 
+
+.names top_module^MUL~0[40] top_module^c1~40 
+1 1 
+
+.names top_module^MUL~0[41] top_module^c1~41 
+1 1 
+
+.names top_module^MUL~0[42] top_module^c1~42 
+1 1 
+
+.names top_module^MUL~0[43] top_module^c1~43 
+1 1 
+
+.names top_module^MUL~0[44] top_module^c1~44 
+1 1 
+
+.names top_module^MUL~0[45] top_module^c1~45 
+1 1 
+
+.names top_module^MUL~47[0] top_module^c2~0 
+1 1 
+
+.names top_module^MUL~47[1] top_module^c2~1 
+1 1 
+
+.names top_module^MUL~47[2] top_module^c2~2 
+1 1 
+
+.names top_module^MUL~47[3] top_module^c2~3 
+1 1 
+
+.names top_module^MUL~47[4] top_module^c2~4 
+1 1 
+
+.names top_module^MUL~47[5] top_module^c2~5 
+1 1 
+
+.names top_module^MUL~47[6] top_module^c2~6 
+1 1 
+
+.names top_module^MUL~47[7] top_module^c2~7 
+1 1 
+
+.names top_module^MUL~47[8] top_module^c2~8 
+1 1 
+
+.names top_module^MUL~47[9] top_module^c2~9 
+1 1 
+
+.names top_module^MUL~47[10] top_module^c2~10 
+1 1 
+
+.names top_module^MUL~47[11] top_module^c2~11 
+1 1 
+
+.names top_module^MUL~47[12] top_module^c2~12 
+1 1 
+
+.names top_module^MUL~47[13] top_module^c2~13 
+1 1 
+
+.names top_module^MUL~47[14] top_module^c2~14 
+1 1 
+
+.names top_module^MUL~47[15] top_module^c2~15 
+1 1 
+
+.names top_module^MUL~47[16] top_module^c2~16 
+1 1 
+
+.names top_module^MUL~47[17] top_module^c2~17 
+1 1 
+
+.names top_module^MUL~47[18] top_module^c2~18 
+1 1 
+
+.names top_module^MUL~47[19] top_module^c2~19 
+1 1 
+
+.names top_module^MUL~47[20] top_module^c2~20 
+1 1 
+
+.names top_module^MUL~47[21] top_module^c2~21 
+1 1 
+
+.names top_module^MUL~47[22] top_module^c2~22 
+1 1 
+
+.names top_module^MUL~47[23] top_module^c2~23 
+1 1 
+
+.names top_module^MUL~47[24] top_module^c2~24 
+1 1 
+
+.names top_module^MUL~47[25] top_module^c2~25 
+1 1 
+
+.names top_module^MUL~47[26] top_module^c2~26 
+1 1 
+
+.names top_module^MUL~47[27] top_module^c2~27 
+1 1 
+
+.names top_module^MUL~47[28] top_module^c2~28 
+1 1 
+
+.names top_module^MUL~47[29] top_module^c2~29 
+1 1 
+
+.names top_module^MUL~47[30] top_module^c2~30 
+1 1 
+
+.names top_module^MUL~47[31] top_module^c2~31 
+1 1 
+
+.names top_module^MUL~47[32] top_module^c2~32 
+1 1 
+
+.names top_module^MUL~47[33] top_module^c2~33 
+1 1 
+
+.names top_module^MUL~47[34] top_module^c2~34 
+1 1 
+
+.names top_module^MUL~47[35] top_module^c2~35 
+1 1 
+
+.names top_module^MUL~47[36] top_module^c2~36 
+1 1 
+
+.names top_module^MUL~47[37] top_module^c2~37 
+1 1 
+
+.names top_module^MUL~47[38] top_module^c2~38 
+1 1 
+
+.names top_module^MUL~47[39] top_module^c2~39 
+1 1 
+
+.names top_module^MUL~47[40] top_module^c2~40 
+1 1 
+
+.names top_module^MUL~47[41] top_module^c2~41 
+1 1 
+
+.names top_module^MUL~47[42] top_module^c2~42 
+1 1 
+
+.names top_module^MUL~47[43] top_module^c2~43 
+1 1 
+
+.names top_module^MUL~47[44] top_module^c2~44 
+1 1 
+
+.names top_module^MUL~47[45] top_module^c2~45 
+1 1 
+
+.names top_module^MUL~329[0] top_module^c3~0 
+1 1 
+
+.names top_module^MUL~329[1] top_module^c3~1 
+1 1 
+
+.names top_module^MUL~329[2] top_module^c3~2 
+1 1 
+
+.names top_module^MUL~329[3] top_module^c3~3 
+1 1 
+
+.names top_module^MUL~329[4] top_module^c3~4 
+1 1 
+
+.names top_module^MUL~329[5] top_module^c3~5 
+1 1 
+
+.names top_module^MUL~329[6] top_module^c3~6 
+1 1 
+
+.names top_module^MUL~329[7] top_module^c3~7 
+1 1 
+
+.names top_module^MUL~329[8] top_module^c3~8 
+1 1 
+
+.names top_module^MUL~329[9] top_module^c3~9 
+1 1 
+
+.names top_module^MUL~329[10] top_module^c3~10 
+1 1 
+
+.names top_module^MUL~329[11] top_module^c3~11 
+1 1 
+
+.names top_module^MUL~329[12] top_module^c3~12 
+1 1 
+
+.names top_module^MUL~329[13] top_module^c3~13 
+1 1 
+
+.names top_module^MUL~329[14] top_module^c3~14 
+1 1 
+
+.names top_module^MUL~329[15] top_module^c3~15 
+1 1 
+
+.names top_module^MUL~329[16] top_module^c3~16 
+1 1 
+
+.names top_module^MUL~329[17] top_module^c3~17 
+1 1 
+
+.names top_module^MUL~329[18] top_module^c3~18 
+1 1 
+
+.names top_module^MUL~329[19] top_module^c3~19 
+1 1 
+
+.names top_module^MUL~329[20] top_module^c3~20 
+1 1 
+
+.names top_module^MUL~329[21] top_module^c3~21 
+1 1 
+
+.names top_module^MUL~329[22] top_module^c3~22 
+1 1 
+
+.names top_module^MUL~329[23] top_module^c3~23 
+1 1 
+
+.names top_module^MUL~329[24] top_module^c3~24 
+1 1 
+
+.names top_module^MUL~329[25] top_module^c3~25 
+1 1 
+
+.names top_module^MUL~329[26] top_module^c3~26 
+1 1 
+
+.names top_module^MUL~329[27] top_module^c3~27 
+1 1 
+
+.names top_module^MUL~329[28] top_module^c3~28 
+1 1 
+
+.names top_module^MUL~329[29] top_module^c3~29 
+1 1 
+
+.names top_module^MUL~329[30] top_module^c3~30 
+1 1 
+
+.names top_module^MUL~329[31] top_module^c3~31 
+1 1 
+
+.names top_module^MUL~329[32] top_module^c3~32 
+1 1 
+
+.names top_module^MUL~329[33] top_module^c3~33 
+1 1 
+
+.names top_module^MUL~329[34] top_module^c3~34 
+1 1 
+
+.names top_module^MUL~329[35] top_module^c3~35 
+1 1 
+
+.names top_module^MUL~329[36] top_module^c3~36 
+1 1 
+
+.names top_module^MUL~329[37] top_module^c3~37 
+1 1 
+
+.names top_module^MUL~329[38] top_module^c3~38 
+1 1 
+
+.names top_module^MUL~329[39] top_module^c3~39 
+1 1 
+
+.names top_module^MUL~329[40] top_module^c3~40 
+1 1 
+
+.names top_module^MUL~329[41] top_module^c3~41 
+1 1 
+
+.names top_module^MUL~329[42] top_module^c3~42 
+1 1 
+
+.names top_module^MUL~329[43] top_module^c3~43 
+1 1 
+
+.names top_module^MUL~329[44] top_module^c3~44 
+1 1 
+
+.names top_module^MUL~329[45] top_module^c3~45 
+1 1 
+
+.names top_module^MUL~141[0] top_module^c4~0 
+1 1 
+
+.names top_module^MUL~141[1] top_module^c4~1 
+1 1 
+
+.names top_module^MUL~141[2] top_module^c4~2 
+1 1 
+
+.names top_module^MUL~141[3] top_module^c4~3 
+1 1 
+
+.names top_module^MUL~141[4] top_module^c4~4 
+1 1 
+
+.names top_module^MUL~141[5] top_module^c4~5 
+1 1 
+
+.names top_module^MUL~141[6] top_module^c4~6 
+1 1 
+
+.names top_module^MUL~141[7] top_module^c4~7 
+1 1 
+
+.names top_module^MUL~141[8] top_module^c4~8 
+1 1 
+
+.names top_module^MUL~141[9] top_module^c4~9 
+1 1 
+
+.names top_module^MUL~141[10] top_module^c4~10 
+1 1 
+
+.names top_module^MUL~141[11] top_module^c4~11 
+1 1 
+
+.names top_module^MUL~141[12] top_module^c4~12 
+1 1 
+
+.names top_module^MUL~141[13] top_module^c4~13 
+1 1 
+
+.names top_module^MUL~141[14] top_module^c4~14 
+1 1 
+
+.names top_module^MUL~141[15] top_module^c4~15 
+1 1 
+
+.names top_module^MUL~141[16] top_module^c4~16 
+1 1 
+
+.names top_module^MUL~141[17] top_module^c4~17 
+1 1 
+
+.names top_module^MUL~141[18] top_module^c4~18 
+1 1 
+
+.names top_module^MUL~141[19] top_module^c4~19 
+1 1 
+
+.names top_module^MUL~141[20] top_module^c4~20 
+1 1 
+
+.names top_module^MUL~141[21] top_module^c4~21 
+1 1 
+
+.names top_module^MUL~141[22] top_module^c4~22 
+1 1 
+
+.names top_module^MUL~141[23] top_module^c4~23 
+1 1 
+
+.names top_module^MUL~141[24] top_module^c4~24 
+1 1 
+
+.names top_module^MUL~141[25] top_module^c4~25 
+1 1 
+
+.names top_module^MUL~141[26] top_module^c4~26 
+1 1 
+
+.names top_module^MUL~141[27] top_module^c4~27 
+1 1 
+
+.names top_module^MUL~141[28] top_module^c4~28 
+1 1 
+
+.names top_module^MUL~141[29] top_module^c4~29 
+1 1 
+
+.names top_module^MUL~141[30] top_module^c4~30 
+1 1 
+
+.names top_module^MUL~141[31] top_module^c4~31 
+1 1 
+
+.names top_module^MUL~141[32] top_module^c4~32 
+1 1 
+
+.names top_module^MUL~141[33] top_module^c4~33 
+1 1 
+
+.names top_module^MUL~141[34] top_module^c4~34 
+1 1 
+
+.names top_module^MUL~141[35] top_module^c4~35 
+1 1 
+
+.names top_module^MUL~141[36] top_module^c4~36 
+1 1 
+
+.names top_module^MUL~141[37] top_module^c4~37 
+1 1 
+
+.names top_module^MUL~141[38] top_module^c4~38 
+1 1 
+
+.names top_module^MUL~141[39] top_module^c4~39 
+1 1 
+
+.names top_module^MUL~141[40] top_module^c4~40 
+1 1 
+
+.names top_module^MUL~141[41] top_module^c4~41 
+1 1 
+
+.names top_module^MUL~141[42] top_module^c4~42 
+1 1 
+
+.names top_module^MUL~141[43] top_module^c4~43 
+1 1 
+
+.names top_module^MUL~141[44] top_module^c4~44 
+1 1 
+
+.names top_module^MUL~141[45] top_module^c4~45 
+1 1 
+
+.names top_module^MUL~188[0] top_module^c5~0 
+1 1 
+
+.names top_module^MUL~188[1] top_module^c5~1 
+1 1 
+
+.names top_module^MUL~188[2] top_module^c5~2 
+1 1 
+
+.names top_module^MUL~188[3] top_module^c5~3 
+1 1 
+
+.names top_module^MUL~188[4] top_module^c5~4 
+1 1 
+
+.names top_module^MUL~188[5] top_module^c5~5 
+1 1 
+
+.names top_module^MUL~188[6] top_module^c5~6 
+1 1 
+
+.names top_module^MUL~188[7] top_module^c5~7 
+1 1 
+
+.names top_module^MUL~188[8] top_module^c5~8 
+1 1 
+
+.names top_module^MUL~188[9] top_module^c5~9 
+1 1 
+
+.names top_module^MUL~188[10] top_module^c5~10 
+1 1 
+
+.names top_module^MUL~188[11] top_module^c5~11 
+1 1 
+
+.names top_module^MUL~188[12] top_module^c5~12 
+1 1 
+
+.names top_module^MUL~188[13] top_module^c5~13 
+1 1 
+
+.names top_module^MUL~188[14] top_module^c5~14 
+1 1 
+
+.names top_module^MUL~188[15] top_module^c5~15 
+1 1 
+
+.names top_module^MUL~188[16] top_module^c5~16 
+1 1 
+
+.names top_module^MUL~188[17] top_module^c5~17 
+1 1 
+
+.names top_module^MUL~188[18] top_module^c5~18 
+1 1 
+
+.names top_module^MUL~188[19] top_module^c5~19 
+1 1 
+
+.names top_module^MUL~188[20] top_module^c5~20 
+1 1 
+
+.names top_module^MUL~188[21] top_module^c5~21 
+1 1 
+
+.names top_module^MUL~188[22] top_module^c5~22 
+1 1 
+
+.names top_module^MUL~188[23] top_module^c5~23 
+1 1 
+
+.names top_module^MUL~188[24] top_module^c5~24 
+1 1 
+
+.names top_module^MUL~188[25] top_module^c5~25 
+1 1 
+
+.names top_module^MUL~188[26] top_module^c5~26 
+1 1 
+
+.names top_module^MUL~188[27] top_module^c5~27 
+1 1 
+
+.names top_module^MUL~188[28] top_module^c5~28 
+1 1 
+
+.names top_module^MUL~188[29] top_module^c5~29 
+1 1 
+
+.names top_module^MUL~188[30] top_module^c5~30 
+1 1 
+
+.names top_module^MUL~188[31] top_module^c5~31 
+1 1 
+
+.names top_module^MUL~188[32] top_module^c5~32 
+1 1 
+
+.names top_module^MUL~188[33] top_module^c5~33 
+1 1 
+
+.names top_module^MUL~188[34] top_module^c5~34 
+1 1 
+
+.names top_module^MUL~188[35] top_module^c5~35 
+1 1 
+
+.names top_module^MUL~188[36] top_module^c5~36 
+1 1 
+
+.names top_module^MUL~188[37] top_module^c5~37 
+1 1 
+
+.names top_module^MUL~188[38] top_module^c5~38 
+1 1 
+
+.names top_module^MUL~188[39] top_module^c5~39 
+1 1 
+
+.names top_module^MUL~188[40] top_module^c5~40 
+1 1 
+
+.names top_module^MUL~188[41] top_module^c5~41 
+1 1 
+
+.names top_module^MUL~188[42] top_module^c5~42 
+1 1 
+
+.names top_module^MUL~188[43] top_module^c5~43 
+1 1 
+
+.names top_module^MUL~188[44] top_module^c5~44 
+1 1 
+
+.names top_module^MUL~188[45] top_module^c5~45 
+1 1 
+
+.names top_module^MUL~235[0] top_module^c6~0 
+1 1 
+
+.names top_module^MUL~235[1] top_module^c6~1 
+1 1 
+
+.names top_module^MUL~235[2] top_module^c6~2 
+1 1 
+
+.names top_module^MUL~235[3] top_module^c6~3 
+1 1 
+
+.names top_module^MUL~235[4] top_module^c6~4 
+1 1 
+
+.names top_module^MUL~235[5] top_module^c6~5 
+1 1 
+
+.names top_module^MUL~235[6] top_module^c6~6 
+1 1 
+
+.names top_module^MUL~235[7] top_module^c6~7 
+1 1 
+
+.names top_module^MUL~235[8] top_module^c6~8 
+1 1 
+
+.names top_module^MUL~235[9] top_module^c6~9 
+1 1 
+
+.names top_module^MUL~235[10] top_module^c6~10 
+1 1 
+
+.names top_module^MUL~235[11] top_module^c6~11 
+1 1 
+
+.names top_module^MUL~235[12] top_module^c6~12 
+1 1 
+
+.names top_module^MUL~235[13] top_module^c6~13 
+1 1 
+
+.names top_module^MUL~235[14] top_module^c6~14 
+1 1 
+
+.names top_module^MUL~235[15] top_module^c6~15 
+1 1 
+
+.names top_module^MUL~235[16] top_module^c6~16 
+1 1 
+
+.names top_module^MUL~235[17] top_module^c6~17 
+1 1 
+
+.names top_module^MUL~235[18] top_module^c6~18 
+1 1 
+
+.names top_module^MUL~235[19] top_module^c6~19 
+1 1 
+
+.names top_module^MUL~235[20] top_module^c6~20 
+1 1 
+
+.names top_module^MUL~235[21] top_module^c6~21 
+1 1 
+
+.names top_module^MUL~235[22] top_module^c6~22 
+1 1 
+
+.names top_module^MUL~235[23] top_module^c6~23 
+1 1 
+
+.names top_module^MUL~235[24] top_module^c6~24 
+1 1 
+
+.names top_module^MUL~235[25] top_module^c6~25 
+1 1 
+
+.names top_module^MUL~235[26] top_module^c6~26 
+1 1 
+
+.names top_module^MUL~235[27] top_module^c6~27 
+1 1 
+
+.names top_module^MUL~235[28] top_module^c6~28 
+1 1 
+
+.names top_module^MUL~235[29] top_module^c6~29 
+1 1 
+
+.names top_module^MUL~235[30] top_module^c6~30 
+1 1 
+
+.names top_module^MUL~235[31] top_module^c6~31 
+1 1 
+
+.names top_module^MUL~235[32] top_module^c6~32 
+1 1 
+
+.names top_module^MUL~235[33] top_module^c6~33 
+1 1 
+
+.names top_module^MUL~235[34] top_module^c6~34 
+1 1 
+
+.names top_module^MUL~235[35] top_module^c6~35 
+1 1 
+
+.names top_module^MUL~235[36] top_module^c6~36 
+1 1 
+
+.names top_module^MUL~235[37] top_module^c6~37 
+1 1 
+
+.names top_module^MUL~235[38] top_module^c6~38 
+1 1 
+
+.names top_module^MUL~235[39] top_module^c6~39 
+1 1 
+
+.names top_module^MUL~235[40] top_module^c6~40 
+1 1 
+
+.names top_module^MUL~235[41] top_module^c6~41 
+1 1 
+
+.names top_module^MUL~235[42] top_module^c6~42 
+1 1 
+
+.names top_module^MUL~235[43] top_module^c6~43 
+1 1 
+
+.names top_module^MUL~235[44] top_module^c6~44 
+1 1 
+
+.names top_module^MUL~235[45] top_module^c6~45 
+1 1 
+
+.names top_module^MUL~282[0] top_module^c7~0 
+1 1 
+
+.names top_module^MUL~282[1] top_module^c7~1 
+1 1 
+
+.names top_module^MUL~282[2] top_module^c7~2 
+1 1 
+
+.names top_module^MUL~282[3] top_module^c7~3 
+1 1 
+
+.names top_module^MUL~282[4] top_module^c7~4 
+1 1 
+
+.names top_module^MUL~282[5] top_module^c7~5 
+1 1 
+
+.names top_module^MUL~282[6] top_module^c7~6 
+1 1 
+
+.names top_module^MUL~282[7] top_module^c7~7 
+1 1 
+
+.names top_module^MUL~282[8] top_module^c7~8 
+1 1 
+
+.names top_module^MUL~282[9] top_module^c7~9 
+1 1 
+
+.names top_module^MUL~282[10] top_module^c7~10 
+1 1 
+
+.names top_module^MUL~282[11] top_module^c7~11 
+1 1 
+
+.names top_module^MUL~282[12] top_module^c7~12 
+1 1 
+
+.names top_module^MUL~282[13] top_module^c7~13 
+1 1 
+
+.names top_module^MUL~282[14] top_module^c7~14 
+1 1 
+
+.names top_module^MUL~282[15] top_module^c7~15 
+1 1 
+
+.names top_module^MUL~282[16] top_module^c7~16 
+1 1 
+
+.names top_module^MUL~282[17] top_module^c7~17 
+1 1 
+
+.names top_module^MUL~282[18] top_module^c7~18 
+1 1 
+
+.names top_module^MUL~282[19] top_module^c7~19 
+1 1 
+
+.names top_module^MUL~282[20] top_module^c7~20 
+1 1 
+
+.names top_module^MUL~282[21] top_module^c7~21 
+1 1 
+
+.names top_module^MUL~282[22] top_module^c7~22 
+1 1 
+
+.names top_module^MUL~282[23] top_module^c7~23 
+1 1 
+
+.names top_module^MUL~282[24] top_module^c7~24 
+1 1 
+
+.names top_module^MUL~282[25] top_module^c7~25 
+1 1 
+
+.names top_module^MUL~282[26] top_module^c7~26 
+1 1 
+
+.names top_module^MUL~282[27] top_module^c7~27 
+1 1 
+
+.names top_module^MUL~282[28] top_module^c7~28 
+1 1 
+
+.names top_module^MUL~282[29] top_module^c7~29 
+1 1 
+
+.names top_module^MUL~282[30] top_module^c7~30 
+1 1 
+
+.names top_module^MUL~282[31] top_module^c7~31 
+1 1 
+
+.names top_module^MUL~282[32] top_module^c7~32 
+1 1 
+
+.names top_module^MUL~282[33] top_module^c7~33 
+1 1 
+
+.names top_module^MUL~282[34] top_module^c7~34 
+1 1 
+
+.names top_module^MUL~282[35] top_module^c7~35 
+1 1 
+
+.names top_module^MUL~282[36] top_module^c7~36 
+1 1 
+
+.names top_module^MUL~282[37] top_module^c7~37 
+1 1 
+
+.names top_module^MUL~282[38] top_module^c7~38 
+1 1 
+
+.names top_module^MUL~282[39] top_module^c7~39 
+1 1 
+
+.names top_module^MUL~282[40] top_module^c7~40 
+1 1 
+
+.names top_module^MUL~282[41] top_module^c7~41 
+1 1 
+
+.names top_module^MUL~282[42] top_module^c7~42 
+1 1 
+
+.names top_module^MUL~282[43] top_module^c7~43 
+1 1 
+
+.names top_module^MUL~282[44] top_module^c7~44 
+1 1 
+
+.names top_module^MUL~282[45] top_module^c7~45 
+1 1 
+
+.names top_module^MUL~329[0] top_module^c8~0 
+1 1 
+
+.names top_module^MUL~329[1] top_module^c8~1 
+1 1 
+
+.names top_module^MUL~329[2] top_module^c8~2 
+1 1 
+
+.names top_module^MUL~329[3] top_module^c8~3 
+1 1 
+
+.names top_module^MUL~329[4] top_module^c8~4 
+1 1 
+
+.names top_module^MUL~329[5] top_module^c8~5 
+1 1 
+
+.names top_module^MUL~329[6] top_module^c8~6 
+1 1 
+
+.names top_module^MUL~329[7] top_module^c8~7 
+1 1 
+
+.names top_module^MUL~329[8] top_module^c8~8 
+1 1 
+
+.names top_module^MUL~329[9] top_module^c8~9 
+1 1 
+
+.names top_module^MUL~329[10] top_module^c8~10 
+1 1 
+
+.names top_module^MUL~329[11] top_module^c8~11 
+1 1 
+
+.names top_module^MUL~329[12] top_module^c8~12 
+1 1 
+
+.names top_module^MUL~329[13] top_module^c8~13 
+1 1 
+
+.names top_module^MUL~329[14] top_module^c8~14 
+1 1 
+
+.names top_module^MUL~329[15] top_module^c8~15 
+1 1 
+
+.names top_module^MUL~329[16] top_module^c8~16 
+1 1 
+
+.names top_module^MUL~329[17] top_module^c8~17 
+1 1 
+
+.names top_module^MUL~329[18] top_module^c8~18 
+1 1 
+
+.names top_module^MUL~329[19] top_module^c8~19 
+1 1 
+
+.names top_module^MUL~329[20] top_module^c8~20 
+1 1 
+
+.names top_module^MUL~329[21] top_module^c8~21 
+1 1 
+
+.names top_module^MUL~329[22] top_module^c8~22 
+1 1 
+
+.names top_module^MUL~329[23] top_module^c8~23 
+1 1 
+
+.names top_module^MUL~329[24] top_module^c8~24 
+1 1 
+
+.names top_module^MUL~329[25] top_module^c8~25 
+1 1 
+
+.names top_module^MUL~329[26] top_module^c8~26 
+1 1 
+
+.names top_module^MUL~329[27] top_module^c8~27 
+1 1 
+
+.names top_module^MUL~329[28] top_module^c8~28 
+1 1 
+
+.names top_module^MUL~329[29] top_module^c8~29 
+1 1 
+
+.names top_module^MUL~329[30] top_module^c8~30 
+1 1 
+
+.names top_module^MUL~329[31] top_module^c8~31 
+1 1 
+
+.names top_module^MUL~329[32] top_module^c8~32 
+1 1 
+
+.names top_module^MUL~329[33] top_module^c8~33 
+1 1 
+
+.names top_module^MUL~329[34] top_module^c8~34 
+1 1 
+
+.names top_module^MUL~329[35] top_module^c8~35 
+1 1 
+
+.names top_module^MUL~329[36] top_module^c8~36 
+1 1 
+
+.names top_module^MUL~329[37] top_module^c8~37 
+1 1 
+
+.names top_module^MUL~329[38] top_module^c8~38 
+1 1 
+
+.names top_module^MUL~329[39] top_module^c8~39 
+1 1 
+
+.names top_module^MUL~329[40] top_module^c8~40 
+1 1 
+
+.names top_module^MUL~329[41] top_module^c8~41 
+1 1 
+
+.names top_module^MUL~329[42] top_module^c8~42 
+1 1 
+
+.names top_module^MUL~329[43] top_module^c8~43 
+1 1 
+
+.names top_module^MUL~329[44] top_module^c8~44 
+1 1 
+
+.names top_module^MUL~329[45] top_module^c8~45 
+1 1 
+
+.names top_module^MUL~376[0] top_module^c9~0 
+1 1 
+
+.names top_module^MUL~376[1] top_module^c9~1 
+1 1 
+
+.names top_module^MUL~376[2] top_module^c9~2 
+1 1 
+
+.names top_module^MUL~376[3] top_module^c9~3 
+1 1 
+
+.names top_module^MUL~376[4] top_module^c9~4 
+1 1 
+
+.names top_module^MUL~376[5] top_module^c9~5 
+1 1 
+
+.names top_module^MUL~376[6] top_module^c9~6 
+1 1 
+
+.names top_module^MUL~376[7] top_module^c9~7 
+1 1 
+
+.names top_module^MUL~376[8] top_module^c9~8 
+1 1 
+
+.names top_module^MUL~376[9] top_module^c9~9 
+1 1 
+
+.names top_module^MUL~376[10] top_module^c9~10 
+1 1 
+
+.names top_module^MUL~376[11] top_module^c9~11 
+1 1 
+
+.names top_module^MUL~376[12] top_module^c9~12 
+1 1 
+
+.names top_module^MUL~376[13] top_module^c9~13 
+1 1 
+
+.names top_module^MUL~376[14] top_module^c9~14 
+1 1 
+
+.names top_module^MUL~376[15] top_module^c9~15 
+1 1 
+
+.names top_module^MUL~376[16] top_module^c9~16 
+1 1 
+
+.names top_module^MUL~376[17] top_module^c9~17 
+1 1 
+
+.names top_module^MUL~376[18] top_module^c9~18 
+1 1 
+
+.names top_module^MUL~376[19] top_module^c9~19 
+1 1 
+
+.names top_module^MUL~376[20] top_module^c9~20 
+1 1 
+
+.names top_module^MUL~376[21] top_module^c9~21 
+1 1 
+
+.names top_module^MUL~376[22] top_module^c9~22 
+1 1 
+
+.names top_module^MUL~376[23] top_module^c9~23 
+1 1 
+
+.names top_module^MUL~376[24] top_module^c9~24 
+1 1 
+
+.names top_module^MUL~376[25] top_module^c9~25 
+1 1 
+
+.names top_module^MUL~376[26] top_module^c9~26 
+1 1 
+
+.names top_module^MUL~376[27] top_module^c9~27 
+1 1 
+
+.names top_module^MUL~376[28] top_module^c9~28 
+1 1 
+
+.names top_module^MUL~376[29] top_module^c9~29 
+1 1 
+
+.names top_module^MUL~376[30] top_module^c9~30 
+1 1 
+
+.names top_module^MUL~376[31] top_module^c9~31 
+1 1 
+
+.names top_module^MUL~376[32] top_module^c9~32 
+1 1 
+
+.names top_module^MUL~376[33] top_module^c9~33 
+1 1 
+
+.names top_module^MUL~376[34] top_module^c9~34 
+1 1 
+
+.names top_module^MUL~376[35] top_module^c9~35 
+1 1 
+
+.names top_module^MUL~376[36] top_module^c9~36 
+1 1 
+
+.names top_module^MUL~376[37] top_module^c9~37 
+1 1 
+
+.names top_module^MUL~376[38] top_module^c9~38 
+1 1 
+
+.names top_module^MUL~376[39] top_module^c9~39 
+1 1 
+
+.names top_module^MUL~376[40] top_module^c9~40 
+1 1 
+
+.names top_module^MUL~376[41] top_module^c9~41 
+1 1 
+
+.names top_module^MUL~376[42] top_module^c9~42 
+1 1 
+
+.names top_module^MUL~376[43] top_module^c9~43 
+1 1 
+
+.names top_module^MUL~376[44] top_module^c9~44 
+1 1 
+
+.names top_module^MUL~376[45] top_module^c9~45 
+1 1 
+
+.names top_module^MUL~423[0] top_module^c10~0 
+1 1 
+
+.names top_module^MUL~423[1] top_module^c10~1 
+1 1 
+
+.names top_module^MUL~423[2] top_module^c10~2 
+1 1 
+
+.names top_module^MUL~423[3] top_module^c10~3 
+1 1 
+
+.names top_module^MUL~423[4] top_module^c10~4 
+1 1 
+
+.names top_module^MUL~423[5] top_module^c10~5 
+1 1 
+
+.names top_module^MUL~423[6] top_module^c10~6 
+1 1 
+
+.names top_module^MUL~423[7] top_module^c10~7 
+1 1 
+
+.names top_module^MUL~423[8] top_module^c10~8 
+1 1 
+
+.names top_module^MUL~423[9] top_module^c10~9 
+1 1 
+
+.names top_module^MUL~423[10] top_module^c10~10 
+1 1 
+
+.names top_module^MUL~423[11] top_module^c10~11 
+1 1 
+
+.names top_module^MUL~423[12] top_module^c10~12 
+1 1 
+
+.names top_module^MUL~423[13] top_module^c10~13 
+1 1 
+
+.names top_module^MUL~423[14] top_module^c10~14 
+1 1 
+
+.names top_module^MUL~423[15] top_module^c10~15 
+1 1 
+
+.names top_module^MUL~423[16] top_module^c10~16 
+1 1 
+
+.names top_module^MUL~423[17] top_module^c10~17 
+1 1 
+
+.names top_module^MUL~423[18] top_module^c10~18 
+1 1 
+
+.names top_module^MUL~423[19] top_module^c10~19 
+1 1 
+
+.names top_module^MUL~423[20] top_module^c10~20 
+1 1 
+
+.names top_module^MUL~423[21] top_module^c10~21 
+1 1 
+
+.names top_module^MUL~423[22] top_module^c10~22 
+1 1 
+
+.names top_module^MUL~423[23] top_module^c10~23 
+1 1 
+
+.names top_module^MUL~423[24] top_module^c10~24 
+1 1 
+
+.names top_module^MUL~423[25] top_module^c10~25 
+1 1 
+
+.names top_module^MUL~423[26] top_module^c10~26 
+1 1 
+
+.names top_module^MUL~423[27] top_module^c10~27 
+1 1 
+
+.names top_module^MUL~423[28] top_module^c10~28 
+1 1 
+
+.names top_module^MUL~423[29] top_module^c10~29 
+1 1 
+
+.names top_module^MUL~423[30] top_module^c10~30 
+1 1 
+
+.names top_module^MUL~423[31] top_module^c10~31 
+1 1 
+
+.names top_module^MUL~423[32] top_module^c10~32 
+1 1 
+
+.names top_module^MUL~423[33] top_module^c10~33 
+1 1 
+
+.names top_module^MUL~423[34] top_module^c10~34 
+1 1 
+
+.names top_module^MUL~423[35] top_module^c10~35 
+1 1 
+
+.names top_module^MUL~423[36] top_module^c10~36 
+1 1 
+
+.names top_module^MUL~423[37] top_module^c10~37 
+1 1 
+
+.names top_module^MUL~423[38] top_module^c10~38 
+1 1 
+
+.names top_module^MUL~423[39] top_module^c10~39 
+1 1 
+
+.names top_module^MUL~423[40] top_module^c10~40 
+1 1 
+
+.names top_module^MUL~423[41] top_module^c10~41 
+1 1 
+
+.names top_module^MUL~423[42] top_module^c10~42 
+1 1 
+
+.names top_module^MUL~423[43] top_module^c10~43 
+1 1 
+
+.names top_module^MUL~423[44] top_module^c10~44 
+1 1 
+
+.names top_module^MUL~423[45] top_module^c10~45 
+1 1 
+
+.end 
+
+
+
+.model multiply 
+
+.inputs a[0] a[1] a[2] a[3] a[4] a[5] a[6] a[7] a[8] a[9] a[10] a[11] a[12] a[13] a[14] a[15] a[16] a[17] a[18] a[19] a[20] \
+ a[21] a[22] a[23] a[24] a[25] a[26] a[27] a[28] a[29] a[30] a[31] a[32] a[33] a[34] a[35] b[0] b[1] b[2] b[3] b[4] b[5] b[6] \
+ b[7] b[8] b[9] b[10] b[11] b[12] b[13] b[14] b[15] b[16] b[17] b[18] b[19] b[20] b[21] b[22] b[23] b[24] b[25] b[26] b[27] \
+ b[28] b[29] b[30] b[31] b[32] b[33] b[34] b[35] 
+
+.outputs out[0] out[1] out[2] out[3] out[4] out[5] out[6] out[7] out[8] out[9] out[10] out[11] out[12] out[13] out[14] \
+ out[15] out[16] out[17] out[18] out[19] out[20] out[21] out[22] out[23] out[24] out[25] out[26] out[27] out[28] out[29] \
+ out[30] out[31] out[32] out[33] out[34] out[35] out[36] out[37] out[38] out[39] out[40] out[41] out[42] out[43] out[44] \
+ out[45] out[46] out[47] out[48] out[49] out[50] out[51] out[52] out[53] out[54] out[55] out[56] out[57] out[58] out[59] \
+ out[60] out[61] out[62] out[63] out[64] out[65] out[66] out[67] out[68] out[69] out[70] out[71] 
+
+.blackbox 
+
+.end 
