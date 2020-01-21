@@ -29,6 +29,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #define MULT_OPTIMIZATION_TRAVERSE_VALUE 1337
 #define MULT_OPTIMIZATION_WEIGHT_
-// Returns a random number
+// Returns a simplistic measurement of the 
+// nodes importance
 int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist);
 #endif
