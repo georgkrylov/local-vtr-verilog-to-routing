@@ -4,7 +4,6 @@
 #ifndef CONFIG_T_H
 #define CONFIG_T_H
 
-
 /* This is the data structure that holds config file details */
 struct config_t
 {
@@ -28,6 +27,7 @@ struct config_t
 	char split_memory_width;
 	// Set to a positive integer to split memory depth to that address width. 0 to split to arch width.
 	int split_memory_depth;
+
 	//add by Sen
 	// Threshold from hard to soft logic(extra bits)
 	int min_hard_adder;
@@ -41,6 +41,7 @@ struct config_t
     // defines if the first cin of an adder/subtractor is connected to a global gnd/vdd
     // or generated using a dummy adder with both inputs set to gnd/vdd
     bool adder_cin_global;
+
 	// If the memory is smaller than both of these, it will be converted to soft logic.
 	int soft_logic_memory_depth_threshold;
 	int soft_logic_memory_width_threshold;
