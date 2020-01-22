@@ -89,7 +89,6 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 		} else {
 			std::cout<<"( u, -1), ";
 		}
-
 		}
 	std::cout<<std::endl;
 	}
@@ -99,18 +98,12 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout ,int hardB
 	{
 	for (size_t y = 0; y <grid_height; y += 1) 
 		{
-
 		if (grid[x][y].first != nullptr){
 			std::string stringToCompare = std::string(grid[x][y].first);
 			if (stringToCompare.compare(typeTag)==0)
 				count = count + 1;
-			// std::cout<<"("<<grid[x][y].first<<","<<grid[x][y].second<<")\t";
-		} else {
-			// std::cout<<"( u, -1), ";
+		} 
 		}
-
-		}
-	// std::cout<<std::endl;
 	}
 	//TODO consider different mults
 	return count;
@@ -177,37 +170,19 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,
         //Check start against the device dimensions
         // Start locations outside the device will never create block instances
         if (startx > grid_width - 1) {
-            // if (warn_out_of_range) {
-            //     VTR_LOG_WARN("Block type '%s' grid location specification startx (%s = %d) falls outside device horizontal range [%d,%d]\n",
-            //                  type->name, xspec.start_expr.c_str(), startx, 0, grid_width - 1);
-            // }
-            // continue; //No instances will be created
 			return;
         }
 
         if (starty > grid_height - 1) {
-            // if (warn_out_of_range) {
-            //     VTR_LOG_WARN("Block type '%s' grid location specification starty (%s = %d) falls outside device vertical range [%d,%d]\n",
-            //                  type->name, yspec.start_expr.c_str(), starty, 0, grid_height - 1);
-            // }
-            // continue; //No instances will be created
 			return;
         }
 
         //Check end against the device dimensions
         if (endx > grid_width - 1) {
-            // if (warn_out_of_range) {
-            //     VTR_LOG_WARN("Block type '%s' grid location specification endx (%s = %d) falls outside device horizontal range [%d,%d]\n",
-            //                  type->name, xspec.end_expr.c_str(), endx, 0, grid_width - 1);
-            // }
 			return;
         }
 
         if (endy > grid_height - 1) {
-            // if (warn_out_of_range) {
-            //     VTR_LOG_WARN("Block type '%s' grid location specification endy (%s = %d) falls outside device vertical range [%d,%d]\n",
-            //                  type->name, yspec.end_expr.c_str(), endy, 0, grid_height - 1);
-            // }
 			return;
         }
 
@@ -252,11 +227,6 @@ OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*,
                    type->name, region_height, xspec.repeat_expr.c_str(), repeaty);
         }
 
-        //VTR_LOG("Applying grid_loc_def for '%s' priority %d startx=%s=%zu, endx=%s=%zu, starty=%s=%zu, endx=%s=%zu,\n",
-        //            type->name, grid_loc_def.priority,
-        //            xspec.start_expr.c_str(), startx, xspec.end_expr.c_str(), endx,
-        //            yspec.start_expr.c_str(), starty, yspec.end_expr.c_str(), endy);
-
         size_t x_end = 0;
         for (size_t kx = 0; x_end < grid_width; ++kx) { //Repeat in x direction
             size_t x_start = startx + kx * repeatx;
@@ -287,6 +257,12 @@ void OdinGridAnalyzer::set_grid_block_type(int priority,t_physical_tile_type* ty
 	if (grid[x_root][y_root].second < priority){
             grid[x_root][y_root].first = type->name;
             grid[x_root][y_root].second = priority;
+	//  This block is commented out, to simplify counting
+	//  if this code is enabled, the hard block will occupy as
+	// much grid tiles as it should, however, a special counting
+	// procedure should be implemented. That being said,
+	// somebody might need that code in future, whereas
+	// it is not required at current state
 
     // for (size_t x = x_root; x < x_root + type->width; ++x) {
     //     size_t x_offset = x - x_root;
@@ -355,31 +331,3 @@ std::string OdinGridAnalyzer::getArchDescriptionTag(int hardBlockType){
 	}
 	return result;
 }
-
-// int OdinGridAnalyzer::parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h){
-// 	if (position == expr.size()) return 0;
-// 	while (position< expr.size() && expr[position]==' ') position++;
-// 	if (position == expr.size()) return 0;
-// 	if (expr[position]=='w')
-// 		return sign * w + parseExpression(expr,position+1,1,W,H,w,h);
-// 	else if (expr[position]=='W')
-// 		return sign * W + parseExpression(expr,position+1,1,W,H,w,h);
-// 	else if (expr[position]=='h')
-// 		return sign * h + parseExpression(expr,position+1,1,W,H,w,h);
-// 	else if (expr[position]=='H')
-// 		return sign * H + parseExpression(expr,position+1,1,W,H,w,h);
-// 	else if (expr[position]=='+')
-// 		return parseExpression(expr,position+1,1,W,H,w,h);
-// 	else if (expr[position]=='-')
-// 		return parseExpression(expr,position+1,-1,W,H,w,h);
-// 	else {
-// 		int tempBorder = position;
-// 		while (tempBorder < expr.size() && expr[tempBorder]!=' ') tempBorder++;
-// 		std::string digitCandidate = expr.substr (position,tempBorder);
-// 		std::cout<<"digitCandidate is" <<digitCandidate<<std::endl;
-// 		fflush(stdout);
-// 		int number = std::stoi(digitCandidate);
-// 		if (tempBorder == expr.size()) return sign*number;
-// 		return sign*number+parseExpression(expr,position+1,1,W,H,w,h);
-// 	}
-// }
