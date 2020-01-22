@@ -85,8 +85,8 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 void HardSoftLogicMixer::calculateAllGridSizes(){
 	if (true ==_allOptsDisabled)
 	{
-		// std::cerr<<"ODIN won't continue execution of calculateAllGridSizes()"<<
-		// 			"since it should not optimize at all";
+		// We do not have to calculate anything if optimizations
+		// are disabled
 		return;
 	}		
 	for (int i = 0 ; i < _arch.grid_layouts.size();i++)
@@ -198,8 +198,6 @@ HardSoftLogicMixer::implementUnassignedLogicInSoftLogic(netlist_t* netlist){
 				std::endl;
 				break;
 			}
-				
-			
 		}
 	}
 }

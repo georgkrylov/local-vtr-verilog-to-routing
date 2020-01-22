@@ -273,48 +273,48 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 	}
 
 	child = get_single_child(a_node, "adder", loc_data, OPTIONAL);
-	if (child != NULL)
-	{
-		prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
-		if (prop != NULL)
+		if (child != NULL)
 		{
-			config->min_hard_adder = atoi(prop);
-		}
-		else /* Default: No minimum hard adder size */
-			config->min_hard_adder = 0;
+			prop = get_attribute(child, "size", loc_data, OPTIONAL).as_string(NULL);
+			if (prop != NULL)
+			{
+				config->min_hard_adder = atoi(prop);
+			}
+			else /* Default: No minimum hard adder size */
+				config->min_hard_adder = 0;
 
-		prop = get_attribute(child, "threshold_size", loc_data, OPTIONAL).as_string(NULL);
-		if (prop != NULL)
-		{
-			config->min_threshold_adder = atoi(prop);
-		}
-		else /* Default: No minimum hard adder size */
-			config->min_threshold_adder = 0;
+			prop = get_attribute(child, "threshold_size", loc_data, OPTIONAL).as_string(NULL);
+			if (prop != NULL)
+			{
+				config->min_threshold_adder = atoi(prop);
+			}
+			else /* Default: No minimum hard adder size */
+				config->min_threshold_adder = 0;
 
-		prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
-		if (prop != NULL)
-		{
-			config->add_padding = atoi(prop);
-		}
-		else /* Default: Pad to hbpad pins */
-			config->add_padding = -1;
+			prop = get_attribute(child, "padding", loc_data, OPTIONAL).as_string(NULL);
+			if (prop != NULL)
+			{
+				config->add_padding = atoi(prop);
+			}
+			else /* Default: Pad to hbpad pins */
+				config->add_padding = -1;
 
-		prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
-		if (prop != NULL)
-		{
-			config->fixed_hard_adder = atoi(prop);
-		}
-		else /* Default: Fixed hard adder size */
-			config->fixed_hard_adder = 1;
+			prop = get_attribute(child, "fixed", loc_data, OPTIONAL).as_string(NULL);
+			if (prop != NULL)
+			{
+				config->fixed_hard_adder = atoi(prop);
+			}
+			else /* Default: Fixed hard adder size */
+				config->fixed_hard_adder = 1;
 
-		prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
-		if (prop != NULL)
-		{
-			config->split_hard_adder = atoi(prop);
+			prop = get_attribute(child, "fracture", loc_data, OPTIONAL).as_string(NULL);
+			if (prop != NULL)
+			{
+				config->split_hard_adder = atoi(prop);
+			}
+			else /* Default: use fractured hard adder size */
+				config->split_hard_adder = 1;
 		}
-		else /* Default: use fractured hard adder size */
-			config->split_hard_adder = 1;
-    }
 
 	child = get_single_child(a_node, "mix_soft_hard_blocks", loc_data, OPTIONAL);
 	if (child != NULL)
@@ -328,31 +328,7 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		config->mults_mixing_exact_number_of_multipliers = -1;
 		config->mix_soft_and_hard_logic = 0;
 		bool can_try_to_optimize = true;
-		// if (config->min_hard_multiplier != 0)
-		// 	can_try_to_optimize = false;
-		// if (config->fixed_hard_multiplier != 1)
-		// 	can_try_to_optimize = false;
-		// if (config->mult_padding != -1) 
-		// 	can_try_to_optimize = false;
-		// if (config->split_hard_multiplier != 1)
-		// 	can_try_to_optimize = false;
-		// if (config->split_memory_width != false)
-		// 	can_try_to_optimize = false;
-		// if (config->split_memory_depth != false)
-		// 	can_try_to_optimize = false;
-		// if (config->min_hard_adder != 0)
-		// 	can_try_to_optimize = false;
-		// if (config->fixed_hard_adder != 0)
-		// 	can_try_to_optimize = false;
-		// if (config->split_hard_adder != 1)
-		// 	can_try_to_optimize = false;
-		// if (config->min_threshold_adder != 0)
-		// 	can_try_to_optimize = false;
-		// if (config->mix_soft_and_hard_logic != 0)
-		// 	can_try_to_optimize = false;
 
-		// After we checked for unexpected interactions,
-		// it is time to populate the bitmask, as described in
 		// config_t.h file. When introducing new hard block type
 		// to perform mixed hard/soft logic design, please modify
 		// the description in config_t.h file, as well as the enum
