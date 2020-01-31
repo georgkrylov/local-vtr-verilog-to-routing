@@ -316,12 +316,12 @@ std::string OdinGridAnalyzer::getArchDescriptionTag(int hardBlockType){
 	std::string result;
 	switch (hardBlockType)
 	{
-	case HardBlocksOptimizationTypesEnum::MULTIPLIERS:
+	case mix_hard_blocks::MULTIPLIERS:
 	{	
 		result = "mult_36";
 		break;
 	}
-	case HardBlocksOptimizationTypesEnum::ADDERS:
+	case mix_hard_blocks::ADDERS:
 	{
 		result = "adder";
 		break;

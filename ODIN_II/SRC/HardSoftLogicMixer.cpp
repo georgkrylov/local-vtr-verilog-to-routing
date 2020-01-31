@@ -34,7 +34,7 @@ HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch,const config_t config,std::v
 	_allOptsDisabled = true;
 	_tileTypes = tileTypes;
 	// By default, disables all optimizations
-	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
+	for (int i = 0; i < mix_hard_blocks::Count; i++){
 		_enabledOptimizations[i] = false;
 	}
 
@@ -47,7 +47,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		int checkValue = -1;
 		int mix_soft_and_hard_logic = config.mix_soft_and_hard_logic;
 		int temp;
-		for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++)
+		for (int i = 0; i < mix_hard_blocks::Count; i++)
 		{
 			temp = 1 << (i);
 			checkValue = temp & mix_soft_and_hard_logic;
@@ -58,25 +58,25 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
 		}
 		_allOptsDisabled = false;
 		//Explicitly set all hard block numbers to max
-		for (int i = 0 ; i<HardBlocksOptimizationTypesEnum::Count; i++)
+		for (int i = 0 ; i<mix_hard_blocks::Count; i++)
 			{
 			_hardBlocksCount[i] = INT_MAX;
 			_hardBlocksMixingRatio[i] = 1.0f;
 			}
 
-		_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_ratio;
+		_hardBlocksMixingRatio[mix_hard_blocks::MULTIPLIERS] = config.mults_mixing_ratio;
 		
 		if (config.mults_mixing_ratio >= 0.0f && config.mults_mixing_ratio <= 1.0f)
 			{	
-				_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
+				_enabledOptimizations[mix_hard_blocks::MULTIPLIERS]=true;
 				_allOptsDisabled = false;
 			}
 		
 		if (config.mults_mixing_exact_number_of_multipliers >= 0)
 			{
-			_hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::MULTIPLIERS]  = 1.0f;
-			_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS]=true;
-			_hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS] = config.mults_mixing_exact_number_of_multipliers;
+			_hardBlocksMixingRatio[mix_hard_blocks::MULTIPLIERS]  = 1.0f;
+			_enabledOptimizations[mix_hard_blocks::MULTIPLIERS]=true;
+			_hardBlocksCount[mix_hard_blocks::MULTIPLIERS] = config.mults_mixing_exact_number_of_multipliers;
 			_allOptsDisabled = false;
 			}
 		}
@@ -98,7 +98,7 @@ void HardSoftLogicMixer::calculateAllGridSizes(){
 		std::pair<int,int> widthAndHeight = _analyzer.estimatePossibleDeviceSize(ref);
 		_grid_layout_sizes.emplace(i,widthAndHeight);
 
-		for (int currentOptimizationKind = 0 ; currentOptimizationKind < HardBlocksOptimizationTypesEnum::Count; currentOptimizationKind++)
+		for (int currentOptimizationKind = 0 ; currentOptimizationKind < mix_hard_blocks::Count; currentOptimizationKind++)
 		{
 			if (true == _enabledOptimizations[currentOptimizationKind])
 			{
@@ -128,45 +128,45 @@ int HardSoftLogicMixer::countHardBlocksInArch(t_grid_def& layout ,int hardBlockT
 	return result;
 }	
 int HardSoftLogicMixer::inferHardBlocksFromNetlist(int currentOptimizationKind){
-	return potentialHardBlockNodes[currentOptimizationKind].size();
+	return candidate_nodes[currentOptimizationKind].size();
 }
 
 void HardSoftLogicMixer::scaleHardBlockCounts(){
-	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count; i++){
+	for (int i = 0; i < mix_hard_blocks::Count; i++){
 		if (_hardBlocksMixingRatio[i]!=-1){
 		_hardBlocksCount[i] = _hardBlocksCount[i]*_hardBlocksMixingRatio[i];
 		}
 	}
 }
 
-void HardSoftLogicMixer::takeNoteOfAPotentialHardBlockNode( nnode_t * opNode, HardBlocksOptimizationTypesEnum type){
-	potentialHardBlockNodes[type].emplace_back(opNode);
+void HardSoftLogicMixer::note_candidate_node( nnode_t * opNode, mix_hard_blocks type){
+	candidate_nodes[type].emplace_back(opNode);
 }
 
-bool HardSoftLogicMixer::mixHardBlocksOfType(HardBlocksOptimizationTypesEnum type)
+bool HardSoftLogicMixer::softenable(mix_hard_blocks type)
 	{ 
 		bool result = false;
-		if (type != HardBlocksOptimizationTypesEnum::Count)
+		if (type != mix_hard_blocks::Count)
 			result = _enabledOptimizations[type];
 		return result;
 	}
 
-void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
+void HardSoftLogicMixer::map_deferred_blocks(netlist_t *netlist){
 	if (_allOptsDisabled)
 		return;
 	calculateAllGridSizes();
-	for (int i = 0; i < HardBlocksOptimizationTypesEnum::Count;i++ ){
+	for (int i = 0; i < mix_hard_blocks::Count ; i++ ){
 		switch (i){
-			case HardBlocksOptimizationTypesEnum::MULTIPLIERS: 
-				if (_enabledOptimizations[HardBlocksOptimizationTypesEnum::MULTIPLIERS])
+			case mix_hard_blocks::MULTIPLIERS: 
+				if (_enabledOptimizations[mix_hard_blocks::MULTIPLIERS])
 				{
-					chooseHardBlocks(netlist,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
+					chooseHardBlocks(netlist,mix_hard_blocks::MULTIPLIERS);
 				}
 				break;
-			case HardBlocksOptimizationTypesEnum::ADDERS:	
-				if (_enabledOptimizations[HardBlocksOptimizationTypesEnum::ADDERS])
+			case mix_hard_blocks::ADDERS:	
+				if (_enabledOptimizations[mix_hard_blocks::ADDERS])
 				{
-					chooseHardBlocks(netlist,HardBlocksOptimizationTypesEnum::ADDERS);
+					chooseHardBlocks(netlist,mix_hard_blocks::ADDERS);
 				}
 				break;
 			default:
@@ -181,16 +181,16 @@ void HardSoftLogicMixer::selectLogicToImplementInHardBlocks(netlist_t *netlist){
 
 void 
 HardSoftLogicMixer::implementUnassignedLogicInSoftLogic(netlist_t* netlist){
-	for (int i = 0 ; i < HardBlocksOptimizationTypesEnum::Count ; i ++ )
+	for (int i = 0 ; i < mix_hard_blocks::Count ; i ++ )
 	{
-	for (int j = 0 ; j <potentialHardBlockNodes[i].size(); j++)
+	for (int j = 0 ; j <candidate_nodes[i].size(); j++)
 		{
 			switch(i){
-				case HardBlocksOptimizationTypesEnum::MULTIPLIERS:
-					instantiate_simple_soft_multiplier(potentialHardBlockNodes[i][j],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
+				case mix_hard_blocks::MULTIPLIERS:
+					instantiate_simple_soft_multiplier(candidate_nodes[i][j],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
 					break;
-				case HardBlocksOptimizationTypesEnum::ADDERS:
-					instantiate_add_w_carry(potentialHardBlockNodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+				case mix_hard_blocks::ADDERS:
+					instantiate_add_w_carry(candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
 					break;
 				default:
 				std::cerr<<"Cleanup for optimization with number: "<<i<<" does not have an "<<
@@ -203,14 +203,14 @@ HardSoftLogicMixer::implementUnassignedLogicInSoftLogic(netlist_t* netlist){
 }
 
 void 
-HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist,HardBlocksOptimizationTypesEnum type){
-	if (type == HardBlocksOptimizationTypesEnum::Count)
+HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist,mix_hard_blocks type){
+	if (type == mix_hard_blocks::Count)
 		{
 			std::cerr<<"Running choseHardBlocks with Count should never happen"
 			<<std::endl;
 			exit(6)	;
 		}
-	std::vector<nnode_t*>& nodesVector = potentialHardBlockNodes[type];
+	std::vector<nnode_t*>& nodesVector = candidate_nodes[type];
 	int nodesCount = nodesVector.size();
 	int* costs = new int[nodesCount];
 	for (int i = 0 ; i < nodesCount;i++){
@@ -222,7 +222,7 @@ HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist,HardBlocksOptimizationTy
 	}
 	std::cout<<std::endl;
 	flush(std::cout);
-	int numberOfMultipliers = _hardBlocksCount[HardBlocksOptimizationTypesEnum::MULTIPLIERS];
+	int numberOfMultipliers = _hardBlocksCount[mix_hard_blocks::MULTIPLIERS];
 	for (int i = 0 ; i < numberOfMultipliers; i++){
 		int maximalCost = costs[0];
 		int indexOfMaximum = 0;
@@ -234,10 +234,10 @@ HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist,HardBlocksOptimizationTy
 		}
 		costs[indexOfMaximum] = -1;
 		switch (type){
-		case HardBlocksOptimizationTypesEnum::MULTIPLIERS:
+		case mix_hard_blocks::MULTIPLIERS:
 			instantiate_hard_multiplier(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
 			break;
-		case HardBlocksOptimizationTypesEnum::ADDERS:
+		case mix_hard_blocks::ADDERS:
 			instantiate_hard_adder(nodesVector[indexOfMaximum],PARTIAL_MAP_TRAVERSE_VALUE,netlist);
 			break;
 		default:

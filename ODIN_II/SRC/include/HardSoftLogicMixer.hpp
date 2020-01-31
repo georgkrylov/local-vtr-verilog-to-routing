@@ -46,27 +46,28 @@ public:
     /* Returns whether the hard blocks and soft logic implementation 
      * of multipliers should be mixed in the process of synthesis
      */
-    bool mixHardBlocksOfType(HardBlocksOptimizationTypesEnum type);
+    bool softenable(mix_hard_blocks type);
     /*----------------------------------------------------------------------
-     * Function: selectLogicToImplementInHardBlocks 
-     *  For all the notes, that noted to be candidates to be implemented in the 
-     * hard blocks, launches corresponding logic
-     * Parameters: 
+     * Function: map_deferred_blocks 
+     * For all  noted nodes, that were noted as candidates to be implemented 
+     * on the hard blocks, launches corresponding procedure of chosing the
+     * corresponding blocks
+     * Parameters: netlist_t *
      * returns:
      *---------------------------------------------------------------------*/
-    void selectLogicToImplementInHardBlocks(netlist_t *netlist);
+    void map_deferred_blocks( netlist_t * netlist);
 
     /*----------------------------------------------------------------------
-     * Function: selectLogicToImplementInHardBlocks 
+     * Function: note_candidate_node
      * Calculates number of available hard blocks by issuing a call,
      * traverses the netlist and statistics to figure out
      * which operation should be implemented on the hard block
      * Parameters: 
      *      node_t * : pointer to candidate node
-     *      HardBlocksOptimizationTypesEnum : type of the hard block to optimize
+     *      mix_hard_blocks : type of the hard block to optimize
      * returns:
      *---------------------------------------------------------------------*/
-    void takeNoteOfAPotentialHardBlockNode( nnode_t * node, HardBlocksOptimizationTypesEnum type);
+    void note_candidate_node( nnode_t * node, mix_hard_blocks type);
 
     
 private:
@@ -79,7 +80,7 @@ private:
 
     void implementUnassignedLogicInSoftLogic(netlist_t* netlist);
     int inferHardBlocksFromNetlist(int currentOptimizationKind);
-    void chooseHardBlocks(netlist_t *netlist,HardBlocksOptimizationTypesEnum type);
+    void chooseHardBlocks(netlist_t *netlist,mix_hard_blocks type);
     /* This map holds estimated device sizes that would
      * correspond to the architecture, keyed by the pointers to 
      * layout  description
@@ -88,16 +89,16 @@ private:
 
     // This array is composed of vectors, that store nodes that
     // are potential candidates for performing mixing optimization
-    std::vector<nnode_t*>potentialHardBlockNodes[HardBlocksOptimizationTypesEnum::Count];
-    int _hardBlocksCount [HardBlocksOptimizationTypesEnum::Count];
+    std::vector<nnode_t*>candidate_nodes[mix_hard_blocks::Count];
+    int _hardBlocksCount [mix_hard_blocks::Count];
     // These booleans store devices selected for optimization
     bool _allOptsDisabled ;
-    bool _enabledOptimizations[HardBlocksOptimizationTypesEnum::Count];
+    bool _enabledOptimizations[mix_hard_blocks::Count];
   	/* If  mixing soft and hard_logic is set, the possible size of the device 
 	 * should be estimated 
 	 */  
     OdinGridAnalyzer _analyzer;
-    float _hardBlocksMixingRatio[HardBlocksOptimizationTypesEnum::Count];
+    float _hardBlocksMixingRatio[mix_hard_blocks::Count];
     t_arch& _arch;
     std::vector<t_physical_tile_type> _tileTypes;
 };

@@ -165,7 +165,7 @@ static ODIN_ERROR_CODE synthesize_verilog()
 	/* point where we convert netlist to FPGA or other hardware target compatible format */
 	printf("Performing Partial Map to target device\n");
 	partial_map_top(verilog_netlist);
-	mixer->selectLogicToImplementInHardBlocks(verilog_netlist);
+	mixer->map_deferred_blocks(verilog_netlist);
 	/* Find any unused logic in the netlist and remove it */
 	remove_unused_logic(verilog_netlist);
 
@@ -663,12 +663,12 @@ void get_options(int argc, char** argv) {
 	}
 	
 	if(global_args.mix_multipliers){
-		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+		int bit_value = ( 1 << mix_hard_blocks::MULTIPLIERS); 
 		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
 	}
 
 	if(global_args.mix_adders){
-		int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::ADDERS); 
+		int bit_value = ( 1 << mix_hard_blocks::ADDERS); 
 		configuration.mix_soft_and_hard_logic  = configuration.mix_soft_and_hard_logic  | bit_value;
 	}
 	configuration.mults_mixing_exact_number_of_multipliers  = global_args.mults_mixing_exact_number_of_multipliers;

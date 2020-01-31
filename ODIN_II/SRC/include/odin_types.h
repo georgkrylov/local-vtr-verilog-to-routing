@@ -544,7 +544,7 @@ struct nnet_t
 // the last element. The order of the elements 
 // in this enum also determines order of optimizations
 // ADDERS SHOULD BE AFTER MULTS
-enum HardBlocksOptimizationTypesEnum { MULTIPLIERS, ADDERS, Count};
+enum mix_hard_blocks { MULTIPLIERS, ADDERS, Count};
 
 struct signal_list_t
 {

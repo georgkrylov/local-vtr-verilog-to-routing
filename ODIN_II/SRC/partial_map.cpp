@@ -186,22 +186,24 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
 			break;
 
 		case ADD:
-			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS) ||
-				true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::ADDERS)  )
+			if ( mixer->softenable(mix_hard_blocks::MULTIPLIERS) ||
+				 mixer->softenable(mix_hard_blocks::ADDERS)  )
 			{
-				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::ADDERS);
-				break;
-			} else
+				mixer->note_candidate_node(node,mix_hard_blocks::ADDERS);
+			} 
+			else
 			{
-				if (hard_adders && node->bit_width >= min_threshold_adder){
+				if (hard_adders && node->bit_width >= min_threshold_adder)
+				{
 					// Check if the size of this adder is greater than the hard vs soft logic threshold
-						instantiate_hard_adder(node, traverse_number, netlist);
-				}else{
+					instantiate_hard_adder(node, traverse_number, netlist);
+				}
+				else
+				{
 					instantiate_add_w_carry(node, traverse_number, netlist);
 				}
-				break;
 			}
-
+			break;
 		case MINUS:
 			if (hard_adders)
 			{
@@ -262,14 +264,19 @@ void partial_map_node(nnode_t *node, short traverse_number, netlist_t *netlist)
 			break;
 		case MULTIPLY:
         {
-			if (true == mixer->mixHardBlocksOfType(HardBlocksOptimizationTypesEnum::MULTIPLIERS)){
-				mixer->takeNoteOfAPotentialHardBlockNode(node,HardBlocksOptimizationTypesEnum::MULTIPLIERS);
-			} else
+			if (mixer->softenable(mix_hard_blocks::MULTIPLIERS))
+			{
+				mixer->note_candidate_node(node, mix_hard_blocks::MULTIPLIERS);
+			} 
+			else
 			{
 				int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);
-				if (hard_multipliers && mult_size >= min_mult) {
+				if (hard_multipliers && mult_size >= min_mult) 
+				{
 					instantiate_hard_multiplier(node, traverse_number, netlist);
-				} else if (!hard_adders) {
+				} 
+				else if (!hard_adders) 
+				{
 					instantiate_simple_soft_multiplier(node, traverse_number, netlist);
 				}
 			}

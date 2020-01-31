@@ -336,7 +336,7 @@ void read_optimizations(pugi::xml_node a_node, config_t *config, const pugiutil:
 		prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
 		if (prop != NULL && true == can_try_to_optimize)
 		{
-			int bit_value = ( 1 << HardBlocksOptimizationTypesEnum::MULTIPLIERS); 
+			int bit_value = ( 1 << mix_hard_blocks::MULTIPLIERS); 
 			config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic | bit_value ;
 		}
 
