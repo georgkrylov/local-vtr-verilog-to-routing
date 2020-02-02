@@ -39,9 +39,9 @@ class HardSoftLogicMixer {
     /*----------------------------------------------------------------------
      * Function: calculateGridSizes 
      *   For all the layouts represented in the architecture file, populates
-     *   the _grid_layout_sizes map with corresponding estimated sizes
+     *   the _grid_layout_sicalculateAllGridSizeszes map with corresponding estimated sizes
      *---------------------------------------------------------------------*/
-    void calculateAllGridSizes();
+    void grid_statistics();
 
     /* Returns whether the hard blocks and soft logic implementation 
      * of multipliers should be mixed in the process of synthesis
@@ -73,13 +73,16 @@ class HardSoftLogicMixer {
     /* This function parses the configuration bitmask and sets
      * the corresponding boolean variables in the _enabledOptimizationsArray.
      */
-    void parseAndSetOptimizationParameters(const config_t);
-    int countHardBlocksInArch(t_grid_def& layout, int hardBlockType, std::pair<int, int> size);
-    void scaleHardBlockCounts();
-
-    void implementUnassignedLogicInSoftLogic(netlist_t* netlist);
-    int inferHardBlocksFromNetlist(int currentOptimizationKind);
-    void chooseHardBlocks(netlist_t* netlist, mix_hard_blocks type);
+    void parse_opt_parameters(const config_t);
+    int hard_blocks_arch(t_grid_def& layout, int hardBlockType, std::pair<int, int> size);
+    void scale_counts();
+    /* After done mapping logic nodes onto hard blocks, 
+     * this function should be called to assure remaining blocks
+     * are assigned to be implemented in soft logic
+     */
+    void soft_map_remaining_nodes(netlist_t* netlist);
+    int hard_blocks_needed(int currentOptimizationKind);
+    void choose_hard_blocks(netlist_t* netlist, mix_hard_blocks type);
     /* This map holds estimated device sizes that would
      * correspond to the architecture, keyed by the pointers to 
      * layout  description
@@ -88,7 +91,7 @@ class HardSoftLogicMixer {
 
     // This array is composed of vectors, that store nodes that
     // are potential candidates for performing mixing optimization
-    std::vector<nnode_t*> candidate_nodes[mix_hard_blocks::Count];
+    std::vector<nnode_t*> _candidate_nodes[mix_hard_blocks::Count];
     int _hardBlocksCount[mix_hard_blocks::Count];
     // These booleans store devices selected for optimization
     bool _allOptsDisabled;

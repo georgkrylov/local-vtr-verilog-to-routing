@@ -23,8 +23,9 @@
 #include "HardSoftLogicMixer.hpp"
 #include <iostream>
 #include <vector>
-#include <cstdint>
-#include <cstring>
+#include <stdint.h>
+#include <string.h>
+#include "odin_error.h" // error_message
 #include "OdinGridAnalyzer.hpp"
 #include <bits/stdc++.h>
 #include "partial_map.h" // instantiate add_with_carry
@@ -40,18 +41,18 @@ HardSoftLogicMixer::HardSoftLogicMixer(t_arch& arch, const config_t config, std:
         _enabledOptimizations[i] = false;
     }
 
-    parseAndSetOptimizationParameters(config);
+    parse_opt_parameters(config);
 }
 
-void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config) {
+void HardSoftLogicMixer::parse_opt_parameters(const config_t config) {
     if (config.mix_soft_and_hard_logic != 0) {
-        int checkValue = -1;
+        int check = -1;
         int mix_soft_and_hard_logic = config.mix_soft_and_hard_logic;
         int temp;
         for (int i = 0; i < mix_hard_blocks::Count; i++) {
             temp = 1 << (i);
-            checkValue = temp & mix_soft_and_hard_logic;
-            if (checkValue != 0) {
+            check = temp & mix_soft_and_hard_logic;
+            if (check != 0) {
                 _enabledOptimizations[i] = true;
             }
         }
@@ -78,7 +79,7 @@ void HardSoftLogicMixer::parseAndSetOptimizationParameters(const config_t config
     }
 }
 
-void HardSoftLogicMixer::calculateAllGridSizes() {
+void HardSoftLogicMixer::grid_statistics() {
     if (true == _allOptsDisabled) {
         // We do not have to calculate anything if optimizations
         // are disabled
@@ -86,42 +87,44 @@ void HardSoftLogicMixer::calculateAllGridSizes() {
     }
     for (int i = 0; i < _arch.grid_layouts.size(); i++) {
         if (i == 1) {
-            std::cerr << "Optimization for multiple layouts was never tested, from now on you are on your own" << std::endl;
+            error_message(INC_IMPLEMENTATION, 1, 2, "%s",
+                          "Optimization for multiple layouts was never tested, from now on you are on your own\n");
         }
         t_grid_def& ref = _arch.grid_layouts[i];
-        std::pair<int, int> widthAndHeight = _analyzer.estimatePossibleDeviceSize(ref);
+        std::pair<int, int> widthAndHeight = _analyzer.estimate_device_size(ref);
         _grid_layout_sizes.emplace(i, widthAndHeight);
 
-        for (int currentOptimizationKind = 0; currentOptimizationKind < mix_hard_blocks::Count; currentOptimizationKind++) {
-            if (true == _enabledOptimizations[currentOptimizationKind]) {
-                int availableHardBlocks = countHardBlocksInArch(ref, currentOptimizationKind, widthAndHeight);
-                int hardBlocksNeeded = inferHardBlocksFromNetlist(currentOptimizationKind);
+        for (int opt = 0; opt < mix_hard_blocks::Count; opt++) {
+            if (true == _enabledOptimizations[opt]) {
+                int availableHardBlocks = hard_blocks_arch(ref, opt, widthAndHeight);
+                int hardBlocksNeeded = hard_blocks_needed(opt);
                 int hardBlocksCount = availableHardBlocks;
                 if (hardBlocksCount > hardBlocksNeeded) {
                     hardBlocksCount = hardBlocksNeeded;
                 }
-                if (hardBlocksCount < _hardBlocksCount[currentOptimizationKind]) {
-                    _hardBlocksCount[currentOptimizationKind] = hardBlocksCount;
+                if (hardBlocksCount < _hardBlocksCount[opt]) {
+                    _hardBlocksCount[opt] = hardBlocksCount;
                 }
-                std::cout << "The estimated hardBlocksCount" << _hardBlocksCount[currentOptimizationKind] << std::endl;
+                printf("The estimated hardBlocksCount %i\n", _hardBlocksCount[opt]);
             }
         }
     }
-    scaleHardBlockCounts();
+    scale_counts();
 }
 
-int HardSoftLogicMixer::countHardBlocksInArch(t_grid_def& layout, int hardBlockType, std::pair<int, int> size) {
+int HardSoftLogicMixer::hard_blocks_arch(t_grid_def& layout, int hardBlockType, std::pair<int, int> size) {
     int result = INT_MAX;
     if (layout.grid_type == FIXED) {
-        result = _analyzer.countHardBlocksInFixedLayout(layout, hardBlockType, size, _tileTypes);
+        result = _analyzer.count_in_fixed(layout, hardBlockType, size, _tileTypes);
     }
     return result;
 }
-int HardSoftLogicMixer::inferHardBlocksFromNetlist(int currentOptimizationKind) {
-    return candidate_nodes[currentOptimizationKind].size();
+
+int HardSoftLogicMixer::hard_blocks_needed(int opt) {
+    return _candidate_nodes[opt].size();
 }
 
-void HardSoftLogicMixer::scaleHardBlockCounts() {
+void HardSoftLogicMixer::scale_counts() {
     for (int i = 0; i < mix_hard_blocks::Count; i++) {
         if (_hardBlocksMixingRatio[i] != -1) {
             _hardBlocksCount[i] = _hardBlocksCount[i] * _hardBlocksMixingRatio[i];
@@ -130,80 +133,80 @@ void HardSoftLogicMixer::scaleHardBlockCounts() {
 }
 
 void HardSoftLogicMixer::note_candidate_node(nnode_t* opNode, mix_hard_blocks type) {
-    candidate_nodes[type].emplace_back(opNode);
+    _candidate_nodes[type].emplace_back(opNode);
 }
 
 bool HardSoftLogicMixer::softenable(mix_hard_blocks type) {
     bool result = false;
-    if (type != mix_hard_blocks::Count)
+    if (type != mix_hard_blocks::Count) {
         result = _enabledOptimizations[type];
+    }
     return result;
 }
 
 void HardSoftLogicMixer::map_deferred_blocks(netlist_t* netlist) {
-    if (_allOptsDisabled)
+    if (_allOptsDisabled) {
         return;
-    calculateAllGridSizes();
+    }
+    grid_statistics();
     for (int i = 0; i < mix_hard_blocks::Count; i++) {
         switch (i) {
             case mix_hard_blocks::MULTIPLIERS:
                 if (_enabledOptimizations[mix_hard_blocks::MULTIPLIERS]) {
-                    chooseHardBlocks(netlist, mix_hard_blocks::MULTIPLIERS);
+                    choose_hard_blocks(netlist, mix_hard_blocks::MULTIPLIERS);
                 }
                 break;
             case mix_hard_blocks::ADDERS:
                 if (_enabledOptimizations[mix_hard_blocks::ADDERS]) {
-                    chooseHardBlocks(netlist, mix_hard_blocks::ADDERS);
+                    choose_hard_blocks(netlist, mix_hard_blocks::ADDERS);
                 }
                 break;
             default:
-                std::cerr << "Optimization with number: " << i << " does not have an "
-                          << "implementation inside of HardSoftLogicMixer::selectLogicToIm"
-                          << "plementInHardBlocks" << std::endl;
+                error_message(INC_IMPLEMENTATION, 1, 2, "%s",
+                              "Optimization with number: %i does not have an implementation inside of HardSoftLogicMixer::map_deferred_blocks\n", i);
                 break;
         }
     }
-    implementUnassignedLogicInSoftLogic(netlist);
+    soft_map_remaining_nodes(netlist);
 }
 
-void HardSoftLogicMixer::implementUnassignedLogicInSoftLogic(netlist_t* netlist) {
+void HardSoftLogicMixer::soft_map_remaining_nodes(netlist_t* netlist) {
     for (int i = 0; i < mix_hard_blocks::Count; i++) {
-        for (int j = 0; j < candidate_nodes[i].size(); j++) {
+        for (int j = 0; j < _candidate_nodes[i].size(); j++) {
             switch (i) {
                 case mix_hard_blocks::MULTIPLIERS:
-                    instantiate_simple_soft_multiplier(candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_simple_soft_multiplier(_candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                     break;
                 case mix_hard_blocks::ADDERS:
-                    instantiate_add_w_carry(candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_add_w_carry(_candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                     break;
                 default:
-                    std::cerr << "Cleanup for optimization with number: " << i << " does not have an "
-                              << "implementation inside of HardSoftLogicMixer::implementUnassignedLogicInSoftLogic" << std::endl;
+                    error_message(INC_IMPLEMENTATION, 1, 2, "%s",
+                              "Cleanup for optimization with number: Optimization with number: %i does not have an implementation inside of HardSoftLogicMixer::soft_map_remaining_nodes\n", i);
                     break;
             }
         }
     }
 }
 
-void HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist, mix_hard_blocks type) {
+void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks type) {
     if (type == mix_hard_blocks::Count) {
-        std::cerr << "Running choseHardBlocks with Count should never happen"
-                  << std::endl;
+        error_message(INC_IMPLEMENTATION, 1, 2, "%s",
+                        "Running choseHardBlocks with Count should never happen");
         exit(6);
     }
-    std::vector<nnode_t*>& nodesVector = candidate_nodes[type];
+    std::vector<nnode_t*>& nodesVector = _candidate_nodes[type];
     int nodesCount = nodesVector.size();
     int* costs = new int[nodesCount];
     for (int i = 0; i < nodesCount; i++) {
         costs[i] = calculate_multiplier_aware_critical_path(nodesVector[i], netlist);
     }
-    std::cout << "Costs are:" << std::endl
-              << "\t";
+    printf("Costs are:\n\t");
     for (int i = 0; i < nodesCount; i++) {
-        std::cout << costs[i] << " ";
+        printf("%i ", costs[i]);
     }
-    std::cout << std::endl;
-    flush(std::cout);
+    printf("\n");
+    fflush(stdout);
     int numberOfMultipliers = _hardBlocksCount[mix_hard_blocks::MULTIPLIERS];
     for (int i = 0; i < numberOfMultipliers; i++) {
         int maximalCost = costs[0];
@@ -223,7 +226,8 @@ void HardSoftLogicMixer::chooseHardBlocks(netlist_t* netlist, mix_hard_blocks ty
                 instantiate_hard_adder(nodesVector[indexOfMaximum], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                 break;
             default:
-                std::cerr << "Implementation of chooseHardBlocks for " << type << " Hard block type is incomplete" << std::endl;
+                    error_message(INC_IMPLEMENTATION, 1, 2, "%s",
+                        "Implementation of chooseHardBlocks for %i: Hard block type is incomplete", type);
                 break;
         }
     }

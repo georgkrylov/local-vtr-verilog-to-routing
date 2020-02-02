@@ -24,6 +24,8 @@ enum odin_error {
     SIMULATION_ERROR,
     /* for error in ACE */
     ACE,
+    /* Unfinished implementation error reporting */
+    INC_IMPLEMENTATION,
 };
 
 extern const char* odin_error_STR[];

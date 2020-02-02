@@ -28,7 +28,7 @@
 #include "expr_eval.h" // parse_formula
 
 std::pair<int, int>
-OdinGridAnalyzer::estimatePossibleDeviceSize(t_grid_def& layout) {
+OdinGridAnalyzer::estimate_device_size(t_grid_def& layout) {
     std::pair<int, int> result;
     if (layout.grid_type == FIXED) {
         int width;
@@ -42,15 +42,15 @@ OdinGridAnalyzer::estimatePossibleDeviceSize(t_grid_def& layout) {
     return result;
 }
 
-int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tileTypes) {
+int OdinGridAnalyzer::count_in_fixed(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tileTypes) {
     int grid_width = size.first;
     int grid_height = size.second;
     //TODO account with fill,corners,perimeter
     std::vector<std::vector<std::pair<char*, int>>> grid(grid_height, std::vector<std::pair<char*, int>>(grid_width, std::make_pair(nullptr, -1)));
     std::vector<t_grid_loc_def>::iterator pointer;
-    std::string typeTag = getArchDescriptionTag(hardBlockType);
+    std::string typeTag = arch_tag(hardBlockType);
     std::cout << typeTag << std::endl;
-    int priorityOfTheDesiredBlock = findDesiredBlockPriority(layout, typeTag);
+    int priorityOfTheDesiredBlock = block_priority(layout, typeTag);
     std::cout << "Desired block's priority is: " << priorityOfTheDesiredBlock << std::endl;
     std::cout << "BlockDefsAre:" << std::endl;
     for (pointer = layout.loc_defs.begin(); pointer < layout.loc_defs.end(); pointer++) {
@@ -58,7 +58,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout, int hardB
         // if there are collisions, vpr would fail anyway
         if (priorityOfTheDesiredBlock <= pointer->priority) {
             std::cout << pointer->block_type << ":" << std::endl;
-            ssize_t indexOfTile = findIndexOfAssociatedTileType(tileTypes, pointer->block_type);
+            ssize_t indexOfTile = tile_index(tileTypes, pointer->block_type);
             if (indexOfTile == -1) {
                 std::cout << " Was not able to find a tile" << std::endl;
                 flush(std::cout);
@@ -72,7 +72,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout, int hardB
             w = tileTypeOfABlockWithHigherPriority.width;
             h = tileTypeOfABlockWithHigherPriority.height;
 
-            fillGridWithBlockType(grid, &(*pointer), tileTypes, indexOfTile, grid_width, grid_height);
+            fill_with_block(grid, &(*pointer), tileTypes, indexOfTile, grid_width, grid_height);
         }
     }
     std::cout << "Grid is:" << std::endl;
@@ -100,7 +100,7 @@ int OdinGridAnalyzer::countHardBlocksInFixedLayout(t_grid_def& layout, int hardB
     //TODO consider different mults
     return count;
 }
-void OdinGridAnalyzer::fillGridWithBlockType(std::vector<std::vector<std::pair<char*, int>>>& grid,
+void OdinGridAnalyzer::fill_with_block(std::vector<std::vector<std::pair<char*, int>>>& grid,
                                              t_grid_loc_def* grid_loc_def,
                                              std::vector<t_physical_tile_type> tileTypes,
                                              ssize_t indexOfTile,
@@ -273,7 +273,7 @@ void OdinGridAnalyzer::set_grid_block_type(int priority, t_physical_tile_type* t
     }
 }
 
-int OdinGridAnalyzer::findDesiredBlockPriority(t_grid_def& layout, std::string& typeTag) {
+int OdinGridAnalyzer::block_priority(t_grid_def& layout, std::string& typeTag) {
     int result = -1;
     std::vector<t_grid_loc_def>::iterator pointer;
     for (pointer = layout.loc_defs.begin(); pointer < layout.loc_defs.end(); pointer++) {
@@ -285,7 +285,7 @@ int OdinGridAnalyzer::findDesiredBlockPriority(t_grid_def& layout, std::string& 
     return result;
 }
 
-ssize_t OdinGridAnalyzer::findIndexOfAssociatedTileType(std::vector<t_physical_tile_type> tileTypes, std::string& typeTag) {
+ssize_t OdinGridAnalyzer::tile_index(std::vector<t_physical_tile_type> tileTypes, std::string& typeTag) {
     ssize_t result = -1;
     ssize_t iter = -1;
     std::cout << "The type tag is" << typeTag << std::endl;
@@ -306,7 +306,7 @@ ssize_t OdinGridAnalyzer::findIndexOfAssociatedTileType(std::vector<t_physical_t
     return result;
 }
 
-std::string OdinGridAnalyzer::getArchDescriptionTag(int hardBlockType) {
+std::string OdinGridAnalyzer::arch_tag(int hardBlockType) {
     std::string result;
     switch (hardBlockType) {
         case mix_hard_blocks::MULTIPLIERS: {

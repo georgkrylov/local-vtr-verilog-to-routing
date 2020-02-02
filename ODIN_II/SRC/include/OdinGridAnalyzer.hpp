@@ -32,7 +32,7 @@
 class OdinGridAnalyzer {
   public:
     /*----------------------------------------------------------------------
-     * Function: estimatePossibleDeviceSize 
+     * Function: estimate_device_size 
      *   Estimates possible size of the device: for a fixed layout, it is 
      *   known, for a dynamic layout, some assumptions are required 
      * Parameters: 
@@ -41,21 +41,21 @@ class OdinGridAnalyzer {
      *   Pair of integers, that correspond to estimated width and height of 
      *   the device
      *---------------------------------------------------------------------*/
-    std::pair<int, int> estimatePossibleDeviceSize(t_grid_def&);
+    std::pair<int, int> estimate_device_size(t_grid_def&);
 
-    int countHardBlocksInFixedLayout(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tiletypes);
-    int findDesiredBlockPriority(t_grid_def& layout, std::string& typeTag);
-    ssize_t findIndexOfAssociatedTileType(std::vector<t_physical_tile_type> tileTypes, std::string& typeTag);
+    int count_in_fixed(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tiletypes);
+    int block_priority(t_grid_def& layout, std::string& typeTag);
+    ssize_t tile_index(std::vector<t_physical_tile_type> tileTypes, std::string& typeTag);
 
   private:
-    std::string getArchDescriptionTag(int hardBlockType);
+    std::string arch_tag(int hardBlockType);
     // int parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h);
 
     /**
      * This function mimics the behaviour of the build_device_grid 
      * It is segreged into a separate function, to improve maintainability 
      */
-    void fillGridWithBlockType(std::vector<std::vector<std::pair<char*, int>>>& grid, t_grid_loc_def* grid_def, std::vector<t_physical_tile_type> tileTypes, ssize_t indexOfTile, int grid_width, int grid_height);
+    void fill_with_block(std::vector<std::vector<std::pair<char*, int>>>& grid, t_grid_loc_def* grid_def, std::vector<t_physical_tile_type> tileTypes, ssize_t indexOfTile, int grid_width, int grid_height);
 
     void set_grid_block_type(int priority, t_physical_tile_type* type, int x, int y, std::vector<std::vector<std::pair<char*, int>>>& grid);
 };
