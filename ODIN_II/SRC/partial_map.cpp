@@ -166,11 +166,15 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
             break;
 
         case ADD:
-            if (hard_adders && node->bit_width >= min_threshold_adder) {
-                // Check if the size of this adder is greater than the hard vs soft logic threshold
-                instantiate_hard_adder(node, traverse_number, netlist);
+            if (mixer->softenable(mix_hard_blocks::MULTIPLIERS) || mixer->softenable(mix_hard_blocks::ADDERS)) {
+                mixer->note_candidate_node(node, mix_hard_blocks::ADDERS);
             } else {
-                instantiate_add_w_carry(node, traverse_number, netlist);
+                if (hard_adders && node->bit_width >= min_threshold_adder) {
+                    // Check if the size of this adder is greater than the hard vs soft logic threshold
+                    instantiate_hard_adder(node, traverse_number, netlist);
+                } else {
+                    instantiate_add_w_carry(node, traverse_number, netlist);
+                }
             }
             break;
         case MINUS:
@@ -220,11 +224,15 @@ void partial_map_node(nnode_t* node, short traverse_number, netlist_t* netlist) 
             instantiate_multi_port_mux(node, traverse_number, netlist);
             break;
         case MULTIPLY: {
-            int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);
-            if (hard_multipliers && mult_size >= min_mult) {
-                instantiate_hard_multiplier(node, traverse_number, netlist);
-            } else if (!hard_adders) {
-                instantiate_simple_soft_multiplier(node, traverse_number, netlist);
+            if (mixer->softenable(mix_hard_blocks::MULTIPLIERS)) {
+                mixer->note_candidate_node(node, mix_hard_blocks::MULTIPLIERS);
+            } else {
+                int mult_size = std::max<int>(node->input_port_sizes[0], node->input_port_sizes[1]);
+                if (hard_multipliers && mult_size >= min_mult) {
+                    instantiate_hard_multiplier(node, traverse_number, netlist);
+                } else if (!hard_adders) {
+                    instantiate_simple_soft_multiplier(node, traverse_number, netlist);
+                }
             }
             break;
         }
