@@ -49,45 +49,27 @@ int OdinGridAnalyzer::count_in_fixed(t_grid_def& layout, int hardBlockType, std:
     std::vector<std::vector<std::pair<char*, int>>> grid(grid_height, std::vector<std::pair<char*, int>>(grid_width, std::make_pair(nullptr, -1)));
     std::vector<t_grid_loc_def>::iterator pointer;
     std::string typeTag = arch_tag(hardBlockType);
-    std::cout << typeTag << std::endl;
     int priorityOfTheDesiredBlock = block_priority(layout, typeTag);
-    std::cout << "Desired block's priority is: " << priorityOfTheDesiredBlock << std::endl;
-    std::cout << "BlockDefsAre:" << std::endl;
     for (pointer = layout.loc_defs.begin(); pointer < layout.loc_defs.end(); pointer++) {
         // Case of == is the tile type we are looking for, and a clash
         // if there are collisions, vpr would fail anyway
         if (priorityOfTheDesiredBlock <= pointer->priority) {
-            std::cout << pointer->block_type << ":" << std::endl;
             ssize_t indexOfTile = tile_index(tileTypes, pointer->block_type);
             if (indexOfTile == -1) {
-                std::cout << " Was not able to find a tile" << std::endl;
-                flush(std::cout);
                 exit(6);
             }
             t_physical_tile_type& tileTypeOfABlockWithHigherPriority = tileTypes[indexOfTile];
             int w = 0;
             int h = 0;
-            std::cout << "Width of a block is:\t" << tileTypeOfABlockWithHigherPriority.width << "\tHeight of a block is:"
-                      << tileTypeOfABlockWithHigherPriority.height << std::endl;
             w = tileTypeOfABlockWithHigherPriority.width;
             h = tileTypeOfABlockWithHigherPriority.height;
 
             fill_with_block(grid, &(*pointer), tileTypes, indexOfTile, grid_width, grid_height);
         }
     }
-    std::cout << "Grid is:" << std::endl;
-    for (size_t x = 0; x < grid_width; x += 1) {
-        for (size_t y = 0; y < grid_height; y += 1) {
-            if (grid[x][y].first != nullptr) {
-                std::cout << "(" << grid[x][y].first << "," << grid[x][y].second << ")\t";
-            } else {
-                std::cout << "( u, -1), ";
-            }
-        }
-        std::cout << std::endl;
-    }
+
     int count = 0;
-    std::cout << "Grid is:" << std::endl;
+
     for (size_t x = 0; x < grid_width; x += 1) {
         for (size_t y = 0; y < grid_height; y += 1) {
             if (grid[x][y].first != nullptr) {
@@ -119,11 +101,6 @@ void OdinGridAnalyzer::fill_with_block(std::vector<std::vector<std::pair<char*, 
     //Load the x specification
     auto& xspec = grid_loc_def->x;
 
-    VTR_ASSERT_MSG(!xspec.start_expr.empty(), "x start position must be specified");
-    VTR_ASSERT_MSG(!xspec.end_expr.empty(), "x end position must be specified");
-    VTR_ASSERT_MSG(!xspec.incr_expr.empty(), "x increment must be specified");
-    VTR_ASSERT_MSG(!xspec.repeat_expr.empty(), "x repeat must be specified");
-
     size_t startx = parse_formula(xspec.start_expr, vars);
     size_t endx = parse_formula(xspec.end_expr, vars);
     size_t incrx = parse_formula(xspec.incr_expr, vars);
@@ -132,66 +109,11 @@ void OdinGridAnalyzer::fill_with_block(std::vector<std::vector<std::pair<char*, 
     //Load the y specification
     auto& yspec = grid_loc_def->y;
 
-    VTR_ASSERT_MSG(!yspec.start_expr.empty(), "y start position must be specified");
-    VTR_ASSERT_MSG(!yspec.end_expr.empty(), "y end position must be specified");
-    VTR_ASSERT_MSG(!yspec.incr_expr.empty(), "y increment must be specified");
-    VTR_ASSERT_MSG(!yspec.repeat_expr.empty(), "y repeat must be specified");
-
     size_t starty = parse_formula(yspec.start_expr, vars);
     size_t endy = parse_formula(yspec.end_expr, vars);
     size_t incry = parse_formula(yspec.incr_expr, vars);
     size_t repeaty = parse_formula(yspec.repeat_expr, vars);
 
-    std::cout << "\t"
-              << "\t"
-              << "\tx\tevaluates to\ty\tevaluates to" << std::endl;
-    std::cout << "_____________________________________________________________" << std::endl;
-    std::cout << "Start_expr\t" << grid_loc_def->x.start_expr << "\t" << startx
-              << "\t" << grid_loc_def->y.start_expr << "\t" << starty << std::endl;
-
-    std::cout << "End_expr\t" << grid_loc_def->x.end_expr << "\t" << endx
-              << "\t" << grid_loc_def->y.end_expr << "\t" << endy << std::endl;
-
-    std::cout << "Incr_expr\t" << grid_loc_def->x.incr_expr << "\t" << incrx
-              << "\t" << grid_loc_def->y.incr_expr << "\t" << incry << std::endl;
-
-    std::cout << "Repeat_expr\t" << grid_loc_def->x.repeat_expr << "\t" << repeatx
-              << "\t" << grid_loc_def->y.repeat_expr << "\t" << repeaty << std::endl;
-
-    std::cout << "Priority:\t" << grid_loc_def->priority << std::endl;
-
-    //Check start against the device dimensions
-    // Start locations outside the device will never create block instances
-    if (startx > grid_width - 1) {
-        return;
-    }
-
-    if (starty > grid_height - 1) {
-        return;
-    }
-
-    //Check end against the device dimensions
-    if (endx > grid_width - 1) {
-        return;
-    }
-
-    if (endy > grid_height - 1) {
-        return;
-    }
-
-    //The end must fall after (or equal) to the start
-    if (endx < startx) {
-        printf("Grid location specification endx (%s = %lu) can not come before startx (%s = %lu) for block type '%s'",
-               xspec.end_expr.c_str(), endx, xspec.start_expr.c_str(), startx, type->name);
-    }
-
-    if (endy < starty) {
-        printf("Grid location specification endy (%s = %lu) can not come before starty (%s = %lu) for block type '%s'",
-               yspec.end_expr.c_str(), endy, yspec.start_expr.c_str(), starty, type->name);
-    }
-
-    //The minimum increment is the block dimension
-    VTR_ASSERT(type->width > 0);
     if (incrx < size_t(type->width)) {
         printf(
             "Grid location specification incrx for block type '%s' must be at least"
