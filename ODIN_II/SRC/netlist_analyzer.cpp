@@ -60,7 +60,7 @@ int calculate_multiplier_aware_critical_path(nnode_t* node,netlist_t* netlist){
 		result = result + 1 ;
 		if (node->type==MULTIPLY)
 			result = result * 5;
-        node->traverse_visited = backup_value;
+    	//    node->traverse_visited = backup_value;
 		return result;
 	}
 	return result;
