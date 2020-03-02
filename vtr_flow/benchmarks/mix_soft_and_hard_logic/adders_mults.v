@@ -1,14 +1,14 @@
+`define WIDTH 2
+`define MULT_WIDTH (`WIDTH * 2)
+
 module top_module
 (
     
-    input a1,a2,b1,b2,a3,b3,a4,b4,
-    output [1:0] c1,c4,
-    output [3:0] c2,c3
+    input [`WIDTH-1:0] a1,b1,
+    output [`MULT_WIDTH-1:0] c1
    
 );
 
   assign c1 = a1*b1;
-  assign c2 = a2*b2;
-  assign c4 = c1+b4;
-  assign c3 = c1+a3; 
+
 endmodule

@@ -1399,6 +1399,214 @@ void create_symbol_table_for_scope(ast_node_t* module_items, sc_hierarchy* local
     } else {
         error_message(NETLIST, module_items->line_number, module_items->file_number, "%s", "Empty module\n");
     }
+void create_symbol_table_for_scope(ast_node_t* module_items, sc_hierarchy *local_ref)
+{
+	/* with the top module we need to visit the entire ast tree */
+	long i, j;
+	char *temp_string;
+	long sc_spot;
+	oassert(module_items->type == MODULE_ITEMS || module_items->type == FUNCTION_ITEMS || module_items->type == TASK_ITEMS || module_items->type == BLOCK);
+
+	STRING_CACHE *local_symbol_table_sc = local_ref->local_symbol_table_sc;
+	ast_node_t **local_symbol_table = local_ref->local_symbol_table;
+	int num_local_symbol_table = local_ref->num_local_symbol_table;
+
+	ast_node_t **implicit_declarations = NULL;
+	int num_implicit_declarations = 0;
+
+	/* search for VAR_DECLARE_LISTS */
+	if (module_items->num_children > 0)
+	{
+		for (i = 0; i < module_items->num_children; i++)
+		{
+			if (module_items->children[i]->type == VAR_DECLARE_LIST)
+			{
+				/* go through the vars in this declare list */
+				for (j = 0; j < module_items->children[i]->num_children; j++)
+				{
+					ast_node_t *var_declare = module_items->children[i]->children[j];
+
+					/* parameters are already dealt with */
+					if (var_declare->types.variable.is_parameter
+						|| var_declare->types.variable.is_localparam
+						|| var_declare->types.variable.is_defparam)
+						
+						continue;
+
+					oassert(module_items->children[i]->children[j]->type == VAR_DECLARE);
+					oassert(	(var_declare->types.variable.is_input) ||
+						(var_declare->types.variable.is_output) ||
+						(var_declare->types.variable.is_reg) ||
+						(var_declare->types.variable.is_integer) ||
+						(var_declare->types.variable.is_genvar) ||
+						(var_declare->types.variable.is_wire));
+
+					if (var_declare->types.variable.is_input 
+						&& var_declare->types.variable.is_reg)
+						{
+							error_message(NETLIST_ERROR, var_declare->line_number, var_declare->file_number, "%s",
+									"Input cannot be defined as a reg\n");
+						}
+
+					/* make the string to add to the string cache */
+					temp_string = make_full_ref_name(NULL, NULL, NULL, var_declare->children[0]->types.identifier, -1);
+					/* look for that element */
+					sc_spot = sc_add_string(local_symbol_table_sc, temp_string);
+					if (local_symbol_table_sc->data[sc_spot] != NULL)
+					{
+						/* ERROR checks here
+						 * output with reg is fine
+						 * output with wire is fine
+						 * input with wire is fine
+						 * Then update the stored string cache entry with information */
+						if (var_declare->types.variable.is_input
+							&& ((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_reg)
+						{
+							error_message(NETLIST_ERROR, var_declare->line_number, var_declare->file_number, "%s",
+									"Input cannot be defined as a reg\n");
+						}
+						/* MORE ERRORS ... could check for same declaration name ... */
+						else if (var_declare->types.variable.is_output)
+						{
+							/* copy all the reg and wire info over */
+							((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_output = true;
+
+							/* check for an initial value and copy it over if found */
+							long initial_value;
+							if(check_for_initial_reg_value(var_declare, &initial_value)){
+								((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_initialized = true;
+								((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.initial_value = initial_value;
+							}
+						}
+						else if ((var_declare->types.variable.is_reg) || (var_declare->types.variable.is_wire) 
+								|| (var_declare->types.variable.is_integer) || (var_declare->types.variable.is_genvar))
+						{
+							/* copy the output status over */
+							((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_wire = var_declare->types.variable.is_wire;
+							((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_reg = var_declare->types.variable.is_reg;
+
+							((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_integer = var_declare->types.variable.is_integer;
+							/* check for an initial value and copy it over if found */
+							long initial_value;
+							if(check_for_initial_reg_value(var_declare, &initial_value)){
+								((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.is_initialized = true;
+								((ast_node_t*)local_symbol_table_sc->data[sc_spot])->types.variable.initial_value = initial_value;
+							}
+						}
+						else if (!var_declare->types.variable.is_integer)
+						{
+							abort();
+						}
+					}
+					else
+					{
+						/* store the data which is an idx here */
+						local_symbol_table_sc->data[sc_spot] = (void *)var_declare;
+
+						/* store the symbol */
+						local_symbol_table = (ast_node_t **)vtr::realloc(local_symbol_table, sizeof(ast_node_t*)*(num_local_symbol_table+1));
+						local_symbol_table[num_local_symbol_table] = (ast_node_t *)var_declare;
+						num_local_symbol_table ++;
+
+						/* check for an initial value and store it if found */
+						long initial_value;
+						if(check_for_initial_reg_value(var_declare, &initial_value)){
+							var_declare->types.variable.is_initialized = true;
+							var_declare->types.variable.initial_value = initial_value;
+						}
+						module_items->children[i]->children[j] = NULL;
+
+					}
+					vtr::free(temp_string);
+
+										
+					remove_child_from_node_at_index( module_items->children[i], j);
+					j--;
+				}
+
+				if( module_items->children[i]->num_children == 0)
+				{
+					remove_child_from_node_at_index( module_items, i);
+					i--;
+				}
+			}
+			else if(module_items->children[i]->type == ASSIGN)
+			{
+				/* might be an implicit declaration */
+				if((module_items->children[i]->children[0]) && (module_items->children[i]->children[0]->type == BLOCKING_STATEMENT))
+				{
+					if((module_items->children[i]->children[0]->children[0]) && (module_items->children[i]->children[0]->children[0]->type == IDENTIFIERS))
+					{ 
+						temp_string = make_full_ref_name(NULL, NULL, NULL, module_items->children[i]->children[0]->children[0]->types.identifier, -1);
+						/* look for that element */
+						sc_spot = sc_lookup_string(local_symbol_table_sc, temp_string);
+						if( sc_spot == -1 )
+						{
+							implicit_declarations = (ast_node_t **)vtr::realloc(implicit_declarations, sizeof(ast_node_t*)*(num_implicit_declarations+1));
+							implicit_declarations[num_implicit_declarations] = module_items->children[i]->children[0]->children[0];
+							num_implicit_declarations++;
+						}
+						vtr::free(temp_string);
+					}
+				}
+			}
+		}
+
+		/* add implicit declarations to string cache */
+		for (i = 0; i < num_implicit_declarations; i++)
+		{
+			ast_node_t *node = implicit_declarations[i];
+			ast_node_t *potential_var_declare = resolve_hierarchical_name_reference(local_ref, node->types.identifier);
+
+			if (potential_var_declare == NULL)
+			{
+				sc_spot = sc_add_string(local_symbol_table_sc, node->types.identifier);
+				oassert(sc_spot > -1);
+
+				if (local_symbol_table_sc->data[sc_spot] == NULL)
+				{
+					ast_node_t *var_declare = create_node_w_type(VAR_DECLARE, node->line_number, node->file_number);
+				
+					/* copy the output status over */
+					var_declare->types.variable.is_wire = true;
+					var_declare->types.variable.is_reg = false;
+
+					var_declare->types.variable.is_integer = false;
+					var_declare->types.variable.is_input = false;
+					
+					allocate_children_to_node(var_declare, { node, NULL, NULL, NULL, NULL, NULL });
+
+					/* store the data which is an idx here */
+					local_symbol_table_sc->data[sc_spot] = (void *)var_declare;
+
+					/* store the symbol */
+					local_symbol_table = (ast_node_t **)vtr::realloc(local_symbol_table, sizeof(ast_node_t*)*(num_local_symbol_table+1));
+					local_symbol_table[num_local_symbol_table] = (ast_node_t *)var_declare;
+					num_local_symbol_table ++;
+				}
+				else
+				{
+					/* net was declared later; do nothing */
+				}
+			}
+			else
+			{
+				/* var_declare was defined in encompassing scope */
+			}
+		}
+
+		if (implicit_declarations)
+		{
+			vtr::free(implicit_declarations);
+		}
+
+		local_ref->local_symbol_table = local_symbol_table;
+		local_ref->num_local_symbol_table = num_local_symbol_table;
+	}
+	else
+	{
+		error_message(NETLIST_ERROR, module_items->line_number, module_items->file_number, "%s", "Empty module\n");
+	}
 }
 
 /*--------------------------------------------------------------------------
