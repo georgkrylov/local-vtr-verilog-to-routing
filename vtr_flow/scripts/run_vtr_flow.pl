@@ -558,7 +558,6 @@ if (    $starting_stage <= $stage_idx_abc
 #################################################################################
 
 if (    $starting_stage <= $stage_idx_abc
-	and $ending_stage >= $stage_idx_abc
 	and !$error_code )
 {
 	#added so that valgrind will not run on abc and perl because of existing memory errors
