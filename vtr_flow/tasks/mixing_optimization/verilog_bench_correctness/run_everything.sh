@@ -1,15 +1,15 @@
 #!/bin/bash
-VTR_ROOT=~/vtr-verilog-to-routing/
+VTR_ROOT=/local_scratch/vtr-verilog-to-routing/
 TASK_PATH=`pwd`
 TASK_NAME=${TASK_PATH%"config"}
 TASK_NAME=${TASK_NAME##*"tasks/"}
 
 rm -rf 0.*
 rm -rf 1.0
-prevvar=0.05
-for (( i=20; i<=20; i++ ))
+prevvar=0.00
+for (( i=0; i<=20; i++ ))
 do
-var=`python -c "print($i/20)"`
+var=`python -c "print($i*1.0/20)"`
 sed -i 's/multipliers_mixing_ratio="'$prevvar'"/multipliers_mixing_ratio="'$var'"/g' config/multconfig.xml 
 prevvar=$var
 $VTR_ROOT/vtr_flow/scripts/run_vtr_task.pl -j8 $TASK_NAME
