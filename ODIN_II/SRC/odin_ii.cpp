@@ -61,6 +61,7 @@
 #include "vtr_util.h"
 #include "vtr_path.h"
 #include "vtr_memory.h"
+#include "HardSoftLogicMixer.hpp"
 
 #define DEFAULT_OUTPUT "."
 
@@ -72,6 +73,7 @@ std::vector<t_logical_block_type> logical_block_types;
 short physical_lut_size = -1;
 int block_tag = -1;
 ids default_net_type = WIRE;
+HardSoftLogicMixer* mixer;
 
 enum ODIN_ERROR_CODE {
     SUCCESS,
@@ -96,6 +98,7 @@ static ODIN_ERROR_CODE synthesize_verilog() {
 
     FILE* output_blif_file = create_blif(global_args.output_file.value().c_str());
 
+    mixer = new HardSoftLogicMixer(Arch, configuration, physical_tile_types);
     /* Perform any initialization routines here */
     find_hard_multipliers();
     find_hard_adders();
@@ -550,6 +553,28 @@ void get_options(int argc, char** argv) {
         .nargs('+')
         .metavar("PINS_TO_MONITOR");
 
+    auto& mixing_opt_grp = parser.add_argument_group("mixing hard and soft logic optimization");
+
+    mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_mults")
+        .help("To enable mixing hard block and soft logic implementation of multipliers")
+        .default_value("false")
+        .action(argparse::Action::STORE_TRUE);
+
+    mixing_opt_grp.add_argument(global_args.mix_multipliers, "--mix_adders")
+        .help("To enable mixing hard block and soft logic implementation of adders")
+        .default_value("false")
+        .action(argparse::Action::STORE_TRUE);
+
+    mixing_opt_grp.add_argument(global_args.mults_mixing_exact_number_of_multipliers, "--mults_mixing_exact_number_of_multipliers")
+        .help("To enable mixing hard block and soft logic implementation of adders")
+        .default_value("-1")
+        .action(argparse::Action::STORE);
+
+    mixing_opt_grp.add_argument(global_args.mults_mixing_ratio, "--multipliers_mixing_ratio")
+        .help("To enable mixing hard block and soft logic implementation of adders")
+        .default_value("-1.0")
+        .action(argparse::Action::STORE);
+
     parser.parse_args(argc, argv);
 
     //Check required options
@@ -609,6 +634,18 @@ void get_options(int argc, char** argv) {
     if (global_args.permissive.value()) {
         warning_message(PARSE_ARGS, -1, -1, "%s", "Permissive flag is ON. Undefined behaviour may occur\n");
     }
+
+    if (global_args.mix_multipliers) {
+        int bit_value = (1 << mix_hard_blocks::MULTIPLIERS);
+        configuration.mix_soft_and_hard_logic = configuration.mix_soft_and_hard_logic | bit_value;
+    }
+
+    if (global_args.mix_adders) {
+        int bit_value = (1 << mix_hard_blocks::ADDERS);
+        configuration.mix_soft_and_hard_logic = configuration.mix_soft_and_hard_logic | bit_value;
+    }
+    configuration.mults_mixing_exact_number_of_multipliers = global_args.mults_mixing_exact_number_of_multipliers;
+    configuration.mults_mixing_ratio = global_args.mults_mixing_ratio;
 }
 
 /*---------------------------------------------------------------------------
@@ -638,6 +675,12 @@ void set_default_config() {
      */
     configuration.soft_logic_memory_width_threshold = 0;
     configuration.soft_logic_memory_depth_threshold = 0;
+    /**
+     * Mixing soft and hard logic parameters 
+     */
+    configuration.mix_soft_and_hard_logic = 0;
+    configuration.mults_mixing_exact_number_of_multipliers = -1;
+    configuration.mults_mixing_ratio = -1.0f;
 }
 
 static void get_physical_luts(std::vector<t_pb_type*>& pb_lut_list, t_mode* mode) {

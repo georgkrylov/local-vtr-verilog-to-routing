@@ -180,6 +180,9 @@ void set_default_optimization_settings(config_t* config) {
     config->fixed_hard_adder = 0;
     config->split_hard_adder = 1;
     config->min_threshold_adder = 0;
+    config->mix_soft_and_hard_logic = 0;
+    config->mults_mixing_exact_number_of_multipliers = -1;
+    config->mults_mixing_ratio = -1.0f;
     return;
 }
 
@@ -270,5 +273,38 @@ void read_optimizations(pugi::xml_node a_node, config_t* config, const pugiutil:
             config->split_hard_adder = 1;
     }
 
+    child = get_single_child(a_node, "mix_soft_hard_blocks", loc_data, OPTIONAL);
+    if (child != NULL) {
+        // This is a temporary block that should be removed in future
+        // Mixing soft and hard blocks is likely to interfere with
+        // other optimizations, so the can_try_to_optimize vent
+        // is introduced to avoid interactions that were not thought through
+        // or were not tested.
+        config->mults_mixing_ratio = -1.0f;
+        config->mults_mixing_exact_number_of_multipliers = -1;
+        config->mix_soft_and_hard_logic = 0;
+        bool can_try_to_optimize = true;
+
+        // config_t.h file. When introducing new hard block type
+        // to perform mixed hard/soft logic design, please modify
+        // the description in config_t.h file, as well as the enum
+        // in the odin_types.h
+        prop = get_attribute(child, "multipliers", loc_data, OPTIONAL).as_string(NULL);
+        if (prop != NULL && true == can_try_to_optimize) {
+            int bit_value = (1 << mix_hard_blocks::MULTIPLIERS);
+            config->mix_soft_and_hard_logic = config->mix_soft_and_hard_logic | bit_value;
+        }
+
+        // These are additional command line parameter that configure that optimization
+        prop = get_attribute(child, "multipliers_mixing_ratio", loc_data, OPTIONAL).as_string(NULL);
+        if (prop != NULL && true == can_try_to_optimize) {
+            float specified_ratio = std::stof(prop);
+            config->mults_mixing_ratio = specified_ratio;
+        }
+        prop = get_attribute(child, "mults_mixing_exact_number_of_multipliers", loc_data, OPTIONAL).as_string(NULL);
+        if (prop != NULL && true == can_try_to_optimize) {
+            config->mults_mixing_exact_number_of_multipliers = std::stoi(prop);
+        }
+    }
     return;
 }
