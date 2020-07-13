@@ -86,7 +86,7 @@ void HardSoftLogicMixer::grid_statistics() {
         return;
     }
     t_grid_def& ref = _arch.grid_layouts.front();
-    std::pair<int, int> widthAndHeight = _analyzer.estimate_device_size(ref);
+    std::pair<int, int> widthAndHeight = std::make_pair(_analyzer.cached_grid.width(), _analyzer.cached_grid.height());
     _grid_layout_sizes.emplace(0, widthAndHeight);
 
     for (int opt = 0; opt < mix_hard_blocks::Count; opt++) {

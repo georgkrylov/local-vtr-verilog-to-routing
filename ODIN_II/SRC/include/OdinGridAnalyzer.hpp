@@ -27,6 +27,8 @@
 #include "odin_types.h"
 #include <utility> // std::pair, std::make_pair
 #include <tuple>
+#include "device_grid.h"
+#include "SetupGrid.h"
 #include <vector> // std::vector
 
 class OdinGridAnalyzer {
@@ -43,10 +45,11 @@ class OdinGridAnalyzer {
      *---------------------------------------------------------------------*/
     std::pair<int, int> estimate_device_size(t_grid_def&);
 
+    void createAndCacheDeviceLayout(t_arch& arch);
     int count_in_fixed(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tiletypes);
     int block_priority(t_grid_def& layout, std::string& typeTag);
     ssize_t tile_index(std::vector<t_physical_tile_type> tileTypes, std::string& typeTag);
-
+    DeviceGrid cached_grid;
   private:
     std::string arch_tag(int hardBlockType);
     // int parseExpression(std::string& expr, int position,int sign, int W, int H, int w, int h);
@@ -58,5 +61,6 @@ class OdinGridAnalyzer {
     void fill_with_block(std::vector<std::vector<std::pair<char*, int>>>& grid, t_grid_loc_def* grid_def, std::vector<t_physical_tile_type> tileTypes, int indexOfTile, ssize_t grid_width, ssize_t grid_height);
 
     void set_grid_block_type(int priority, t_physical_tile_type* type, int x, int y, std::vector<std::vector<std::pair<char*, int>>>& grid);
+
 };
 #endif

@@ -116,12 +116,18 @@ files_to_dirs(BISON_VerilogParser_OUTPUT_HEADER PARSER_INCLUDE_DIRS)
 include(CheckCXXSymbolExists)
 
 set(LIB_INCLUDE_DIRS "SRC/include")
-
+set(LIB_INCLUDE_VPR_DEPENDENCIES "../vpr/src/")
 #Collect the source files
 file(GLOB_RECURSE EXEC_SOURCES main.cpp)
 file(GLOB_RECURSE LIB_SOURCES SRC/*.cpp)
 file(GLOB_RECURSE LIB_HEADERS_H ${LIB_INCLUDE_DIRS}/*.h)
 file(GLOB_RECURSE LIB_HEADERS_HPP ${LIB_INCLUDE_DIRS}/*.hpp)
+#additional deps
+list(APPEND LIB_HEADERS_H ${LIB_INCLUDE_VPR_DEPENDENCIES}/base/device_grid.h)
+list(APPEND LIB_HEADERS_H ${LIB_INCLUDE_VPR_DEPENDENCIES}/base/SetupGrid.h)
+
+list(APPEND LIB_SOURCES ${LIB_INCLUDE_VPR_DEPENDENCIES}/base/device_grid.cpp)
+list(APPEND LIB_SOURCES ${LIB_INCLUDE_VPR_DEPENDENCIES}/base/SetupGrid.cpp)
 
 #Treat .c as CXX
 set_source_files_properties(${FLEX_VerilogLexer_OUTPUTS} ${BISON_VerilogParser_OUTPUT_SOURCE} PROPERTIES LANGUAGE CXX)
@@ -132,8 +138,11 @@ if(FLEX_BISON_WARN_SUPPRESS_FLAGS)
                                 PROPERTIES COMPILE_FLAGS ${FLEX_BISON_WARN_SUPPRESS_FLAGS})
 endif()
 
+set(LIB_INCLUDE_VPR_DEPENDENCIES "../vpr/src/base")
+list( APPEND LIB_INCLUDE_VPR_DEPENDENCIES "../vpr/src/util" "../vpr/src/route" "../vpr/src/device" "../vpr/src/power" "../vpr/src/place" "../libs/EXTERNAL/libtatum/libtatum")
+
 add_definitions(-DUSING_BISON -DYYERROR_VERBOSE)
-include_directories(${LIB_INCLUDE_DIRS} ${PARSER_INCLUDE_DIRS})
+include_directories(${LIB_INCLUDE_DIRS} ${PARSER_INCLUDE_DIRS} ${LIB_INCLUDE_VPR_DEPENDENCIES})
 
 #Create the library
 add_library(libodin_ii STATIC

@@ -42,6 +42,10 @@ OdinGridAnalyzer::estimate_device_size(t_grid_def& layout) {
     return result;
 }
 
+void OdinGridAnalyzer::createAndCacheDeviceLayout(t_arch& arch){
+    cached_grid = create_device_grid("odin_layouyt",arch.grid_layouts, 1,1);
+}
+
 int OdinGridAnalyzer::count_in_fixed(t_grid_def& layout, int hardBlockType, std::pair<int, int> size, std::vector<t_physical_tile_type> tileTypes) {
     unsigned int grid_width = (unsigned int) size.first;
     unsigned int grid_height = (unsigned int) size.second;
