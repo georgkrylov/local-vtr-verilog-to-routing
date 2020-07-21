@@ -141,6 +141,11 @@ struct global_args_t {
     argparse::ArgValue<int> sim_random_seed;
 
     argparse::ArgValue<bool> interactive_simulation;
+
+    // Arguments for mixing hard and soft logic
+    argparse::ArgValue<bool> mix_multipliers;
+    argparse::ArgValue<int> mults_mixing_exact_number_of_multipliers;
+    argparse::ArgValue<float> mults_mixing_ratio;
 };
 
 /**
@@ -533,6 +538,17 @@ struct nnet_t {
 
     init_value_e initial_value; // initial net value
                                 //////////////////////
+};
+
+// Enumerator showing on which kinds of hard blocks
+// mixing of soft and hard logic implementation should
+// be performed. The Count should be the
+// the last element. The order of the elements
+// in this enum also determines order of optimizations
+// ADDERS SHOULD BE AFTER MULTS
+enum mix_hard_blocks {
+    MULTIPLIERS,
+    Count
 };
 
 struct signal_list_t {

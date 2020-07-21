@@ -47,6 +47,24 @@ struct config_t {
     int soft_logic_memory_width_threshold;
 
     std::string arch_file; // Name of the FPGA architecture file
+
+    // Mixing soft and hard logic
+    // Should be set to allow for mixing soft and hard logic, default integer value
+    // is 0 (No optimization is required)
+    // The bits correspond to (right to left):
+    // 1 : multipliers
+    // ...
+    int mix_soft_and_hard_logic;
+    // This variable shows the percentage of multipliers that will be implemented
+    // in hard logic. The default value of the variable is -1.0f. The variable
+    // will automaticaly set the rightmost bit of mix_soft_and_hard_logic to 1
+    // mults_mixing_exact_number_of_multipliers takes precedence
+    float mults_mixing_ratio;
+    // This value is for the special cases when only X multipliers are desired
+    // Default value is -1. Setting this value will automatically set
+    // mults mixing ratio to 1.0 as well as the rightmost bit of
+    // mix_soft_and_hard_logic to 1
+    int mults_mixing_exact_number_of_multipliers;
 };
 
 extern config_t configuration;

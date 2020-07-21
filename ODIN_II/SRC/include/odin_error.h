@@ -28,6 +28,8 @@ enum odin_error {
     PARSE_BLIF,
     /* for errors in the netlist simulation */
     SIMULATION,
+    /* for incomplete implementation error messages*/
+    INC_IMPLEMENTATION,
 };
 
 extern const char* odin_error_STR[];
