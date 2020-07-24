@@ -26,6 +26,19 @@
 
 #include "odin_types.h" // mix_hard_blocks, config_t
 
+/**
+ * @brief Weighted node
+ * WeightedNode.node is a pointer to nnode_t (the candidate for optimization)
+ * WeightedNode.weight is a field that is used for storing weights towards the 
+ * mixing optimization.
+ *  value of -1 is reserved for hardened blocks
+ *  value 0 is the default value
+ */
+typedef struct {
+    nnode_t* node;
+    long weight;
+} WeightedNode;
+
 class HardSoftLogicMixer {
   public:
     HardSoftLogicMixer(const config_t& configuration);
@@ -73,7 +86,7 @@ class HardSoftLogicMixer {
 
     /*----------------------------------------------------------------------
      * Function: scale_counts
-     * Applies parameter scaling to the count of hard blocks
+     * Applies parameter scaling to the estimated count of hard blocks
      *---------------------------------------------------------------------*/
     void scale_counts();
 
@@ -101,7 +114,7 @@ class HardSoftLogicMixer {
 
     // This array is composed of vectors, that store nodes that
     // are potential candidates for performing mixing optimization
-    std::vector<nnode_t*> _candidate_nodes[mix_hard_blocks::Count];
+    std::vector<WeightedNode> _nodes_by_opt[mix_hard_blocks::Count];
 
     // The array contains estimated size of the hard blocks
     int _hardBlocksCount[mix_hard_blocks::Count];

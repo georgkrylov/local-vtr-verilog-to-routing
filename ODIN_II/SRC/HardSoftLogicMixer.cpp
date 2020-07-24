@@ -77,7 +77,7 @@ void HardSoftLogicMixer::parse_opt_parameters(const config_t config) {
 }
 
 void HardSoftLogicMixer::note_candidate_node(nnode_t* opNode, mix_hard_blocks type) {
-    _candidate_nodes[type].emplace_back(opNode);
+    _nodes_by_opt[type].push_back({opNode, 0});
 }
 
 bool HardSoftLogicMixer::softenable(mix_hard_blocks type) {
@@ -142,15 +142,15 @@ void HardSoftLogicMixer::scale_counts() {
 }
 
 int HardSoftLogicMixer::hard_blocks_needed(int opt) {
-    return _candidate_nodes[opt].size();
+    return _nodes_by_opt[opt].size();
 }
 
 void HardSoftLogicMixer::soft_map_remaining_nodes(netlist_t* netlist) {
     for (unsigned int i = 0; i < mix_hard_blocks::Count; i++) {
-        for (unsigned int j = 0; j < _candidate_nodes[i].size(); j++) {
+        for (unsigned int j = 0; j < _nodes_by_opt[i].size(); j++) {
             switch (i) {
                 case mix_hard_blocks::MULTIPLIERS:
-                    instantiate_simple_soft_multiplier(_candidate_nodes[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_simple_soft_multiplier(_nodes_by_opt[i][j].node, PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                     break;
                 default:
                     error_message(INC_IMPLEMENTATION, unknown_location, "%s",
@@ -167,32 +167,40 @@ void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks 
                       "Running choseHardBlocks with Count should never happen");
         exit(6);
     }
-    std::vector<nnode_t*>& nodesVector = _candidate_nodes[type];
-    int nodesCount = nodesVector.size();
-    int* costs = new int[nodesCount];
-    for (int i = 0; i < nodesCount; i++) {
-        costs[i] = calculate_multiplier_aware_critical_path(nodesVector[i], netlist);
+
+    std::vector<WeightedNode>& weighted_nodes = _nodes_by_opt[type];
+    size_t nodes_count = weighted_nodes.size();
+
+    // compute weights for all noted nodes
+    for (size_t i = 0; i < nodes_count; i++) {
+        weighted_nodes[i].weight = calculate_multiplier_aware_critical_path(weighted_nodes[i].node, netlist);
     }
 
-    int numberOfMultipliers = _hardBlocksCount[mix_hard_blocks::MULTIPLIERS];
-    for (int i = 0; i < numberOfMultipliers; i++) {
-        int maximalCost = -1;
-        int indexOfMaximum = -1;
-        for (int j = 0; j < nodesCount; j++) {
-            if (maximalCost < costs[j] && (nodesVector[j]->input_port_sizes[0] > 1) && (nodesVector[j]->input_port_sizes[1] > 1)) {
-                maximalCost = costs[j];
-                indexOfMaximum = j;
+    // per optimization, instantiate hard logic
+    for (int i = 0; i < _hardBlocksCount[type]; i++) {
+        int maximal_cost = -1;
+        int index = -1;
+        for (size_t j = 0; j < nodes_count; j++) {
+            // if found a new maximal cost that is higher than a current maximum AND is not restricted by input
+            // params for minimal "hardenable" multiplier width
+            if (maximal_cost < weighted_nodes[j].weight && (weighted_nodes[j].node->input_port_sizes[0] > 1) && (weighted_nodes[j].node->input_port_sizes[1] > 1)) {
+                maximal_cost = weighted_nodes[j].weight;
+                index = j;
             }
         }
 
-        if (indexOfMaximum < 0)
+        // if there are no suitable nodes left, leave the loop to
+        // implement remaining nodes in soft logic
+        if (index < 0)
             break;
 
-        costs[indexOfMaximum] = -1;
+        // indicate for future iterations the node was hardened
+        weighted_nodes[index].weight = -1;
+
         switch (type) {
             case mix_hard_blocks::MULTIPLIERS: {
                 if (hard_multipliers) {
-                    instantiate_hard_multiplier(nodesVector[indexOfMaximum], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_hard_multiplier(weighted_nodes[index].node, PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                 }
                 break;
             }
@@ -203,10 +211,11 @@ void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks 
         }
     }
 
-    for (int i = nodesCount - 1; i >= 0; i--) {
-        if (costs[i] == -1) {
-            nodesVector.erase(nodesVector.begin() + i);
+    // From the end of the vector, remove all nodes that were implemented in hard logic. The remaining
+    // nodes will be instantiated in soft_map_remaining_nodes
+    for (int i = nodes_count - 1; i >= 0; i--) {
+        if (weighted_nodes[i].weight == -1) {
+            weighted_nodes.erase(weighted_nodes.begin() + i);
         }
     }
-    delete[] costs;
 }
