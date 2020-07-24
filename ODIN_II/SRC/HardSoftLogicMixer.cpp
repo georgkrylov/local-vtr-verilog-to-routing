@@ -77,7 +77,7 @@ void HardSoftLogicMixer::parse_opt_parameters(const config_t config) {
 }
 
 void HardSoftLogicMixer::note_candidate_node(nnode_t* opNode, mix_hard_blocks type) {
-    _nodes_by_opt[type].push_back({opNode, 0});
+    _nodes_by_opt[type].push_back(opNode);
 }
 
 bool HardSoftLogicMixer::softenable(mix_hard_blocks type) {
@@ -101,7 +101,7 @@ void HardSoftLogicMixer::map_deferred_blocks(netlist_t* netlist) {
                 }
                 break;
             default:
-                error_message(INC_IMPLEMENTATION, unknown_location, "%s",
+                error_message(NETLIST, unknown_location, "%s",
                               "Optimization with number: %i does not have an implementation inside of HardSoftLogicMixer::map_deferred_blocks\n", i);
                 break;
         }
@@ -150,10 +150,10 @@ void HardSoftLogicMixer::soft_map_remaining_nodes(netlist_t* netlist) {
         for (unsigned int j = 0; j < _nodes_by_opt[i].size(); j++) {
             switch (i) {
                 case mix_hard_blocks::MULTIPLIERS:
-                    instantiate_simple_soft_multiplier(_nodes_by_opt[i][j].node, PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_simple_soft_multiplier(_nodes_by_opt[i][j], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                     break;
                 default:
-                    error_message(INC_IMPLEMENTATION, unknown_location, "%s",
+                    error_message(NETLIST, unknown_location, "%s",
                                   "Cleanup for optimization with number: Optimization with number: %i does not have an implementation inside of HardSoftLogicMixer::soft_map_remaining_nodes\n", i);
                     break;
             }
@@ -163,17 +163,17 @@ void HardSoftLogicMixer::soft_map_remaining_nodes(netlist_t* netlist) {
 
 void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks type) {
     if (type == mix_hard_blocks::Count) {
-        error_message(INC_IMPLEMENTATION, unknown_location, "%s",
+        error_message(NETLIST, unknown_location, "%s",
                       "Running choseHardBlocks with Count should never happen");
         exit(6);
     }
 
-    std::vector<WeightedNode>& weighted_nodes = _nodes_by_opt[type];
+    std::vector<nnode_t*>& weighted_nodes = _nodes_by_opt[type];
     size_t nodes_count = weighted_nodes.size();
 
     // compute weights for all noted nodes
     for (size_t i = 0; i < nodes_count; i++) {
-        weighted_nodes[i].weight = calculate_multiplier_aware_critical_path(weighted_nodes[i].node, netlist);
+        mixing_optimization_stats(weighted_nodes[i], netlist);
     }
 
     // per optimization, instantiate hard logic
@@ -183,8 +183,8 @@ void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks 
         for (size_t j = 0; j < nodes_count; j++) {
             // if found a new maximal cost that is higher than a current maximum AND is not restricted by input
             // params for minimal "hardenable" multiplier width
-            if (maximal_cost < weighted_nodes[j].weight && (weighted_nodes[j].node->input_port_sizes[0] > 1) && (weighted_nodes[j].node->input_port_sizes[1] > 1)) {
-                maximal_cost = weighted_nodes[j].weight;
+            if (maximal_cost < weighted_nodes[j]->weight && (weighted_nodes[j]->input_port_sizes[0] > 1) && (weighted_nodes[j]->input_port_sizes[1] > 1)) {
+                maximal_cost = weighted_nodes[j]->weight;
                 index = j;
             }
         }
@@ -195,17 +195,17 @@ void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks 
             break;
 
         // indicate for future iterations the node was hardened
-        weighted_nodes[index].weight = -1;
+        weighted_nodes[index]->weight = -1;
 
         switch (type) {
             case mix_hard_blocks::MULTIPLIERS: {
                 if (hard_multipliers) {
-                    instantiate_hard_multiplier(weighted_nodes[index].node, PARTIAL_MAP_TRAVERSE_VALUE, netlist);
+                    instantiate_hard_multiplier(weighted_nodes[index], PARTIAL_MAP_TRAVERSE_VALUE, netlist);
                 }
                 break;
             }
             default:
-                error_message(INC_IMPLEMENTATION, unknown_location, "%s",
+                error_message(NETLIST, unknown_location, "%s",
                               "Implementation of chooseHardBlocks for %i: Hard block type is incomplete", type);
                 break;
         }
@@ -214,7 +214,7 @@ void HardSoftLogicMixer::choose_hard_blocks(netlist_t* netlist, mix_hard_blocks 
     // From the end of the vector, remove all nodes that were implemented in hard logic. The remaining
     // nodes will be instantiated in soft_map_remaining_nodes
     for (int i = nodes_count - 1; i >= 0; i--) {
-        if (weighted_nodes[i].weight == -1) {
+        if (weighted_nodes[i]->weight == -1) {
             weighted_nodes.erase(weighted_nodes.begin() + i);
         }
     }

@@ -69,40 +69,22 @@ void init_stat(netlist_t* netlist) {
     netlist->num_logic_element = 0;
 }
 
-int calculate_multiplier_aware_critical_path(nnode_t* node, netlist_t* netlist) {
-    int i, j;
-    int result = 0;
-    if (node->traverse_visited != MULT_OPTIMIZATION_TRAVERSE_VALUE) {
-        /*this is a new node so depth visit it */
-        int backup_value = node->traverse_visited;
-        /* mark that we have visitied this node now */
-        node->traverse_visited = MULT_OPTIMIZATION_TRAVERSE_VALUE;
-        result = 1;
-        for (i = 0; i < node->num_output_pins; i++) {
-            if (node->output_pins[i]->net) {
-                nnet_t* next_net = node->output_pins[i]->net;
-                if (next_net->fanout_pins) {
-                    for (j = 0; j < next_net->num_fanout_pins; j++) {
-                        if (next_net->fanout_pins[j]) {
-                            if (next_net->fanout_pins[j]->node) {
-                                /* recursive call point */
-                                int ans = calculate_multiplier_aware_critical_path(next_net->fanout_pins[j]->node, netlist);
-                                if (result < ans) {
-                                    result = ans;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+void mixing_optimization_stats(nnode_t* node, netlist_t* netlist) {
+    uintptr_t traverse_mark_number = 1010;
+    // Reinitialize statistics (to avoid interference)
+    init_stat(netlist);
+    // assuming the optimization is started from the node of the type that
+    // matches the node type
+    switch (node->type) {
+        case MULTIPLY: {
+            node->weight = get_stats(node, netlist, traverse_mark_number)->downward.max_depth;
+            break;
         }
-        result = result + 1;
-        if (node->type == MULTIPLY)
-            result = result * 5;
-        node->traverse_visited = backup_value;
-        return result;
+        default:
+            error_message(NETLIST, unknown_location, "%s",
+                          "Counting weights for mixing optimization for %i: Hard block type is unimplemented", node->type);
+            break;
     }
-    return result;
 }
 
 static void print_stats(metric_t* m) {
@@ -222,6 +204,9 @@ static void count_node_type(operation_list op, nnode_t* node, netlist_t* netlist
         case CLOCK_NODE:
         case FF_NODE:
         case MULTIPLY:
+            increment_type_count(op, netlist);
+            netlist->num_of_node += 1;
+            break;
         case ADD:
         case MEMORY:
         case HARD_IP:
